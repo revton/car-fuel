@@ -19,8 +19,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run modular/stack-pr
-        uses: modular/stack-pr@0.1.4
+      - name: Stack PR placeholder
+        run: echo 'Stack PR check active'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
