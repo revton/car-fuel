@@ -5,7 +5,18 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  A["Carregando dados de PRs..."]
+  pr62["PR #62
+ci(stack): auto-update Stack section in PR bodies"]
+  pr61["PR #61
+docs(stack): add Stack PR visualization (Mermaid + workflow)"]
+  pr60["PR #60
+chore(infra): fix docs/readme encoding"]
+  pr59["PR #59
+chore(gh-script): ensure label idempotent"]
+  pr58["PR #58
+chore(gh-script): fix quoting in search query"]
+  pr59 --> pr60
+  pr58 --> pr59
 ```
 <!-- stack-pr:end -->
 
