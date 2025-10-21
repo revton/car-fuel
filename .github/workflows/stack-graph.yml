@@ -103,10 +103,13 @@ jobs:
 
             core.setOutput('changed', String(newContent !== content));
       - name: Commit changes (if any)
-        if: steps.build.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/stack-plan/STACK-PR-PLAN.md
-          git commit -m "docs(stack): update Mermaid stack graph"
-          git push
+          if git diff --quiet -- docs/stack-plan/STACK-PR-PLAN.md; then
+            echo "No changes to commit";
+          else
+            git add docs/stack-plan/STACK-PR-PLAN.md
+            git commit -m "docs(stack): update Mermaid stack graph"
+            git push
+          fi
