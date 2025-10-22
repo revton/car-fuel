@@ -52,31 +52,18 @@ jobs:
             }
 
             function buildGraph(prs){
-              const headSet = new Set(prs.map(p => p.head));
-              const byHead = new Map(prs.map(p => [p.head, p]));
-              const byNumber = new Map(prs.map(p => [p.number, p]));
               const edges = [];
-
-              // create edges when PR.base == otherPR.head
               for (const p of prs){
                 const parent = prs.find(x => x.head === p.base);
-                if (parent){
-                  edges.push({ from: parent, to: p });
-                }
+                if (parent){ edges.push({ from: parent, to: p }); }
               }
-
-              // Build mermaid lines
               const lines = [ 'flowchart TD' ];
               for (const p of prs){
                 const label = `PR #${p.number}`.replace('"','\\"');
                 lines.push(`  pr${p.number}["${label}\n${p.title.replace(/"/g,'\\"')}"]`);
               }
-              for (const e of edges){
-                lines.push(`  pr${e.from.number} --> pr${e.to.number}`);
-              }
-              if (prs.length === 0){
-                lines.push('  Empty["No open PRs"]');
-              }
+              for (const e of edges){ lines.push(`  pr${e.from.number} --> pr${e.to.number}`); }
+              if (prs.length === 0){ lines.push('  Empty["No open PRs"]'); }
               return '```mermaid\n' + lines.join('\n') + '\n```';
             }
 
@@ -97,19 +84,19 @@ jobs:
             const before = content.slice(0, startIdx + begin.length);
             const after = content.slice(endIdx);
             const newContent = before + '\n' + mermaid + '\n' + after;
-            if (newContent !== content){
-              fs.writeFileSync(filePath, newContent, 'utf8');
-            }
-
+            if (newContent !== content){ fs.writeFileSync(filePath, newContent, 'utf8'); }
             core.setOutput('changed', String(newContent !== content));
+
       - name: Commit changes (if any)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if git diff --quiet -- docs/stack-plan/STACK-PR-PLAN.md; then
             echo "No changes to commit";
-          else
-            git add docs/stack-plan/STACK-PR-PLAN.md
-            git commit -m "docs(stack): update Mermaid stack graph"
-            git push
+            exit 0;
           fi
+          git add docs/stack-plan/STACK-PR-PLAN.md
+          git commit -m "docs(stack): update Mermaid stack graph"
+          BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          echo "Pushing to $BRANCH"
+          git push origin HEAD:"$BRANCH"
