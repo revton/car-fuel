@@ -5,7 +5,8 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  Empty["No open PRs"]
+  pr63["PR #63
+ci: remove legacy stack-pr placeholder workflow"]
 ```
 <!-- stack-pr:end -->
 
