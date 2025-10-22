@@ -9,10 +9,7 @@ flowchart TD
 chore(infra): fix docs/readme encoding"]
   pr59["PR #59
 chore(gh-script): ensure label idempotent"]
-  pr58["PR #58
-chore(gh-script): fix quoting in search query"]
   pr59 --> pr60
-  pr58 --> pr59
 ```
 <!-- stack-pr:end -->
 
