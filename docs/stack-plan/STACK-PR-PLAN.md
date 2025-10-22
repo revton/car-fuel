@@ -5,8 +5,6 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr62["PR #62
-ci(stack): auto-update Stack section in PR bodies"]
   pr61["PR #61
 docs(stack): add Stack PR visualization (Mermaid + workflow)"]
   pr60["PR #60
