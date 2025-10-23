@@ -5,8 +5,7 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr65["PR #65
-docs(readme): update scripts usage and notes"]
+  Empty["No open PRs"]
 ```
 <!-- stack-pr:end -->
 
