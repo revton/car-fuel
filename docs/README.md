@@ -49,3 +49,6 @@ Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
 ## Observações
 - Para fechar issues automaticamente, inclua `Closes #<id>` nas PRs que entram na branch padrão (`main`).
 - O diagrama Mermaid mostra apenas PRs abertas.
+
+### Atalho
+- Você pode usar `.\scripts\gh_create_issues_from_csv.ps1` (wrapper) com os mesmos parâmetros do v3 — ele apenas delega para `gh_create_issues_from_csv_v3.ps1`.
