@@ -1,0 +1,17 @@
+name: scripts-dryrun
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  dryrun:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Dry-run v3 with sample CSV
+        shell: pwsh
+        run: |
+          pwsh -NoLogo -NoProfile -File scripts/gh_create_issues_from_csv_v3.ps1 -Owner revton -Repo car-fuel -CsvPath docs/project/ISSUES.example.csv -DryRun -RequestDelayMs 0
