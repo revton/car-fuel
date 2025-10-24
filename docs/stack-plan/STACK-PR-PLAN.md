@@ -5,8 +5,8 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr68["PR #68
-release: develop → main (wrap v3 + docs)"]
+  pr72["PR #72
+chore(scripts): validate CSV columns + sample"]
 ```
 <!-- stack-pr:end -->
 
