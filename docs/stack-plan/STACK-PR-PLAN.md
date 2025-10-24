@@ -5,8 +5,14 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
+  pr74["PR #74
+ci(scripts): run v3 dry-run against sample CSV"]
+  pr73["PR #73
+docs(readme): quick guide and troubleshooting for scripts"]
   pr72["PR #72
 chore(scripts): validate CSV columns + sample"]
+  pr73 --> pr74
+  pr72 --> pr73
 ```
 <!-- stack-pr:end -->
 
