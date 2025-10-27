@@ -52,3 +52,5 @@ Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
 
 ### Atalho
 - Você pode usar `.\scripts\gh_create_issues_from_csv.ps1` (wrapper) com os mesmos parâmetros do v3 — ele apenas delega para `gh_create_issues_from_csv_v3.ps1`.
+
+- Guia ghstack (PRs empilhadas): `docs/STACK-PR-GHSTACK.md`
