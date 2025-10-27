@@ -2,6 +2,27 @@
 
 Este guia descreve como criar e manter PRs empilhadas usando a ferramenta `ghstack` (https://github.com/ezyang/ghstack) no fluxo deste repositório.
 
+## Cheat Sheet (rápido)
+- Publicar/atualizar a pilha atual: `uvx ghstack`
+- Ajuda/versão: `uvx ghstack --help` • `uvx ghstack --version`
+- Criar pilha 1 → 2 → 3 (base develop):
+  ```bash
+  git checkout develop && git pull
+  git checkout -b feat/part-1
+  # commits...
+  uvx ghstack    # PR1 base develop
+
+  git checkout -b feat/part-2
+  # commits...
+  uvx ghstack    # PR2 base PR1
+
+  git checkout -b feat/part-3
+  # commits...
+  uvx ghstack    # PR3 base PR2
+  ```
+- Rebase/sync após mudanças: `git rebase develop` (ou ajuste commits) → `uvx ghstack`
+- Merge: Squash & merge na ordem PR1 → PR2 → PR3; feche issues via PR de release `develop → main` com “Closes #<id>”.
+
 ## Por que usar ghstack
 - Cria/atualiza automaticamente PRs encadeadas a partir dos commits/branches locais.
 - Reaplica a cadeia após rebase/amend (um único comando).
@@ -76,10 +97,12 @@ Este guia descreve como criar e manter PRs empilhadas usando a ferramenta `ghsta
 - Sincronização com `develop`: rebase a pilha em `develop` e rode `ghstack`.
 - Revisões pequenas: preferir diffs ≤ 300 linhas por PR.
 
-## Troubleshooting
-- Permissão negada: verifique o token salvo no keychain (`ghstack` solicitará novamente se necessário).
-- PRs fora de ordem: rode `ghstack` após ajustar commits/rebase.
-- CI vermelho no `stack-graph`: abra o arquivo `docs/stack-plan/STACK-PR-PLAN.md` para checar se há base incorreta.
+## Pitfalls Comuns
+- Base incorreta na PR: se a base não for o head da PR anterior, rode `git rebase develop` (ou ajuste a cadeia) e `uvx ghstack` para reescrever as bases.
+- Token do GitHub insuficiente: o ghstack requer token com escopo `repo`. Se falhar, gere um novo token e re‑execute `uvx ghstack` (ele salva no keychain).
+- “Closes #…” não fechando issues: apenas PRs que entram na `main` fecham automaticamente. Use “Closes #…” na PR de release `develop → main`.
+- Commit/branch bagunçada: o ghstack opera sobre commits. Mantenha cada patch pequeno (um conjunto lógico) e publique a cadeia com `uvx ghstack`.
+- CI vermelho no `stack-graph`: cheque `docs/stack-plan/STACK-PR-PLAN.md` para identificar um elo fora de ordem; sincronize com `uvx ghstack`.
 
 ## Execução com `uvx` (atalhos úteis)
 - Rodar `ghstack` diretamente:
