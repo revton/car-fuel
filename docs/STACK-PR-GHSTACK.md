@@ -9,9 +9,19 @@ Este guia descreve como criar e manter PRs empilhadas usando a ferramenta `ghsta
 
 ## Pré‑requisitos
 - Git + Python 3.8+
-- Instalação (recomendado via pipx):
-  - `pipx install ghstack`
-  - ou: `pip install --user ghstack`
+- Gerenciador de pacotes: `uv` (padrão neste repo)
+
+### Instalação com `uv` (recomendado)
+- Instale o `uv` (ver instruções oficiais do projeto Astral):
+  - Linux/macOS: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+  - Windows (PowerShell): `iwr https://astral.sh/uv/install.ps1 -UseBasicParsing | iex`
+- Rode ferramentas com `uvx` (sem instalar globalmente):
+  - `uvx ghstack --version`
+- Opcional (instalar como ferramenta):
+  - `uv tool install ghstack`
+
+### Alternativas (se necessário)
+- `pipx install ghstack` ou `pip install --user ghstack`
 - Verifique: `ghstack --version`
 
 ## Autenticação
@@ -70,6 +80,13 @@ Este guia descreve como criar e manter PRs empilhadas usando a ferramenta `ghsta
 - Permissão negada: verifique o token salvo no keychain (`ghstack` solicitará novamente se necessário).
 - PRs fora de ordem: rode `ghstack` após ajustar commits/rebase.
 - CI vermelho no `stack-graph`: abra o arquivo `docs/stack-plan/STACK-PR-PLAN.md` para checar se há base incorreta.
+
+## Execução com `uvx` (atalhos úteis)
+- Rodar `ghstack` diretamente:
+  - `uvx ghstack`
+- Checar versão/ajuda:
+  - `uvx ghstack --version`
+  - `uvx ghstack --help`
 
 ## Referências
 - ghstack: https://github.com/ezyang/ghstack
