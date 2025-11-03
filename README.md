@@ -1,8 +1,8 @@
 # car-fuel
 
-[![Docs Index](https://img.shields.io/badge/Docs-Index-0A84FF)](docs/README.md) [![Diretrizes](https://img.shields.io/badge/Docs-Diretrizes-2E8B57)](docs/DIRETRIZES.md) [![Stack PR](https://img.shields.io/badge/Workflow-Stack__PR-8E44AD)](docs/STACK-PR.md) [![Projects](https://img.shields.io/badge/Gestao-Projects-F39C12)](docs/PROJECTS.md) [![Issue Template](https://img.shields.io/badge/Docs-Issue__Template-95A5A6)](docs/templates/ISSUE_TEMPLATE.md) [![Stack Graph](https://img.shields.io/badge/Docs-Stack__Graph-0A84FF)](docs/stack-plan/STACK-PR-PLAN.md)
+[![Docs Index](https://img.shields.io/badge/Docs-Index-0A84FF)](docs/README.md) [![Diretrizes](https://img.shields.io/badge/Docs-Diretrizes-2E8B57)](docs/DIRETRIZES.md) [![Stack PR](https://img.shields.io/badge/Workflow-Stack__PR-8E44AD)](docs/STACK-PR.md) [![Projects](https://img.shields.io/badge/Gestao-Projects-F39C12)](docs/PROJECTS.md) [![Issue Template](https://img.shields.io/badge/Docs-Issue__Template-95A5A6)](docs/templates/ISSUE_TEMPLATE.md) [![Stack Graph](https://img.shields.io/badge/Docs-Stack__Graph-0A84FF)](docs/stack-plan/STACK-PR-PLAN.md) [![ghstack Guide](https://img.shields.io/badge/Docs-ghstack__Guide-0A84FF)](docs/STACK-PR-GHSTACK.md)
 
-Links rápidos: [Docs](docs/README.md) • [Diretrizes](docs/DIRETRIZES.md) • [Stack PR](docs/STACK-PR.md) • [Projects](docs/PROJECTS.md) • [Issue Template](docs/templates/ISSUE_TEMPLATE.md) • [Stack Graph](docs/stack-plan/STACK-PR-PLAN.md)
+Links rápidos: [Docs](docs/README.md) • [Diretrizes](docs/DIRETRIZES.md) • [Stack PR](docs/STACK-PR.md) • [Projects](docs/PROJECTS.md) • [Issue Template](docs/templates/ISSUE_TEMPLATE.md) • [Stack Graph](docs/stack-plan/STACK-PR-PLAN.md) • [ghstack Guide](docs/STACK-PR-GHSTACK.md)
 
 Índice da documentação: veja `docs/README.md`.
 Guia de PRs empilhados (stack-pr): veja `docs/STACK-PR.md`.
