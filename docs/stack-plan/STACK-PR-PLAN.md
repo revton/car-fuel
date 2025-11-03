@@ -5,8 +5,6 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr75["PR #75
-docs(ghstack): add guide for stacked PRs (ghstack)"]
   pr74["PR #74
 ci(scripts): run v3 dry-run against sample CSV"]
   pr73["PR #73
