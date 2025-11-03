@@ -55,3 +55,5 @@ Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
 
 #### CSV de exemplo
 - Um arquivo de exemplo está disponível em `docs/project/ISSUES.example.csv` (UTF-8). Copie/ajuste e preencha a coluna `Key` automaticamente com o script.
+
+- Guia ghstack (PRs empilhadas): `docs/STACK-PR-GHSTACK.md`
