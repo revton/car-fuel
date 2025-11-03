@@ -21,3 +21,4 @@ jobs:
       - name: Check ghstack with uvx
         run: |
           uvx ghstack --version
+          uvx ghstack --help > /dev/null
