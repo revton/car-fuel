@@ -115,3 +115,41 @@ Este guia descreve como criar e manter PRs empilhadas usando a ferramenta `ghsta
 - ghstack: https://github.com/ezyang/ghstack
 - Diagrama de pilha (Mermaid): `docs/stack-plan/STACK-PR-PLAN.md`
 - Workflows: `.github/workflows/stack-graph.yml`, `.github/workflows/stack-pr-body.yml`
+
+## Conversão de cadeia existente (exemplo prático)
+Quando já existem PRs filhas abertas e você quer migrar para o ghstack, reempilhe os patches como commits em uma única branch e publique a pilha.
+
+1) Criar branch de stack e trazer os patches como commits
+```
+# Baseie-se em develop
+git checkout develop && git pull
+git checkout -b stack/fase3
+
+# Commit 1 (ex.: docs quick guide)
+git merge --squash origin/docs/70-scripts-guide-troubleshooting
+git commit -m "docs(readme): quick guide and troubleshooting for scripts"
+
+# Commit 2 (ex.: CI dry-run)
+git merge --squash origin/ci/71-dryrun-v3-sample
+git commit -m "ci(scripts): run v3 dry-run against sample CSV"
+```
+
+2) Publicar somente os commits da pilha com base em `develop`
+```
+# Recomendado: usar Python 3.11 (uvx) para evitar avisos do asyncio
+uvx --python 3.11 ghstack submit -B develop --stack HEAD~2..HEAD --no-skip
+```
+
+3) Fechar PRs antigas
+a) Feche as PRs antigas como “Superseded by #<nova_base> / #<nova_topo>”.
+b) A partir de agora, use `uvx ghstack` para atualizar a pilha (rebase/sync).
+
+### Landing (opcional)
+Quando todas as PRs da pilha estiverem verdes e aprovadas:
+```
+uvx --python 3.11 ghstack land
+```
+Requisitos:
+- Checks verdes e sem conflitos
+- Permissões de merge no repositório
+- Política do time: confirmar se o uso de “land” está alinhado (Squash & merge é o padrão deste repo)
