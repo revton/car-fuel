@@ -5,7 +5,8 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  Empty["No open PRs"]
+  pr95["PR #95
+release: develop → main (Fase 3 via ghstack)"]
 ```
 <!-- stack-pr:end -->
 
