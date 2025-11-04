@@ -70,3 +70,5 @@ Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
 - Duplicação de issues: o v3 evita duplicar por título normalizado/canônico e tenta detectar por caminho `docs/...` no corpo; use `Key` para travar linhas já migradas
 - Rate limit: ajuste `-RequestDelayMs` (ex.: 200ms)
 - Ambiente Linux no CI: use `pwsh` (PowerShell 7) para executar scripts `.ps1`
+
+- Guia ghstack (PRs empilhadas): `docs/STACK-PR-GHSTACK.md`

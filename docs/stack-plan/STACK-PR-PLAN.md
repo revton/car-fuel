@@ -20,4 +20,3 @@ chore(scripts): validate CSV columns + sample"]
 - A cadeia é inferida quando a `base` de uma PR é exatamente o `head` de outra PR (PRs empilhadas).
 - Mantenha no corpo das PRs: `Depends on #<PR>` para ajudar a navegação.
 - Ordem de merge: base → topo da pilha; usar "Squash and merge".
-
