@@ -1,0 +1,3 @@
+Title,Body,Labels,Key
+"Docs: Exemplo de Issue","Documento: `docs/README.md`. Aceite: exemplo de uso do script.","type:docs,area:docs,status:todo,priority:P3",
+"Chore: Ajustar fluxo de PR","Ajustar mensagens e verificar checks no Stack Graph.","type:chore,area:repo,status:todo,priority:P3",
