@@ -1,0 +1,109 @@
+name: stack-pr-body
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update PR body with Stack section
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = context.payload.pull_request?.number;
+            if (!prNumber) {
+              throw new Error('No pull_request in context');
+            }
+
+            async function getOpenPRs(){
+              const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', per_page: 100 });
+              return prs.map(pr => ({
+                number: pr.number,
+                title: pr.title,
+                head: pr.head.ref,
+                headRepo: pr.head.repo?.full_name || `${owner}/${repo}`,
+                base: pr.base.ref,
+                baseRepo: pr.base.repo?.full_name || `${owner}/${repo}`,
+              }));
+            }
+
+            function headKey(p){ return `${p.headRepo}:${p.head}`; }
+            function baseKey(p){ return `${p.baseRepo}:${p.base}`; }
+
+            function computeRelations(prs, current){
+              const byHead = new Map(prs.map(p => [headKey(p), p]));
+              const parentKey = `${owner}/${repo}:${current.base}`;
+              const parent = byHead.get(parentKey) || null;
+              const wantChildBase = `${owner}/${repo}:${current.head}`;
+              const children = prs
+                .filter(p => baseKey(p) === wantChildBase)
+                .sort((a,b)=>a.number-b.number);
+              return { parent, children };
+            }
+
+            function buildChain(prs, current){
+              const byHead = new Map(prs.map(p => [headKey(p), p]));
+              const byBase = prs.reduce((m,p)=>{
+                const k = baseKey(p);
+                if(!m.has(k)) m.set(k, []);
+                m.get(k).push(p);
+                return m;
+              }, new Map());
+              // climb to root within this repo
+              let root = current;
+              while (byHead.get(`${owner}/${repo}:${root.base}`)) {
+                root = byHead.get(`${owner}/${repo}:${root.base}`);
+              }
+              // descend picking smallest PR number child deterministically
+              const path = [root];
+              let cursor = root;
+              const guard = new Set([cursor.number]);
+              while (true){
+                const kids = (byBase.get(`${owner}/${repo}:${cursor.head}`) || []).slice().sort((a,b)=>a.number-b.number);
+                if (kids.length === 0) break;
+                const next = kids[0];
+                if (guard.has(next.number)) break;
+                guard.add(next.number);
+                path.push(next);
+                cursor = next;
+              }
+              return path.map(p => `#${p.number}`).join(' → ');
+            }
+
+            const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+            const current = { number: pr.number, title: pr.title, head: pr.head.ref, base: pr.base.ref };
+            const prs = await getOpenPRs();
+            const { parent, children } = computeRelations(prs, current);
+            const parentStr = parent ? `#${parent.number}` : current.base;
+            const nextStr = children.length ? children.map(c => `#${c.number}`).join(', ') : '(topo)';
+            const chainStr = buildChain(prs, current);
+
+            const begin = '<!-- stack-section:begin -->';
+            const end = '<!-- stack-section:end -->';
+
+            let body = pr.body || '';
+            // sanitize literal \n sequences to real newlines
+            body = body.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n');
+            // Strip existing section by markers
+            const beginIdx = body.indexOf(begin);
+            const endIdx = body.indexOf(end);
+            if (beginIdx !== -1 && endIdx !== -1 && endIdx > beginIdx){
+              body = body.slice(0, beginIdx) + body.slice(endIdx + end.length);
+            }
+
+            const section = `${begin}\n## Pilha\n- Pai: ${parentStr}\n- Próxima: ${nextStr}\n- Cadeia: ${chainStr}\n${end}`;
+            const newBody = `${section}\n\n${body.trim()}`.trim() + '\n';
+
+            if (newBody !== (pr.body || '')){
+              await github.rest.issues.update({ owner, repo, issue_number: prNumber, body: newBody });
+            }
