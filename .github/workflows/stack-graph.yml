@@ -1,0 +1,102 @@
+name: stack-graph
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build stack graph (Mermaid)
+        id: build
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            async function listOpenPRs(page=1, per_page=100) {
+              const prs = await github.rest.pulls.list({ owner, repo, state: 'open', per_page, page });
+              return prs.data.map(pr => ({
+                number: pr.number,
+                title: pr.title,
+                head: pr.head.ref,
+                base: pr.base.ref,
+                html_url: pr.html_url,
+              }));
+            }
+
+            async function getAllOpenPRs() {
+              let all = [];
+              for (let page=1; page<=10; page++) {
+                const pageItems = await listOpenPRs(page);
+                if (!pageItems.length) break;
+                all = all.concat(pageItems);
+                if (pageItems.length < 100) break;
+              }
+              return all;
+            }
+
+            function buildGraph(prs){
+              const edges = [];
+              for (const p of prs){
+                const parent = prs.find(x => x.head === p.base);
+                if (parent){ edges.push({ from: parent, to: p }); }
+              }
+              const lines = [ 'flowchart TD' ];
+              for (const p of prs){
+                const label = `PR #${p.number}`.replace('"','\\"');
+                lines.push(`  pr${p.number}["${label}\n${p.title.replace(/"/g,'\\"')}"]`);
+              }
+              for (const e of edges){ lines.push(`  pr${e.from.number} --> pr${e.to.number}`); }
+              if (prs.length === 0){ lines.push('  Empty["No open PRs"]'); }
+              return '```mermaid\n' + lines.join('\n') + '\n```';
+            }
+
+            const filePath = path.join(process.cwd(), 'docs/stack-plan/STACK-PR-PLAN.md');
+            const begin = '<!-- stack-pr:begin -->';
+            const end = '<!-- stack-pr:end -->';
+
+            const prs = await getAllOpenPRs();
+            const mermaid = buildGraph(prs);
+
+            let content = fs.readFileSync(filePath, 'utf8');
+            const startIdx = content.indexOf(begin);
+            const endIdx = content.indexOf(end);
+            if (startIdx === -1 || endIdx === -1 || endIdx < startIdx){
+              core.setFailed('Markers not found in STACK-PR-PLAN.md');
+              return;
+            }
+            const before = content.slice(0, startIdx + begin.length);
+            const after = content.slice(endIdx);
+            const newContent = before + '\n' + mermaid + '\n' + after;
+            if (newContent !== content){ fs.writeFileSync(filePath, newContent, 'utf8'); }
+            core.setOutput('changed', String(newContent !== content));
+
+      - name: Commit changes (if any)
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- docs/stack-plan/STACK-PR-PLAN.md; then
+            echo "No changes to commit";
+            exit 0;
+          fi
+          git add docs/stack-plan/STACK-PR-PLAN.md
+          git commit -m "docs(stack): update Mermaid stack graph"
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          git push origin HEAD:"$BRANCH"
