@@ -10,6 +10,10 @@ ci(scripts): run v3 dry-run against sample CSV"]
   pr73["PR #73
 docs(readme): quick guide and troubleshooting for scripts"]
   pr73 --> pr74
+  pr72["PR #72
+chore(scripts): validate CSV columns + sample"]
+  pr73 --> pr74
+  pr72 --> pr73
 ```
 <!-- stack-pr:end -->
 
