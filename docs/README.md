@@ -56,4 +56,19 @@ Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
 #### CSV de exemplo
 - Um arquivo de exemplo está disponível em `docs/project/ISSUES.example.csv` (UTF-8). Copie/ajuste e preencha a coluna `Key` automaticamente com o script.
 
+## Guia Rápido (scripts)
+- Criar issues (sem Projects):
+  - `.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo>`
+- Adicionar ao Projects v2:
+  - `.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo> -AddToProject -ProjectOwner <owner> -ProjectNumber <num>`
+- Dry‑run (sem criar) e ritmo:
+  - `.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo> -DryRun -RequestDelayMs 200`
+
+## Troubleshooting
+- `gh` não autenticado: rode `gh auth login` (o script apenas alerta e prossegue; no Dry‑run evita POST/labels)
+- CSV inválido (faltando colunas): ver `docs/project/ISSUES.example.csv` e garanta `Title,Body,Labels,Key`
+- Duplicação de issues: o v3 evita duplicar por título normalizado/canônico e tenta detectar por caminho `docs/...` no corpo; use `Key` para travar linhas já migradas
+- Rate limit: ajuste `-RequestDelayMs` (ex.: 200ms)
+- Ambiente Linux no CI: use `pwsh` (PowerShell 7) para executar scripts `.ps1`
+
 - Guia ghstack (PRs empilhadas): `docs/STACK-PR-GHSTACK.md`
