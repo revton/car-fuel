@@ -1,0 +1,51 @@
+# Documentação — Car Fuel
+
+Índice e notas rápidas para uso dos utilitários do repositório.
+
+## Stack Graph (PRs Empilhadas)
+- Visualização (Mermaid): `docs/stack-plan/STACK-PR-PLAN.md`
+- Workflows ativos: `stack-graph.yml` (gera o diagrama) e `stack-pr-body.yml` (seção “Pilha” no body da PR).
+
+## Criar Issues a partir de CSV (gh CLI)
+
+- Script: `scripts/gh_create_issues_from_csv_v3.ps1`
+- Pré‑requisitos:
+  - Windows PowerShell 5.1+ ou PowerShell 7+
+  - GitHub CLI (`gh`) instalado e autenticado (`gh auth status`)
+- CSV esperado (UTF‑8): colunas `Title,Body,Labels,Key`
+  - `Key` é preenchida automaticamente com o número da issue criada/encontrada
+  - Caminho padrão: `docs/project/ISSUES.csv` (pode alterar com `-CsvPath`)
+
+Exemplos (PowerShell):
+
+1) Criar issues (sem Projects):
+```
+.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo>
+```
+
+2) Criar issues e adicionar ao Projects v2:
+```
+.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo> -AddToProject -ProjectOwner <owner> -ProjectNumber <num>
+```
+
+3) Simular sem criar (dry‑run) e controlar ritmo:
+```
+.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo> -DryRun -RequestDelayMs 200
+```
+
+Comportamento importante:
+- Deduplicação:
+  - Evita duplicar issues ABERTAS comparando título (normalizado/canônico)
+  - Tenta identificar duplicata por caminho de doc referenciado no corpo (ex.: `docs/...`)
+  - Faz uma busca de fallback (`search/issues`) com o título
+- Labels: garante existência/atualização de cor de labels comuns (idempotente)
+- Coluna `Key`:
+  - Se preenchida no CSV, a linha é ignorada
+  - Ao criar/associar, grava o número e reescreve o CSV
+
+Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
+- Sem extração de caminho de doc; usa índices de título (normalizado/canônico) + busca
+
+## Observações
+- Para fechar issues automaticamente, inclua `Closes #<id>` nas PRs que entram na branch padrão (`main`).
+- O diagrama Mermaid mostra apenas PRs abertas.
