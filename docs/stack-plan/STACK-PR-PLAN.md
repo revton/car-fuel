@@ -5,6 +5,42 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
+  pr93["PR #93
+ci(scripts): run v3 dry-run against sample CSV"]
+  pr92["PR #92
+docs(readme): quick guide and troubleshooting for scripts"]
+  pr91["PR #91
+docs(stack): update Mermaid stack graph"]
+  pr90["PR #90
+chore(scripts): add v3 wrapper gh_create_issues_from_csv.ps1 (#67)"]
+  pr89["PR #89
+docs(plan): marcar #43 como concluída (PR #65)"]
+  pr88["PR #88
+docs(stack): update Mermaid stack graph"]
+  pr87["PR #87
+docs(readme): update scripts usage and notes (#65)"]
+  pr86["PR #86
+docs(stack): update Mermaid stack graph"]
+  pr85["PR #85
+ci: remove legacy stack-pr placeholder workflow (#63)"]
+  pr84["PR #84
+docs(stack): update Mermaid stack graph"]
+  pr83["PR #83
+chore(infra): fix docs/readme encoding (#60)"]
+  pr82["PR #82
+docs(stack): update Mermaid stack graph"]
+  pr81["PR #81
+chore(gh-script): ensure label idempotent (#59)"]
+  pr80["PR #80
+docs(stack): update Mermaid stack graph"]
+  pr79["PR #79
+chore(gh-script): fix quoting in search query (#58)"]
+  pr78["PR #78
+docs(stack): update Mermaid stack graph"]
+  pr77["PR #77
+docs(stack): add Stack PR visualization (Mermaid + workflow) (#61)"]
+  pr76["PR #76
+ci(stack): auto-update Stack section in PR bodies (#62)"]
   pr74["PR #74
 ci(scripts): run v3 dry-run against sample CSV"]
   pr73["PR #73
