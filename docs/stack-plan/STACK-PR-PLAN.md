@@ -5,8 +5,7 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr67["PR #67
-chore(scripts): add v3 wrapper gh_create_issues_from_csv.ps1"]
+  Empty["No open PRs"]
 ```
 <!-- stack-pr:end -->
 
