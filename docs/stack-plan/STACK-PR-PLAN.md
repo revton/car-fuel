@@ -7,9 +7,6 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 flowchart TD
   pr60["PR #60
 chore(infra): fix docs/readme encoding"]
-  pr59["PR #59
-chore(gh-script): ensure label idempotent"]
-  pr59 --> pr60
 ```
 <!-- stack-pr:end -->
 
