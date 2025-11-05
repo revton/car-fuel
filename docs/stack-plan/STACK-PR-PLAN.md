@@ -5,7 +5,8 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  Empty["No open PRs"]
+  pr97["PR #97
+docs(plan): add Próximas Fases (Fase 4/5)"]
 ```
 <!-- stack-pr:end -->
 
