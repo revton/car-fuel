@@ -5,11 +5,7 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr74["PR #74
-ci(scripts): run v3 dry-run against sample CSV"]
-  pr73["PR #73
-docs(readme): quick guide and troubleshooting for scripts"]
-  pr73 --> pr74
+  Empty["No open PRs"]
 ```
 <!-- stack-pr:end -->
 
