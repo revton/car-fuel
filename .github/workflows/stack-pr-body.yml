@@ -22,10 +22,12 @@ jobs:
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const prNumber = context.payload.pull_request?.number;
-            if (!prNumber) {
-              throw new Error('No pull_request in context');
+            const ev = context.eventName || (process.env['GITHUB_EVENT_NAME'] || '');
+            if (ev !== 'pull_request' || !context.payload.pull_request) {
+              core.notice();
+              return;
             }
+            const prNumber = context.payload.pull_request.number;
 
             async function getOpenPRs(){
               const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', per_page: 100 });
