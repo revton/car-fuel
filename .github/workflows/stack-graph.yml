@@ -88,7 +88,8 @@ jobs:
             core.setOutput('changed', String(newContent !== content));
 
       - name: Commit changes (if any)
-        if: github.event_name != 'pull_request'
+        # Do not attempt to push to protected main; still run on other branches
+        if: github.event_name == 'push' && github.ref != 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
