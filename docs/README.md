@@ -6,6 +6,9 @@
 - Visualização (Mermaid): `docs/stack-plan/STACK-PR-PLAN.md`
 - Workflows ativos: `stack-graph.yml` (gera o diagrama) e `stack-pr-body.yml` (seção “Pilha” no body da PR).
 
+## Diretrizes de Desenvolvimento
+- Guia principal: `docs/DIRETRIZES.md`
+
 ## Criar Issues a partir de CSV (gh CLI)
 
 - Script: `scripts/gh_create_issues_from_csv_v3.ps1`
