@@ -14,7 +14,7 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 
 ## Qualidade de Código
 - Mensagens de commit em Conventional Commits (ex.: `feat:`, `fix:`, `docs:`, `ci:`, `chore:`).
-- Revisões via PR obrigatórias; 1+ aprovação e histórico linear.
+- Revisões via PR: recomendadas. Em repositório de único mantenedor, não exigir aprovação de terceiros; usar checks obrigatórios (status checks) e checklist da PR. Com 2+ revisores, exigir ≥1 aprovação (e opcionalmente CODEOWNERS).
 - Testes: foco em unidades críticas e integrações mínimas; automação em CI quando aplicável.
 
 ## CI/CD
@@ -49,4 +49,3 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 3. Publique PR para `main` (ou uma pilha com `ghstack` quando houver dependências).
 4. Aguarde checks verdes e review; faça Squash and merge.
 5. Issues fecham automaticamente se a PR contiver `Closes #<id>`.
-
