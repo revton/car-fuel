@@ -5,10 +5,13 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr98["PR #98
-ci(stack-pr-body): skip on push to main (no-op)"]
-  pr97["PR #97
-docs(plan): add Próximas Fases (Fase 4/5)"]
+  pr102["PR #102
+docs(processo): política de revisão e template de PR (Fase 4)"]
+  pr101["PR #101
+docs(projects): guia Projects v2 (Fase 4)"]
+  pr100["PR #100
+docs(diretrizes): guia de desenvolvimento inicial"]
+  pr101 --> pr102
 ```
 <!-- stack-pr:end -->
 
