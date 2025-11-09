@@ -44,8 +44,10 @@ Checklist (concluído)
 - Para auto‑fechamento de issues, usar `Closes #<id>` em PRs para a branch padrão (`main`).
 
 ## Próximas Fases
-- Fase 4 — Gestão (Projects/Processo) [type:process, area:mgmt, priority:P2, status:todo]
-  - Definir Project v2 com colunas (Backlog, In Progress, Review, Done)
-  - Políticas de review (SLA, 1+ aprovação), etiquetação e DoD
+- Fase 4 — Gestão (Projects/Processo) [type:process, area:mgmt, priority:P2, status:in-progress]
+  - Projects v2 (guia): ver `docs/PROJECTS.md`
+  - Processo/Política: ver `docs/PROCESSO.md` e `docs/DIRETRIZES.md`
+  - Template de PR com checklist (ver `.github/pull_request_template.md`)
+  - Automação de movimento no Project (opcional via Actions)
 - Fase 5 — Outros [type:misc, area:repo, priority:P3, status:todo]
   - Itens diversos de melhoria contínua
