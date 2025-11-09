@@ -5,18 +5,8 @@ Este arquivo é atualizado automaticamente para refletir as PRs abertas e suas d
 <!-- stack-pr:begin -->
 ```mermaid
 flowchart TD
-  pr105["PR #105
-docs(processo): política para revisão/merge e template de PR (Fase 4)"]
-  pr104["PR #104
-docs(projects): guia Projects v2 (Fase 4)"]
-  pr103["PR #103
-docs(plan): detalhar Fase 4 (Projects, Processo, Template)"]
-  pr102["PR #102
-docs(processo): política de revisão e template de PR (Fase 4)"]
-  pr101["PR #101
-docs(projects): guia Projects v2 (Fase 4)"]
-  pr102 --> pr103
-  pr101 --> pr102
+  pr100["PR #100
+docs(diretrizes): guia de desenvolvimento inicial"]
 ```
 <!-- stack-pr:end -->
 
