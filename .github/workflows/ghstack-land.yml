@@ -1,0 +1,68 @@
+name: ghstack-land
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Top PR number to land (ghstack stack)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  land:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify secret available
+        shell: bash
+        run: |
+          if [ -z "${GHSTACK_TOKEN}" ]; then
+            echo "GHSTACK_TOKEN secret is missing. Add it in Settings → Secrets and variables → Actions." >&2
+            exit 1
+          fi
+        env:
+          GHSTACK_TOKEN: ${{ secrets.GHSTACK_TOKEN }}
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Ensure origin URL has no .git suffix for ghstack
+          git remote set-url origin "https://github.com/${GITHUB_REPOSITORY}"
+
+      - name: Write ~/.ghstackrc
+        shell: bash
+        run: |
+          cat > "$HOME/.ghstackrc" <<EOF
+          [ghstack]
+          github_url = github.com
+          github_oauth = ${GHSTACK_TOKEN}
+          github_username = ${GITHUB_ACTOR}
+          remote_name = origin
+          EOF
+        env:
+          GHSTACK_TOKEN: ${{ secrets.GHSTACK_TOKEN }}
+
+      - name: Land stack (ghstack)
+        env:
+          GHSTACK_TOKEN: ${{ secrets.GHSTACK_TOKEN }}
+        run: |
+          set -euxo pipefail
+          uvx --python 3.11 ghstack --version
+          uvx --python 3.11 ghstack land ${{ inputs.pr }}
+
