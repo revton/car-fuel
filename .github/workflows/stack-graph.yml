@@ -89,7 +89,10 @@ jobs:
 
       - name: Commit changes (if any)
         # Do not attempt to push to protected main, and skip ghstack synthetic branches
-        if: github.event_name == 'push' && github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/gh/')
+        if: >-
+          ${ { github.event_name == 'push' &&
+                github.ref != 'refs/heads/main' &&
+                !startsWith(github.ref, 'refs/heads/gh/') } }
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
