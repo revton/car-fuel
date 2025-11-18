@@ -46,5 +46,11 @@ Checklist (concluído)
 ## Próximas Fases
 - Fase 4 — Gestão (Projects/Processo) [type:process, area:mgmt, priority:P2, status:done] — release #109
   - Entregues: `docs/PROJECTS.md`, `docs/PROCESSO.md`, `.github/pull_request_template.md`, Fase 4 no PHASE_PLAN.
-- Fase 5 — Outros [type:misc, area:repo, priority:P3, status:todo]
-  - Definir backlog de melhorias contínuas e próximas automações.
+- Fase 5 — Outros [type:misc, area:repo, priority:P3, status:in_progress]
+  - Backlog priorizado registrado em `docs/project/ISSUES.csv` e no Project “Car Fuel — Gestão” (coluna Backlog). Cada item já está etiquetado com `type/area/priority/status` para seguir o fluxo Backlog → In Progress → Review → Done.
+  - Ordem atual das entregas (Fase 5):
+    1. **Chore: script v3 seta campos do Project ao criar issue** — permitir mapear labels → campos personalizados do Project durante a criação das issues (P1, área repo, status:todo).
+    2. **Chore: sync CSV ↔ issues para atualizar Key/status** — script de reconciliação para manter `docs/project/ISSUES.csv` alinhado ao estado real das issues (P2, área repo, status:todo).
+    3. **Docs: guia operacional do Project (Fase 5)** — playbook detalhado e checklist semanal para o Project, expandindo `docs/PROJECTS.md` (P2, área docs, status:todo).
+    4. **Docs: troubleshooting dos scripts gh_create_issues** — adicionar seção dedicada em `docs/README.md` com erros frequentes e correções (P3, área docs, status:todo).
+  - Após cada entrega, atualizar este plano indicando release e referência de PR/issue fechada.
