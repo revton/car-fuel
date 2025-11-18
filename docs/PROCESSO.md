@@ -12,3 +12,4 @@
 ## Projects v2
 - Colunas: Backlog → In Progress → Review → Done.
 - Automação: mover para Review na abertura de PR e para Done no merge.
+- Backlog atual (Fase 5): itens priorizados em `docs/project/ISSUES.csv` foram adicionados ao Project “Car Fuel — Gestão” na coluna Backlog e devem seguir o fluxo acima (um card por issue, linkando PRs com `Closes #<id>`).
