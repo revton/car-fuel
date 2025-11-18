@@ -1,6 +1,6 @@
 # Plano por Fases — revton/car-fuel
 
-Atualizado: Fase 0 em `main` (release #64) e Fase 3 finalizada em `main` (release #95). Política atual: ramo único `main`.
+Atualizado: Fase 0 em `main` (release #64), Fase 3 em `main` (release #95) e Fase 4 em `main` (release #109). Política atual: ramo único `main`.
 
 ## Fase 0 — Higienização (infra, duplicatas, encoding)
 - #41 Chore: gh script — corrigir aspas na busca (Find-IssueByTitle) [priority:P3, type:chore, area:repo, status:done] — PRs: #58 (merged)
@@ -15,8 +15,8 @@ Checklist (concluído)
 - Release: `develop` → `main` (merged) — fecha automaticamente #41, #42, #19
 
 ## Fase 1 — CI e Stack PR (concluída)
-- Stack Graph (Mermaid) e Stack PR Body (seção "Pilha" na PR) ativos em `.github/workflows/stack-graph.yml` e `.github/workflows/stack-pr-body.yml`.
-- Badge no `README.md` e link em `docs/README.md` para o diagrama: `docs/stack-plan/STACK-PR-PLAN.md`.
+- Stack PR Body ativo em `.github/workflows/stack-pr-body.yml`.
+- Stack Graph/arquivo Mermaid foram descontinuados para evitar conflitos de land.
 
 ## Fase 2 — Documentação (concluída)
 - #43 Docs: README — instruções para executar scripts de issues [type:docs, area:docs, priority:P3, status:done] — PR: #65 (merged)
@@ -40,14 +40,11 @@ Checklist (concluído)
 - Fechamento automático de issues: usar “Closes #<id>” nas PRs para `main`
 
 ## Observações
-- O diagrama Mermaid (Stack Graph) mostra somente PRs abertas; após a Fase 0, ele poderá aparecer como "No open PRs".
+- Stack Graph (Mermaid) removido; priorizar ghstack para pilhas e o body das PRs.
 - Para auto‑fechamento de issues, usar `Closes #<id>` em PRs para a branch padrão (`main`).
 
 ## Próximas Fases
-- Fase 4 — Gestão (Projects/Processo) [type:process, area:mgmt, priority:P2, status:in-progress]
-  - Projects v2 (guia): ver `docs/PROJECTS.md`
-  - Processo/Política: ver `docs/PROCESSO.md` e `docs/DIRETRIZES.md`
-  - Template de PR com checklist (ver `.github/pull_request_template.md`)
-  - Automação de movimento no Project (opcional via Actions)
+- Fase 4 — Gestão (Projects/Processo) [type:process, area:mgmt, priority:P2, status:done] — release #109
+  - Entregues: `docs/PROJECTS.md`, `docs/PROCESSO.md`, `.github/pull_request_template.md`, Fase 4 no PHASE_PLAN.
 - Fase 5 — Outros [type:misc, area:repo, priority:P3, status:todo]
-  - Itens diversos de melhoria contínua
+  - Definir backlog de melhorias contínuas e próximas automações.

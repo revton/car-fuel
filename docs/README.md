@@ -2,10 +2,6 @@
 
 Índice e notas rápidas para uso dos utilitários do repositório.
 
-## Stack Graph (PRs Empilhadas)
-- Visualização (Mermaid): `docs/stack-plan/STACK-PR-PLAN.md`
-- Workflows ativos: `stack-graph.yml` (gera o diagrama) e `stack-pr-body.yml` (seção “Pilha” no body da PR).
-
 ## Diretrizes de Desenvolvimento
 - Guia principal: `docs/DIRETRIZES.md`
 
