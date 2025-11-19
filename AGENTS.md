@@ -22,8 +22,7 @@ Este repositório usa ghstack como fluxo padrão para PRs empilhadas. Quando est
 - O antigo stack-graph foi removido; não recrie o Mermaid (`docs/stack-plan/STACK-PR-PLAN.md` não existe).
 
 ## Scripts e automações
-- Scripts PowerShell estão em `scripts/`; use `docs/README.md` para exemplos (CSV -> issues).
-- Para gerar issues a partir de CSV, siga `docs/README.md` e `docs/DIRETRIZES.md`.
+- Scripts PowerShell estão em `scripts/`; veja `docs/README.md` para exemplos gerais.
 
 ## Ao atualizar documentação/Fases
 - Registre estados em `docs/project/PHASE_PLAN.md` (inclua releases, fases concluídas e observações).
