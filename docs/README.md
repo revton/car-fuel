@@ -27,6 +27,8 @@ Se estiver usando um agente (Codex, etc.), veja também `AGENTS.md` para context
 - `docs/PROCESSO.md` — processo de trabalho (revisões, merges, uso de Issues/PRs, Projects v2).
 - `docs/PROJECTS.md` — guia do GitHub Projects v2 (colunas, campos, views e fluxo backlog→merge).
 - `docs/STACK-PR-GHSTACK.md` — guia de Stack PR com ghstack (pilhas baseadas em `main` + workflow `ghstack-land`).
+- `docs/guides/README.md` — índice de guias de estudo (passo a passo de implementações e fases).
+- `docs/guides/FASE5-BACKEND-MVP.md` — guia de estudo da Fase 5 (Backend MVP) — rascunho a ser preenchido durante a implementação.
 - `docs/project/PHASE_PLAN.md` — plano por fases, releases e governança de branch.
 - `docs/project/ISSUES.csv` — backlog estruturado usado como referência para criação/priorização de Issues.
  - `docs/templates/ISSUE_TEMPLATE.md` — modelo de issue alinhado aos campos do Project v2 (tipo, prioridade, módulo, OpenAPI?, ADR?).
