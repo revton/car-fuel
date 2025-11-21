@@ -10,6 +10,7 @@ Este repositório usa ghstack como fluxo padrão para PRs empilhadas. Quando est
 - `docs/project/PHASE_PLAN.md`: estado macro das fases. Atualize sempre que uma fase fechar ou iniciar.
 - `.github/pull_request_template.md`: checklist exigido; mantenha a estrutura nos PRs.
 - `.github/workflows/ghstack-land.yml`: workflow manual para `ghstack land`. Exige o secret `GHSTACK_TOKEN` com escopo `repo`.
+- `docs/API_STYLE.md`: convenções de API HTTP (versionamento, recursos, códigos, paginação, headers, segurança, depreciação, convenções e linters). Use sempre que houver rotas/contratos de API.
 
 ## ghstack (stacks de PR)
 1. Faça commits na `main` (branch única).

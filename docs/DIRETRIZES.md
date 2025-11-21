@@ -8,9 +8,10 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 - Observabilidade como requisito: logs estruturados, métricas e rastreabilidade em operações críticas.
 
 ## Padrões de API (quando houver backend)
-- REST pragmático, versionamento no caminho (ex.: `/v1/...`) ou via header.
+- REST pragmático, versionamento no caminho (ex.: `/v1/...`).
 - Respostas consistentes de erro (código, mensagem, detalhes), com correlação de requisições.
 - Idempotência em operações sensíveis; validações e mensagens claras.
+- Detalhamento adicional em `docs/API_STYLE.md` (recursos, códigos, paginação, headers, segurança, depreciação, convenções e linters).
 
 ## Qualidade de Código
 - Mensagens de commit em Conventional Commits (ex.: `feat:`, `fix:`, `docs:`, `ci:`, `chore:`).
