@@ -60,8 +60,13 @@ uvx --python 3.11 ghstack                  # PR3 base PR2
 - Branch base da pilha: `main`.
 - Visualização e verificação:
   - Seção “Pilha” no topo do body da PR (workflow `.github/workflows/stack-pr-body.yml`).
+  - O mesmo workflow também preenche uma seção “Issues” com linhas `Closes #<id>` derivadas:
+    - do nome da branch (qualquer número que apareça no nome da branch, ex.: `adr/129-backend-stack`);
+    - e/ou do título da PR (padrões como `Closes #129`, `Fixes #129`, `Resolves #129`).
   - Checks obrigatórios na `main`: `update`, `validate`.
-- Fechamento de issues: ocorre quando a PR (ou PR de release) entra em `main` com `Closes #<id>`.
+- Fechamento de issues:
+  - Ocorre quando a PR (ou PR de release) entra em `main` com `Closes #<id>` no body.
+  - Para facilitar, use nomes de branch que incluam o número da issue (ex.: `adr/129-backend-stack`, `133-vehicles-endpoints`) e, opcionalmente, mantenha `Closes #<id>` no título da PR/commit.
 
 ## Fluxo de trabalho (exemplo)
 
