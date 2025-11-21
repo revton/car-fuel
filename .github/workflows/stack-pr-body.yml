@@ -84,23 +84,12 @@ jobs:
               return path.map(p => `#${p.number}`).join(' -> ');
             }
 
-            function extractIssueNumbers(pr, rawBody){
+            function extractIssueNumbers(pr, sectionText){
               const numbers = new Set();
-              const ref = pr.head.ref || '';
               const title = pr.title || '';
-              const body = rawBody || '';
+              const section = sectionText || '';
 
-              // 1) Numbers in branch name (e.g., adr/129-backend-stack -> 129)
-              //    Ignore internal ghstack branches (gh/<user>/<id>/head)
-              if (!ref.startsWith('gh/')) {
-                const branchMatches = ref.match(/\b(\d{1,5})\b/g) || [];
-                for (const raw of branchMatches){
-                  const n = parseInt(raw, 10);
-                  if (!Number.isNaN(n)) numbers.add(n);
-                }
-              }
-
-              // 2) Explicit patterns in title/body (Closes #123, Fixes #123, Resolves #123)
+              // Explicit patterns in title/Issues section (Closes #123, Fixes #123, Resolves #123)
               const patterns = [
                 /Closes\s*#(\d+)/ig,
                 /Fixes\s*#(\d+)/ig,
@@ -118,7 +107,7 @@ jobs:
               }
 
               addFrom(title);
-              addFrom(body);
+              addFrom(section);
 
               return Array.from(numbers).sort((a,b)=>a-b);
             }
@@ -137,14 +126,17 @@ jobs:
             let body = pr.body || '';
             // sanitize literal \n sequences to real newlines
             body = body.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n');
-            // Strip existing section by markers
+
+            // Capture existing stack section (to preservar Issues já conhecidos)
             const beginIdx = body.indexOf(begin);
             const endIdx = body.indexOf(end);
+            let previousSection = '';
             if (beginIdx !== -1 && endIdx !== -1 && endIdx > beginIdx){
+              previousSection = body.slice(beginIdx, endIdx + end.length);
               body = body.slice(0, beginIdx) + body.slice(endIdx + end.length);
             }
 
-            const issues = extractIssueNumbers(pr, body);
+            const issues = extractIssueNumbers(pr, previousSection);
             const issuesBlock = issues.length
               ? '\n\n## Issues\n' + issues.map(n => `- Closes #${n}`).join('\n')
               : '';
@@ -164,4 +156,3 @@ jobs:
             if (newBody !== (pr.body || '')){
               await github.rest.issues.update({ owner, repo, issue_number: prNumber, body: newBody });
             }
-
