@@ -19,7 +19,8 @@ Este repositório usa ghstack como fluxo padrão para PRs empilhadas. Quando est
 - `docs/TESTING.md`: estratégia de testes (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness, CI). Consulte ao sugerir novos testes ou ajustar pipelines.
 - `docs/OBSERVABILITY.md`: diretrizes de observabilidade (logs JSON, métricas, tracing, health checks, alertas, web vitals). Use ao propor logging, métricas ou instrumentação de serviços.
 - `docs/CONTRIBUTING.md`: guia de contribuição (branches, Conventional Commits, Stack PR, checklist, code review, DoD, releases). Útil para alinhar automações e fluxos propostos pelo agente.
- - `docs/DEVELOPER_SETUP.md`: setup de desenvolvimento (pré‑requisitos, encoding, Gradle wrapper, variáveis de ambiente, troubleshooting). Consulte ao orientar ajustes de ambiente local ou PATH.
+- `docs/DEVELOPER_SETUP.md`: setup de desenvolvimento (pré‑requisitos, encoding, Gradle wrapper, variáveis de ambiente, troubleshooting). Consulte ao orientar ajustes de ambiente local ou PATH.
+ - `docs/adr/0000-template.md`: modelo para novos ADRs. Use quando uma decisão impactar arquitetura, NFRs, segurança, observabilidade ou dados de forma significativa.
 
 ## ghstack (stacks de PR)
 1. Faça commits na `main` (branch única).
