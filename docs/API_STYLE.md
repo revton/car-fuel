@@ -24,6 +24,7 @@ Este documento define convenções para APIs HTTP deste repositório, complement
 - 2xx: `200 OK`, `201 Created`, `204 No Content`.
 - 4xx: `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found`, `409 Conflict`, `422 Unprocessable Entity`.
 - 5xx: `500 Internal Server Error` (erros inesperados); preferir log detalhado e resposta enxuta.
+- Ver mapeamentos e códigos internos em `docs/ERRORS.md`.
 
 ## Paginação
 - Padrão sugerido: `page` e `per_page` ou paginação por cursor.
@@ -47,9 +48,8 @@ Este documento define convenções para APIs HTTP deste repositório, complement
 ## Convenções de payload
 - JSON com campos em `camelCase` ou `snake_case` (escolher e manter consistente).
 - Datas em ISO 8601 (`YYYY-MM-DDTHH:mm:ssZ`).
-- Erros com estrutura consistente (código interno, mensagem, detalhes e `requestId`).
+- Erros com estrutura consistente conforme `docs/ERRORS.md` (envelope tipo RFC 7807 com `code`, `status`, `title`, `detail`, `requestId`).
 
 ## Linters e validação
 - Ao introduzir OpenAPI/Swagger, usar linters (como `spectral`) no CI para validar contratos.
 - Contratos devem ser versionados junto com o código e revisados via PR.
-

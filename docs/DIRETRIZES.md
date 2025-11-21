@@ -11,7 +11,7 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 - REST pragmático, versionamento no caminho (ex.: `/v1/...`).
 - Respostas consistentes de erro (código, mensagem, detalhes), com correlação de requisições.
 - Idempotência em operações sensíveis; validações e mensagens claras.
-- Detalhamento adicional em `docs/API_STYLE.md` (recursos, códigos, paginação, headers, segurança, depreciação, convenções e linters).
+- Detalhamento adicional em `docs/API_STYLE.md` (recursos, códigos, paginação, headers, segurança, depreciação, convenções e linters) e `docs/ERRORS.md` (envelope de erro, códigos internos e exemplos).
 
 ## Qualidade de Código
 - Mensagens de commit em Conventional Commits (ex.: `feat:`, `fix:`, `docs:`, `ci:`, `chore:`).
