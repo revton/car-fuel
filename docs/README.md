@@ -18,6 +18,7 @@ Se estiver usando um agente (Codex, etc.), veja também `AGENTS.md` para context
 - `docs/STACK-PR-GHSTACK.md` — guia de Stack PR com ghstack (pilhas baseadas em `main` + workflow `ghstack-land`).
 - `docs/project/PHASE_PLAN.md` — plano por fases, releases e governança de branch.
 - `docs/project/ISSUES.csv` — backlog estruturado usado como referência para criação/priorização de Issues.
+ - `docs/templates/ISSUE_TEMPLATE.md` — modelo de issue alinhado aos campos do Project v2 (tipo, prioridade, módulo, OpenAPI?, ADR?).
 
 ## Ferramentas e Scripts
 - Scripts PowerShell de automação ficam em `scripts/` (ex.: utilitários com GitHub CLI `gh`).
@@ -34,4 +35,3 @@ Se estiver usando um agente (Codex, etc.), veja também `AGENTS.md` para context
 - Sempre usar PRs contra `main` e preferir "Squash and merge".
 - Fechamento automático de Issues: incluir `Closes #<id>` nas PRs que entram em `main`.
 - Manter os arquivos de documentação acima atualizados quando houver mudanças de processo, fluxo de stack ou organização de Project.
-
