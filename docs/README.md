@@ -19,7 +19,8 @@ Se estiver usando um agente (Codex, etc.), veja também `AGENTS.md` para context
 - `docs/ENVIRONMENTS.md` — visão de ambientes (local/dev/prod), variáveis/segredos, CORS, flags, observabilidade por ambiente, limites, dados e promoção.
 - `docs/SECURITY.md` — diretrizes gerais de segurança (authN/authZ, transporte, CORS, rate limiting, segredos, supply chain, CI/CD, incidentes).
 - `docs/PRIVACY.md` — baseline de privacidade (classificação de dados, minimização, base legal, retenção, direitos, subprocessadores, telemetria, incidentes).
- - `docs/TESTING.md` — estratégia de testes (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness, CI).
+- `docs/TESTING.md` — estratégia de testes (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness, CI).
+ - `docs/OBSERVABILITY.md` — diretrizes de observabilidade (logs JSON, métricas, tracing, health checks, alertas, web vitals).
 - `docs/PROCESSO.md` — processo de trabalho (revisões, merges, uso de Issues/PRs, Projects v2).
 - `docs/PROJECTS.md` — guia do GitHub Projects v2 (colunas, campos, views e fluxo backlog→merge).
 - `docs/STACK-PR-GHSTACK.md` — guia de Stack PR com ghstack (pilhas baseadas em `main` + workflow `ghstack-land`).

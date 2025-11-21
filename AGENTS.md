@@ -16,7 +16,8 @@ Este repositório usa ghstack como fluxo padrão para PRs empilhadas. Quando est
 - `docs/ENVIRONMENTS.md`: visão de ambientes (local/dev/prod), variáveis/segredos, CORS, flags, observabilidade por ambiente, limites, dados e promoção. Considere sempre o ambiente alvo ao automatizar scripts e pipelines.
 - `docs/SECURITY.md`: baseline de segurança (authZ/authN, transporte, CORS, rate limiting, segredos/cripto, supply chain, CI/CD, auditoria, incidentes). Consulte antes de sugerir alterações que afetem segurança.
 - `docs/PRIVACY.md`: baseline de privacidade (classificação de dados, minimização, base legal, retenção, direitos, subprocessadores, telemetria, incidentes). Use ao propor logs, telemetria ou novas fontes de dados de usuário.
- - `docs/TESTING.md`: estratégia de testes (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness, CI). Consulte ao sugerir novos testes ou ajustar pipelines.
+- `docs/TESTING.md`: estratégia de testes (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness, CI). Consulte ao sugerir novos testes ou ajustar pipelines.
+ - `docs/OBSERVABILITY.md`: diretrizes de observabilidade (logs JSON, métricas, tracing, health checks, alertas, web vitals). Use ao propor logging, métricas ou instrumentação de serviços.
 
 ## ghstack (stacks de PR)
 1. Faça commits na `main` (branch única).
