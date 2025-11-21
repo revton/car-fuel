@@ -84,13 +84,14 @@ jobs:
               return path.map(p => `#${p.number}`).join(' -> ');
             }
 
-            function extractIssueNumbers(pr){
+            function extractIssueNumbers(pr, rawBody){
               const numbers = new Set();
               const ref = pr.head.ref || '';
               const title = pr.title || '';
+              const body = rawBody || '';
 
               // 1) Numbers in branch name (e.g., adr/129-backend-stack -> 129)
-              //    Ignora branches internas do ghstack (gh/<user>/<id>/head)
+              //    Ignore internal ghstack branches (gh/<user>/<id>/head)
               if (!ref.startsWith('gh/')) {
                 const branchMatches = ref.match(/\b(\d{1,5})\b/g) || [];
                 for (const raw of branchMatches){
@@ -99,19 +100,25 @@ jobs:
                 }
               }
 
-              // 2) Padrões explícitos no título (Closes #123, Fixes #123, Resolves #123)
+              // 2) Explicit patterns in title/body (Closes #123, Fixes #123, Resolves #123)
               const patterns = [
                 /Closes\s*#(\d+)/ig,
                 /Fixes\s*#(\d+)/ig,
                 /Resolves\s*#(\d+)/ig,
               ];
-              for (const re of patterns){
-                let m;
-                while ((m = re.exec(title)) !== null){
-                  const n = parseInt(m[1], 10);
-                  if (!Number.isNaN(n)) numbers.add(n);
+
+              function addFrom(text){
+                for (const re of patterns){
+                  let m;
+                  while ((m = re.exec(text)) !== null){
+                    const n = parseInt(m[1], 10);
+                    if (!Number.isNaN(n)) numbers.add(n);
+                  }
                 }
               }
+
+              addFrom(title);
+              addFrom(body);
 
               return Array.from(numbers).sort((a,b)=>a-b);
             }
@@ -123,7 +130,6 @@ jobs:
             const parentStr = parent ? `#${parent.number}` : current.base;
             const nextStr = children.length ? children.map(c => `#${c.number}`).join(', ') : '(topo)';
             const chainStr = buildChain(prs, current);
-            const issues = extractIssueNumbers(pr);
 
             const begin = '<!-- stack-section:begin -->';
             const end = '<!-- stack-section:end -->';
@@ -138,6 +144,7 @@ jobs:
               body = body.slice(0, beginIdx) + body.slice(endIdx + end.length);
             }
 
+            const issues = extractIssueNumbers(pr, body);
             const issuesBlock = issues.length
               ? '\n\n## Issues\n' + issues.map(n => `- Closes #${n}`).join('\n')
               : '';
@@ -145,6 +152,16 @@ jobs:
             const section = `${begin}\n## Pilha\n- Pai: ${parentStr}\n- Próxima: ${nextStr}\n- Cadeia: ${chainStr}${issuesBlock}\n${end}`;
             const newBody = `${section}\n\n${body.trim()}`.trim() + '\n';
 
+            // Clean title suffix like "(Closes #123, #124)" after we've reflected issues in body
+            let newTitle = pr.title || '';
+            const closeSuffix = /\s*\((?:Closes|Fixes|Resolves)\s*#[0-9,\s#]+\)\s*$/i;
+            newTitle = newTitle.replace(closeSuffix, '').trim();
+
+            if (newTitle !== (pr.title || '')){
+              await github.rest.pulls.update({ owner, repo, pull_number: prNumber, title: newTitle });
+            }
+
             if (newBody !== (pr.body || '')){
               await github.rest.issues.update({ owner, repo, issue_number: prNumber, body: newBody });
             }
+

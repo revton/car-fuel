@@ -69,7 +69,11 @@ Objetivo: registrar em um ADR a linguagem, framework e forma de persistência do
    - `uvx --python 3.11 ghstack submit -B main`
 6. No GitHub:
    - Abrir a PR criada pelo ghstack.
-   - Verificar se a seção “Issues” (gerada pelo workflow `stack-pr-body`) contém `Closes #129` — isso deve acontecer automaticamente porque o número 129 está no nome da branch.
+   - Editar o título da PR para incluir `Closes #129`  
+     (ex.: `docs(adr): stack técnica backend (Closes #129)`).
+   - Aguardar a execução do workflow `stack-pr-body`:
+     - ele adicionará a seção `Issues` no body com `Closes #129`;
+     - e removerá o sufixo `(Closes #129)` do título, que volta a ficar limpo.
    - Mover a issue #129 para **In Progress** / **Review** no Project **Car Fuel**.
 
 ### Passo 2 — Issue #130: ADR modelo de dados (veículos/abastecimentos)
@@ -92,7 +96,7 @@ Objetivo: descrever o modelo conceitual de veículos, abastecimentos e entidades
    - `uvx --python 3.11 ghstack`
 6. No GitHub:
    - Verificar que agora existem **duas PRs** na pilha (129 embaixo, 130 em cima).
-   - Conferir se a seção “Issues” da PR da issue #130 inclui `Closes #130` (derivado do nome da branch).
+   - Editar o título da PR da issue #130 uma vez para incluir `Closes #130`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 3 — Issue #131: OpenAPI do MVP
 
@@ -139,7 +143,7 @@ Objetivo: implementar endpoints do MVP para veículos (ex.: criar e listar).
 4. Commit:
    - `git add <arquivos modificados>`
    - `git commit -m "feat(api): endpoints veículos MVP"`
-5. Atualizar pilha:
+5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
 
 ### Passo 6 — Issue #134: endpoints abastecimentos
@@ -181,7 +185,7 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
    - Opção A: Squash & Merge manual na ordem (da base para o topo).
    - Opção B: usar `ghstack land` (ver `docs/STACK-PR-GHSTACK.md` e workflow `ghstack-land.yml`).
 3. Após as merges em `main`:
-   - Conferir fechamento das issues #129–#135 via `Closes #<id>` na seção “Issues” do body e nas issues correspondentes.
+   - Conferir fechamento das issues #129–#135 via `Closes #<id>` na seção `Issues` do body e nas issues correspondentes.
    - Atualizar o Project **Car Fuel** (Status = Done).
 4. Atualizar este guia:
    - Adicionar links para os ADRs, arquivo OpenAPI, PRs principais e qualquer observação de NFRs, segurança e observabilidade aplicada.
