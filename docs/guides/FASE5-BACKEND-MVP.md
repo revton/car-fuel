@@ -64,12 +64,12 @@ Objetivo: registrar em um ADR a linguagem, framework e forma de persistência do
 3. Garantir que o ADR referencie a issue **#129** (no texto).
 4. Commit:
    - `git add docs/adr/0005-backend-stack.md`
-   - `git commit -m "docs(adr): stack técnica backend"`
+   - `git commit -m "docs(adr): stack técnica backend (Closes #129)"`
 5. Publicar a primeira PR da pilha com ghstack:
    - `uvx --python 3.11 ghstack submit -B main`
 6. No GitHub:
    - Abrir a PR criada pelo ghstack.
-   - Verificar se a seção “Issues” (gerada pelo workflow `stack-pr-body`) contém `Closes #129` — isso deve acontecer automaticamente porque o número 129 está no nome da branch.
+   - Conferir se a seção `Issues` (gerada pelo workflow `stack-pr-body`) contém `Closes #129` e se o título foi limpo (sem o sufixo).
    - Mover a issue #129 para **In Progress** / **Review** no Project **Car Fuel**.
 
 ### Passo 2 — Issue #130: ADR modelo de dados (veículos/abastecimentos)
@@ -87,12 +87,12 @@ Objetivo: descrever o modelo conceitual de veículos, abastecimentos e entidades
 3. Referenciar a issue **#130** no texto.
 4. Commit:
    - `git add docs/adr/0006-domain-model-vehicles-fuelings.md`
-   - `git commit -m "docs(adr): modelo de dados veículos/abastecimentos"`
+   - `git commit -m "docs(adr): modelo de dados veículos/abastecimentos (Closes #130)"`
 5. Atualizar a pilha com ghstack:
    - `uvx --python 3.11 ghstack`
 6. No GitHub:
    - Verificar que agora existem **duas PRs** na pilha (129 embaixo, 130 em cima).
-   - Conferir se a seção “Issues” da PR da issue #130 inclui `Closes #130` (derivado do nome da branch).
+   - Conferir se a seção `Issues` da PR da issue #130 inclui `Closes #130` e se o título foi limpo.
 
 ### Passo 3 — Issue #131: OpenAPI do MVP
 
@@ -107,9 +107,11 @@ Objetivo: definir um contrato OpenAPI inicial (por exemplo `/health`, `/vehicles
    - `docs/ERRORS.md` (envelope de erro, códigos internos).
 4. Commit:
    - `git add <arquivo openapi>`
-   - `git commit -m "docs(api): contrato OpenAPI MVP"`
+   - `git commit -m "docs(api): contrato OpenAPI MVP (Closes #131)"`
 5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #131 e verificar se a seção `Issues` contém `Closes #131` e se o título foi limpo.
 
 ### Passo 4 — Issue #132: esqueleto backend e `/health`
 
@@ -123,9 +125,11 @@ Objetivo: criar o projeto backend e um endpoint simples `/health`.
 3. Opcional: adicionar testes básicos para o `/health`.
 4. Commit:
    - `git add <arquivos do backend>`
-   - `git commit -m "feat(api): esqueleto backend e /health"`
+   - `git commit -m "feat(api): esqueleto backend e /health (Closes #132)"`
 5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #132 e verificar se a seção `Issues` contém `Closes #132` e se o título foi limpo.
 
 ### Passo 5 — Issue #133: endpoints veículos
 
@@ -138,9 +142,11 @@ Objetivo: implementar endpoints do MVP para veículos (ex.: criar e listar).
 3. Adicionar testes (unitários/integrados) alinhados ao contrato.
 4. Commit:
    - `git add <arquivos modificados>`
-   - `git commit -m "feat(api): endpoints veículos MVP"`
-5. Atualizar pilha:
+   - `git commit -m "feat(api): endpoints veículos MVP (Closes #133)"`
+5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #133 e verificar se a seção `Issues` contém `Closes #133` e se o título foi limpo.
 
 ### Passo 6 — Issue #134: endpoints abastecimentos
 
@@ -153,9 +159,11 @@ Objetivo: implementar endpoints para registrar abastecimentos e listar históric
 3. Adicionar testes cobrindo casos principais.
 4. Commit:
    - `git add <arquivos modificados>`
-   - `git commit -m "feat(api): endpoints abastecimentos MVP"`
-5. Atualizar pilha:
+   - `git commit -m "feat(api): endpoints abastecimentos MVP (Closes #134)"`
+5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #134 e verificar se a seção `Issues` contém `Closes #134` e se o título foi limpo.
 
 ### Passo 7 — Issue #135: CI (build + testes backend como checks)
 
@@ -169,9 +177,11 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
 3. Conferir que os nomes dos jobs/checks ficam claros para uso em Branch protection.
 4. Commit:
    - `git add .github/workflows/*.yml`
-   - `git commit -m "ci: build e testes backend"`
-5. Atualizar pilha:
+   - `git commit -m "ci: build e testes backend (Closes #135)"`
+5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #135 e verificar se a seção `Issues` contém `Closes #135` e se o título foi limpo.
 
 ### Passo 8 — Review, land e guia de estudo
 
@@ -181,7 +191,7 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
    - Opção A: Squash & Merge manual na ordem (da base para o topo).
    - Opção B: usar `ghstack land` (ver `docs/STACK-PR-GHSTACK.md` e workflow `ghstack-land.yml`).
 3. Após as merges em `main`:
-   - Conferir fechamento das issues #129–#135 via `Closes #<id>` na seção “Issues” do body e nas issues correspondentes.
+   - Conferir fechamento das issues #129–#135 via `Closes #<id>` na seção `Issues` do body e nas issues correspondentes.
    - Atualizar o Project **Car Fuel** (Status = Done).
 4. Atualizar este guia:
    - Adicionar links para os ADRs, arquivo OpenAPI, PRs principais e qualquer observação de NFRs, segurança e observabilidade aplicada.
