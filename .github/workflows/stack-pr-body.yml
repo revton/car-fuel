@@ -90,13 +90,16 @@ jobs:
               const title = pr.title || '';
 
               // 1) Numbers in branch name (e.g., adr/129-backend-stack -> 129)
-              const branchMatches = ref.match(/\b(\d{1,5})\b/g) || [];
-              for (const raw of branchMatches){
-                const n = parseInt(raw, 10);
-                if (!Number.isNaN(n)) numbers.add(n);
+              //    Ignora branches internas do ghstack (gh/<user>/<id>/head)
+              if (!ref.startsWith('gh/')) {
+                const branchMatches = ref.match(/\b(\d{1,5})\b/g) || [];
+                for (const raw of branchMatches){
+                  const n = parseInt(raw, 10);
+                  if (!Number.isNaN(n)) numbers.add(n);
+                }
               }
 
-              // 2) Patterns in title (Closes #123, Fixes #123, Resolves #123)
+              // 2) Padrões explícitos no título (Closes #123, Fixes #123, Resolves #123)
               const patterns = [
                 /Closes\s*#(\d+)/ig,
                 /Fixes\s*#(\d+)/ig,
@@ -145,4 +148,3 @@ jobs:
             if (newBody !== (pr.body || '')){
               await github.rest.issues.update({ owner, repo, issue_number: prNumber, body: newBody });
             }
-
