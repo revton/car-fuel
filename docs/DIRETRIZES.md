@@ -18,6 +18,7 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 - Mensagens de commit em Conventional Commits (ex.: `feat:`, `fix:`, `docs:`, `ci:`, `chore:`).
 - Revisões via PR: recomendadas. Em repositório de único mantenedor, não exigir aprovação de terceiros; usar checks obrigatórios (status checks) e checklist da PR. Com 2+ revisores, exigir ≥1 aprovação (e opcionalmente CODEOWNERS).
 - Testes: foco em unidades críticas e integrações mínimas; automação em CI quando aplicável.
+ - Detalhamento adicional em `docs/TESTING.md` (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness e CI).
 
 ## CI/CD
 - GitHub Actions ativas:
