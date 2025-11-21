@@ -34,7 +34,7 @@ Este documento descreve os ambientes previstos para o Car Fuel e como pensar var
 
 ## Dados
 - Local/dev: preferir dados sintéticos; se usar dumps de produção, anonimizar dados sensíveis.
-- Prod: seguir as regras de retenção e privacidade do projeto (ver NFRs e ADRs relevantes).
+- Prod: seguir as regras de retenção e privacidade do projeto (ver `docs/NFR.md`, `docs/PRIVACY.md` e ADRs relevantes).
 
 ## Promoção entre ambientes
 - Fluxo sugerido (quando existirem dev/prod):
@@ -43,4 +43,3 @@ Este documento descreve os ambientes previstos para o Car Fuel e como pensar var
   3. Validação (testes, smoke, métricas).
   4. Promoção para prod (deploy a partir da mesma artefato/commit).
 - Mudanças de configuração sensíveis devem ser revisadas em PRs específicas e testadas em dev antes de ir para prod.
-
