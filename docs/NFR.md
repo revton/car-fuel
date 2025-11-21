@@ -35,7 +35,7 @@ Estes valores são referências de projeto, não SLAs contratuais.
 ## Dados
 - Consistência: eventual onde aceitável, forte em operações críticas (ex.: registro de abastecimento e saldos derivados imediatos).
 - Retenção: datas de abastecimento e dados históricos devem ser mantidos por período suficiente para análise de consumo; regras detalhadas podem ser documentadas em ADRs específicos.
-- Privacidade: dados de localização ou identificadores pessoais devem ser tratados com cuidado, minimizando armazenamento quando não essencial.
+- Privacidade: dados de localização ou identificadores pessoais devem ser tratados com cuidado, minimizando armazenamento quando não essencial. Ver detalhes em `docs/PRIVACY.md`.
 
 ## Operabilidade
 - Deve ser possível identificar rapidamente a causa de falhas frequentes via logs e métricas.
@@ -45,4 +45,3 @@ Estes valores são referências de projeto, não SLAs contratuais.
 ## Custo
 - Escolhas de arquitetura devem considerar simplicidade e custo operacional (infraestrutura, storage, observabilidade).
 - Evitar dependências complexas quando um design mais simples atende aos requisitos funcionais e não funcionais.
-
