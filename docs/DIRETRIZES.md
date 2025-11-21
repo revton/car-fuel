@@ -6,6 +6,7 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 - Separação por camadas: borda (APIs/CLI/Jobs), domínio (regras), infraestrutura (persistência/integr.)
 - APIs contract‑first quando aplicável; documentação e contratos versionados com o código.
 - Observabilidade como requisito: logs estruturados, métricas e rastreabilidade em operações críticas.
+- NFRs (performance, resiliência, escalabilidade, etc.) sumarizados em `docs/NFR.md`.
 
 ## Padrões de API (quando houver backend)
 - REST pragmático, versionamento no caminho (ex.: `/v1/...`).
