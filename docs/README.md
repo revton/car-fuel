@@ -1,58 +1,37 @@
 # Documentação — Car Fuel
 
-Índice e notas rápidas para uso dos utilitários do repositório.
+Este documento é o índice central da documentação do projeto e o ponto de partida para novos contribuidores.
 
-## Diretrizes de Desenvolvimento
-- Guia principal: `docs/DIRETRIZES.md`
+## Primeiros Passos
+- Leia as diretrizes gerais de desenvolvimento: `docs/DIRETRIZES.md`.
+- Entenda o processo de trabalho (revisão/merge, uso de Issues e PRs): `docs/PROCESSO.md`.
+- Veja como o trabalho é organizado no GitHub Projects v2: `docs/PROJECTS.md`.
+- Consulte o plano de fases e releases: `docs/project/PHASE_PLAN.md`.
 
-## Criar Issues a partir de CSV (gh CLI)
+Se estiver usando um agente (Codex, etc.), veja também `AGENTS.md` para contexto específico de automação.
 
-- Script: `scripts/gh_create_issues_from_csv_v3.ps1`
-- Pré‑requisitos:
-  - Windows PowerShell 5.1+ ou PowerShell 7+
-  - GitHub CLI (`gh`) instalado e autenticado (`gh auth status`)
-- CSV esperado (UTF‑8): colunas `Title,Body,Labels,Key`
-  - `Key` é preenchida automaticamente com o número da issue criada/encontrada
-  - Caminho padrão: `docs/project/ISSUES.csv` (pode alterar com `-CsvPath`)
+## Índice de Documentação
+- `AGENTS.md` — contexto para agentes/automação (Codex Cloud, ghstack-land, checks obrigatórios).
+- `docs/DIRETRIZES.md` — diretrizes de desenvolvimento (arquitetura, qualidade, CI/CD, fluxo de PRs).
+- `docs/PROCESSO.md` — processo de trabalho (revisões, merges, uso de Issues/PRs, Projects v2).
+- `docs/PROJECTS.md` — guia do GitHub Projects v2 (colunas, campos, views e fluxo backlog→merge).
+- `docs/STACK-PR-GHSTACK.md` — guia de Stack PR com ghstack (pilhas baseadas em `main` + workflow `ghstack-land`).
+- `docs/project/PHASE_PLAN.md` — plano por fases, releases e governança de branch.
+- `docs/project/ISSUES.csv` — backlog estruturado usado como referência para criação/priorização de Issues.
 
-Exemplos (PowerShell):
+## Ferramentas e Scripts
+- Scripts PowerShell de automação ficam em `scripts/` (ex.: utilitários com GitHub CLI `gh`).
+- Use a ajuda embutida (`-?`, `--help`) e leia `docs/DIRETRIZES.md` / `docs/PROCESSO.md` para garantir que o uso esteja alinhado ao fluxo atual.
 
-1) Criar issues (sem Projects):
-```
-.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo>
-```
+## Stack PR e ghstack
+- O fluxo padrão de PRs empilhadas está descrito em `docs/STACK-PR-GHSTACK.md`.
+- Integração com CI:
+  - Seção “Pilha” no body das PRs (`stack-pr-body.yml`).
+  - Validação básica do `ghstack` (`ghstack-validate.yml`).
+- Para landing automatizado de uma pilha, use o workflow `ghstack-land` com o PAT configurado (`GHSTACK_TOKEN`).
 
-2) Criar issues e adicionar ao Projects v2:
-```
-.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo> -AddToProject -ProjectOwner <owner> -ProjectNumber <num>
-```
+## Convenções importantes
+- Sempre usar PRs contra `main` e preferir "Squash and merge".
+- Fechamento automático de Issues: incluir `Closes #<id>` nas PRs que entram em `main`.
+- Manter os arquivos de documentação acima atualizados quando houver mudanças de processo, fluxo de stack ou organização de Project.
 
-3) Simular sem criar (dry‑run) e controlar ritmo:
-```
-.\scripts\gh_create_issues_from_csv_v3.ps1 -Owner <owner> -Repo <repo> -DryRun -RequestDelayMs 200
-```
-
-Comportamento importante:
-- Deduplicação:
-  - Evita duplicar issues ABERTAS comparando título (normalizado/canônico)
-  - Tenta identificar duplicata por caminho de doc referenciado no corpo (ex.: `docs/...`)
-  - Faz uma busca de fallback (`search/issues`) com o título
-- Labels: garante existência/atualização de cor de labels comuns (idempotente)
-- Coluna `Key`:
-  - Se preenchida no CSV, a linha é ignorada
-  - Ao criar/associar, grava o número e reescreve o CSV
-
-Alternativa (v2): `scripts/gh_create_issues_from_csv_v2.ps1`
-- Sem extração de caminho de doc; usa índices de título (normalizado/canônico) + busca
-
-## Observações
-- Para fechar issues automaticamente, inclua `Closes #<id>` nas PRs que entram na branch padrão (`main`).
-- O diagrama Mermaid mostra apenas PRs abertas.
-
-### Atalho
-- Você pode usar `.\scripts\gh_create_issues_from_csv.ps1` (wrapper) com os mesmos parâmetros do v3 — ele apenas delega para `gh_create_issues_from_csv_v3.ps1`.
-
-#### CSV de exemplo
-- Um arquivo de exemplo está disponível em `docs/project/ISSUES.example.csv` (UTF-8). Copie/ajuste e preencha a coluna `Key` automaticamente com o script.
-
-- Guia ghstack (PRs empilhadas): `docs/STACK-PR-GHSTACK.md`
