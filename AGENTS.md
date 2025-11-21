@@ -13,6 +13,7 @@ Este repositório usa ghstack como fluxo padrão para PRs empilhadas. Quando est
 - `docs/API_STYLE.md`: convenções de API HTTP (versionamento, recursos, códigos, paginação, headers, segurança, depreciação, convenções e linters). Use sempre que houver rotas/contratos de API.
 - `docs/ERRORS.md`: catálogo de erros para APIs (envelope padrão, `code` internos, exemplos e diretrizes para OpenAPI). Ao definir endpoints, alinhar os erros a este catálogo.
 - `docs/NFR.md`: NFRs (SLOs, performance, resiliência, escalabilidade, segurança/observabilidade, dados, operabilidade, custo). Ao propor soluções de arquitetura, verifique alinhamento com estes requisitos.
+ - `docs/ENVIRONMENTS.md`: visão de ambientes (local/dev/prod), variáveis/segredos, CORS, flags, observabilidade por ambiente, limites, dados e promoção. Considere sempre o ambiente alvo ao automatizar scripts e pipelines.
 
 ## ghstack (stacks de PR)
 1. Faça commits na `main` (branch única).
