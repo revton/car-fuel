@@ -16,7 +16,8 @@ Se estiver usando um agente (Codex, etc.), veja também `AGENTS.md` para context
 - `docs/API_STYLE.md` — guia de estilo de API (versionamento, recursos, métodos, códigos, paginação, headers, segurança, depreciação, convenções e linters).
 - `docs/ERRORS.md` — catálogo de erros (envelope tipo RFC 7807, campos, códigos internos e exemplos para OpenAPI).
 - `docs/NFR.md` — requisitos não funcionais (SLOs, performance, resiliência, escalabilidade, segurança/observabilidade, dados, operabilidade, custo).
- - `docs/ENVIRONMENTS.md` — visão de ambientes (local/dev/prod), variáveis/segredos, CORS, flags, observabilidade por ambiente, limites, dados e promoção.
+- `docs/ENVIRONMENTS.md` — visão de ambientes (local/dev/prod), variáveis/segredos, CORS, flags, observabilidade por ambiente, limites, dados e promoção.
+ - `docs/SECURITY.md` — diretrizes gerais de segurança (authN/authZ, transporte, CORS, rate limiting, segredos, supply chain, CI/CD, incidentes).
 - `docs/PROCESSO.md` — processo de trabalho (revisões, merges, uso de Issues/PRs, Projects v2).
 - `docs/PROJECTS.md` — guia do GitHub Projects v2 (colunas, campos, views e fluxo backlog→merge).
 - `docs/STACK-PR-GHSTACK.md` — guia de Stack PR com ghstack (pilhas baseadas em `main` + workflow `ghstack-land`).

@@ -41,6 +41,9 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 - ghstack via `uvx` (Python 3.11 recomendado) — sem necessidade de instalação global.
 - Se/Quando houver backend Java: alinhar a JDK 17 e ferramentas de build (Maven/Gradle) padronizadas.
 
+## Segurança (visão geral)
+- Diretrizes gerais de segurança em `docs/SECURITY.md` (authN/authZ, transporte, CORS, rate limiting, segredos, supply chain, CI/CD, incidentes).
+
 ## Gestão de Tarefas
 - GitHub Issues com labels: `type:*`, `area:*`, `priority:*`, `status:*`.
 - GitHub Projects v2: colunas Backlog → In Progress → Review → Done; política de SLA de review.
