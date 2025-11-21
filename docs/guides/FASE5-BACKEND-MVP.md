@@ -96,7 +96,7 @@ Objetivo: descrever o modelo conceitual de veículos, abastecimentos e entidades
    - `uvx --python 3.11 ghstack`
 6. No GitHub:
    - Verificar que agora existem **duas PRs** na pilha (129 embaixo, 130 em cima).
-   - Editar o título da PR da issue #130 uma vez para incluir `Closes #130`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
+   - Editar o título da PR da issue #130 para incluir `Closes #130`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 3 — Issue #131: OpenAPI do MVP
 
@@ -114,6 +114,9 @@ Objetivo: definir um contrato OpenAPI inicial (por exemplo `/health`, `/vehicles
    - `git commit -m "docs(api): contrato OpenAPI MVP"`
 5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #131.
+   - Editar o título da PR para incluir `Closes #131`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 4 — Issue #132: esqueleto backend e `/health`
 
@@ -130,6 +133,9 @@ Objetivo: criar o projeto backend e um endpoint simples `/health`.
    - `git commit -m "feat(api): esqueleto backend e /health"`
 5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #132.
+   - Editar o título da PR para incluir `Closes #132`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 5 — Issue #133: endpoints veículos
 
@@ -145,6 +151,9 @@ Objetivo: implementar endpoints do MVP para veículos (ex.: criar e listar).
    - `git commit -m "feat(api): endpoints veículos MVP"`
 5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #133.
+   - Editar o título da PR para incluir `Closes #133`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 6 — Issue #134: endpoints abastecimentos
 
@@ -158,8 +167,11 @@ Objetivo: implementar endpoints para registrar abastecimentos e listar históric
 4. Commit:
    - `git add <arquivos modificados>`
    - `git commit -m "feat(api): endpoints abastecimentos MVP"`
-5. Atualizar pilha:
+5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #134.
+   - Editar o título da PR para incluir `Closes #134`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 7 — Issue #135: CI (build + testes backend como checks)
 
@@ -174,8 +186,11 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
 4. Commit:
    - `git add .github/workflows/*.yml`
    - `git commit -m "ci: build e testes backend"`
-5. Atualizar pilha:
+5. Atualizar a pilha:
    - `uvx --python 3.11 ghstack`
+6. No GitHub:
+   - Abrir a PR criada para a issue #135.
+   - Editar o título da PR para incluir `Closes #135`; o workflow garantirá que isso seja refletido na seção `Issues` do body e, em seguida, limpará o título.
 
 ### Passo 8 — Review, land e guia de estudo
 
