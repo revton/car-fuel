@@ -4,38 +4,41 @@ Este guia sugere uma configuração simples e eficaz para acompanhar trabalho no
 
 ## Estrutura sugerida
 - Colunas: Backlog → In Progress → Review → Done
-- Campos (opcional): Priority (P1/P2/P3), Area (repo/docs/ci/etc), Type (feat/fix/docs/ci/chore)
-- Filtros salvos: “A Fazer” (Backlog+P1/P2), “Em Review”, “Concluídas (30d)”
+
+### Campos sugeridos
+- Status: inferido pela coluna (Backlog, In Progress, Review, Done).
+- Tipo (Type): feat, fix, docs, ci, chore.
+- Prioridade (Priority): P1 (crítico), P2 (importante), P3 (melhoria).
+- Módulo (Area): repo, docs, ci, api, domain, webapp, etc.
+- Contrato OpenAPI? (OpenAPI?): Sim/Não — marcar quando a tarefa envolve contrato de API.
+- ADR? (ADR?): Sim/Não — marcar se exige criação/atualização de um ADR.
+
+### Views e filtros
+- "Backlog Prioritário": Status = Backlog AND Priority ∈ {P1, P2}.
+- "Em Review": Status = Review.
+- "Contrato/API": OpenAPI? = Sim.
+- "ADR pendente": ADR? = Sim AND Status ≠ Done.
+- "Concluídas (30d)": Status = Done, filtrando por data de conclusão.
 
 ## Boas práticas
 - Uma issue por objetivo coeso; descrever critérios de aceite.
 - Vínculo com PR: usar “Closes #<id>” na PR que vai para `main`.
 - Labels alinhadas (type, area, priority, status) para relatórios rápidos.
+- Mantenha os campos OpenAPI?/ADR? atualizados quando relevante; isso facilita planejamento arquitetural.
 
 ## Automação básica
 - Mover para “Review” quando a PR for aberta.
 - Mover para “Done” quando a PR for mergeada.
-- Preencher Priority/Area a partir das labels (se desejar, via GitHub Actions).
+- Preencher Priority/Area/Type a partir das labels (se desejar, via GitHub Actions).
 
-## Como começar
-1. Crie um Project v2 e as colunas sugeridas.
-2. Adicione as issues existentes e defina prioridades.
-3. Habilite automações de movimento por eventos de PR.
+## Fluxo backlog → merge
+1. Crie/ajuste o Project v2 com as colunas e campos sugeridos.
+2. Adicione as issues existentes (Backlog) e defina Prioridade, Tipo, Módulo e flags OpenAPI?/ADR? quando aplicável.
+3. Ao iniciar uma tarefa: mova o card para In Progress, crie a branch (ou pilha com ghstack) e abra a PR com `Closes #<id>`.
+4. Ao abrir PR: automação move para Review.
+5. Ao mergear em `main`: automação move para Done; a Issue é fechada via `Closes #<id>`.
+6. Revisão periódica: use as views "Backlog Prioritário", "Contrato/API" e "ADR pendente" para decidir o que entra na próxima iteração.
 
-## Playbook da Fase 5 (Projects v2)
-
-> Objetivo: manter o backlog da Fase 5 sincronizado entre `docs/project/ISSUES.csv`, Issues públicas e o Project v2 “Car Fuel — Gestão”.
-
-1. **Backlog view** – Crie uma vista com filtros `Status: Backlog` + `Priority in (P1, P2)` e campos visíveis `Priority`, `Area`, `Type`, `Iteration`. Salve como “Fase 5 — Backlog”.
-2. **Registrar notas** – Use “Add item” → “+ Create new issue” para rascunhar ideia, preencha título + resumo curto e marque as labels (type/area/priority). Descreva critérios de aceite no corpo ou vincule ao trecho correspondente em `docs/project/ISSUES.csv`.
-3. **Sincronizar CSV** – Após revisar/ordenar o backlog, execute o script `gh_create_issues_from_csv_v3.ps1` (ou o sincronizador da tarefa “Chore: sync CSV ↔ issues...”) para alinhar colunas `Key` no CSV; isso mantém a rastreabilidade usada no PHASE_PLAN.
-4. **Fluxo de colunas** – Assim que o desenvolvimento começar, mova o card para `In Progress`; abra a PR referenciando a issue com “Closes #<id>” e deixe a automação levar para `Review`/`Done`.
-5. **Revisão semanal** – Na review semanal, confirme se todos os cards no Backlog têm campos preenchidos, critério de aceite claro e link para documentação. Ajuste prioridades antes de promover itens para `In Progress`.
-
-### Notas registradas no Project
-
-As oportunidades identificadas na auditoria atual foram adicionadas ao Project (coluna **Backlog**) e persistidas em `docs/project/ISSUES.csv` para facilitar criação futura das issues:
-- **Chore: script v3 seta campos do Project ao criar issue** — automatizar o preenchimento de Priority/Area/Type.
-- **Chore: sync CSV ↔ issues para atualizar Key/status** — script de reconciliação entre CSV e Issues.
-- **Docs: guia operacional do Project (Fase 5)** — playbook detalhado e checklist semanal.
-- **Docs: troubleshooting dos scripts gh_create_issues** — sessão de erros comuns em `docs/README.md`.
+## Observações finais
+- Este documento é o “contrato” do Project v2 usado pelo repositório.
+- Sempre que alterar campos/colunas importantes no Project, atualize este arquivo para manter o alinhamento.
