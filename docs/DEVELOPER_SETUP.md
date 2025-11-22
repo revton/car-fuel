@@ -37,9 +37,16 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 ## OpenAPI lint e pre-commit
 - Dependências: Node 20+ com `npx`, `uvx` instalado, regras em `.spectral.yaml`.
 - Instalação do hook: `uvx pre-commit install`.
-- Execução manual: `uvx pre-commit run spectral-openapi-lint --all-files`.
-- Escape quando necessário: `SKIP=spectral-openapi-lint git commit ...`.
-- CI: workflow `.github/workflows/openapi-lint.yml` usa o mesmo comando para manter paridade.
+- Execução manual: `uvx pre-commit run spectral-openapi-lint --all-files` (OpenAPI) e `uvx pre-commit run ktlint --all-files` (Kotlin).
+- Escape quando necessário: `SKIP=spectral-openapi-lint,ktlint git commit ...`.
+- CI: workflows `.github/workflows/openapi-lint.yml` e `.github/workflows/kotlin-lint.yml` usam os mesmos comandos para manter paridade.
+- Nota: o hook `ktlint` usa `scripts/hooks/ktlint_runner.py` para chamar o wrapper correto em cada SO (`./gradlew ktlint` no Unix, `gradlew.bat ktlint` no Windows).
+
+## Backend Kotlin (build/test/lint)
+- Build/Testes locais: `./gradlew test` (Linux/macOS) ou `gradlew.bat test` (Windows).
+- Subir aplicação para desenvolvimento: `./gradlew bootRun` (ou `gradlew.bat bootRun`); health em `http://localhost:8080/v1/health`.
+- Lint estático Kotlin: `./gradlew ktlint` (ou `gradlew.bat ktlint`) — alias para Detekt (JDK 17).
+- CI: workflow `.github/workflows/kotlin-lint.yml` roda `./gradlew ktlint`; demais jobs de build/test devem usar o wrapper (`./gradlew ...`) com JDK 17.
 
 ## Troubleshooting
 - `uvx` não encontrado:
