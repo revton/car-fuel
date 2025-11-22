@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: spectral-openapi-lint
+        name: spectral-openapi-lint
+        entry: npx --yes @stoplight/spectral-cli@6 lint api/openapi/car-fuel-v1.yaml
+        language: system
+        pass_filenames: false
