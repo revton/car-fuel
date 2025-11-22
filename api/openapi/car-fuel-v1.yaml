@@ -1,0 +1,958 @@
+openapi: 3.0.3
+info:
+  title: Car Fuel API
+  description: >
+    Contract for the Car Fuel MVP covering health, vehicles, tanks, and fuelings.
+    Error envelopes follow docs/API_STYLE.md and docs/ERRORS.md.
+  version: 1.0.0
+servers:
+  - url: https://api.car-fuel.local
+    description: Example base URL (HTTPS required)
+  - url: http://localhost:8080
+    description: Local development
+tags:
+  - name: Health
+    description: Health and readiness endpoints.
+  - name: Vehicles
+    description: Vehicle management for fuel tracking.
+  - name: Tanks
+    description: Fuel tanks linked to vehicles.
+  - name: Fuelings
+    description: Fueling history for vehicles.
+paths:
+  /v1/health:
+    get:
+      tags:
+        - Health
+      summary: Service health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service is up
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                ok:
+                  value:
+                    status: ok
+                    version: 1.0.0
+                    timestamp: 2025-01-21T12:00:00Z
+                    environment: dev
+                    uptime_seconds: 3600
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /v1/vehicles:
+    get:
+      tags:
+        - Vehicles
+      summary: List vehicles
+      operationId: listVehicles
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: plate
+          in: query
+          required: false
+          description: Filter by plate (case-insensitive partial match).
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Vehicles page
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehiclesPage'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    post:
+      tags:
+        - Vehicles
+      summary: Create vehicle
+      operationId: createVehicle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleInput'
+            examples:
+              create:
+                value:
+                  name: Corolla 2018
+                  plate: ABC1D23
+                  odometer_unit: KM
+      responses:
+        '201':
+          description: Vehicle created
+          headers:
+            Location:
+              description: Resource URL of the created vehicle.
+              schema:
+                type: string
+              example: /v1/vehicles/6e27c7e3-9f81-4c6e-ba77-6e79b1d1a010
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /v1/vehicles/{vehicle_id}:
+    parameters:
+      - $ref: '#/components/parameters/VehicleId'
+    get:
+      tags:
+        - Vehicles
+      summary: Get vehicle by id
+      operationId: getVehicle
+      responses:
+        '200':
+          description: Vehicle details
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '404':
+          $ref: '#/components/responses/VehicleNotFoundError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /v1/tanks:
+    get:
+      tags:
+        - Tanks
+      summary: List tanks
+      operationId: listTanks
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: vehicle_id
+          in: query
+          required: false
+          description: Filter tanks by vehicle.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Tanks page
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TanksPage'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    post:
+      tags:
+        - Tanks
+      summary: Create tank
+      operationId: createTank
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TankInput'
+            examples:
+              create:
+                value:
+                  vehicle_id: 6e27c7e3-9f81-4c6e-ba77-6e79b1d1a010
+                  name: principal
+                  fuel_type: gasoline
+                  capacity_liters: 50
+                  is_primary: true
+      responses:
+        '201':
+          description: Tank created
+          headers:
+            Location:
+              description: Resource URL of the created tank.
+              schema:
+                type: string
+              example: /v1/tanks/6a3c64d4-97d9-4c52-9555-bdd083c8f34f
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tank'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/VehicleNotFoundError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /v1/tanks/{tank_id}:
+    parameters:
+      - $ref: '#/components/parameters/TankId'
+    get:
+      tags:
+        - Tanks
+      summary: Get tank by id
+      operationId: getTank
+      responses:
+        '200':
+          description: Tank details
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tank'
+        '404':
+          $ref: '#/components/responses/TankNotFoundError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /v1/fuelings:
+    get:
+      tags:
+        - Fuelings
+      summary: List fuelings
+      operationId: listFuelings
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PerPageParam'
+        - name: vehicle_id
+          in: query
+          required: false
+          description: Filter fuelings by vehicle id (derivable from tank).
+          schema:
+            type: string
+            format: uuid
+        - name: tank_id
+          in: query
+          required: false
+          description: Filter fuelings by tank id.
+          schema:
+            type: string
+            format: uuid
+        - name: from
+          in: query
+          required: false
+          description: Filter from this fueling timestamp (inclusive).
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: false
+          description: Filter up to this fueling timestamp (inclusive).
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Fuelings page
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuelingsPage'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    post:
+      tags:
+        - Fuelings
+      summary: Register fueling
+      operationId: createFueling
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelingInput'
+            examples:
+              create:
+                value:
+                  tank_id: 6a3c64d4-97d9-4c52-9555-bdd083c8f34f
+                  filled_at: 2025-01-20T11:00:00Z
+                  odometer: 23500.4
+                  volume_liters: 45.2
+                  total_cost: 261.41
+                  full_tank: true
+                  note: Posto Central
+      responses:
+        '201':
+          description: Fueling registered
+          headers:
+            Location:
+              description: Resource URL of the fueling record.
+              schema:
+                type: string
+              example: /v1/fuelings/3dfb7c0f-d14f-4f9c-9779-27b3edc2c9b4
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fueling'
+        '422':
+          $ref: '#/components/responses/InvalidFuelPayloadError'
+        '404':
+          $ref: '#/components/responses/TankNotFoundError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /v1/fuelings/{fueling_id}:
+    parameters:
+      - $ref: '#/components/parameters/FuelingId'
+    get:
+      tags:
+        - Fuelings
+      summary: Get fueling by id
+      operationId: getFueling
+      responses:
+        '200':
+          description: Fueling details
+          headers:
+            X-Request-Id:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fueling'
+        '404':
+          $ref: '#/components/responses/FuelingNotFoundError'
+        default:
+          $ref: '#/components/responses/DefaultError'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      required: false
+      description: Page number (1-based).
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      required: false
+      description: Page size.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+    VehicleId:
+      name: vehicle_id
+      in: path
+      required: true
+      description: Unique vehicle identifier.
+      schema:
+        type: string
+        format: uuid
+    TankId:
+      name: tank_id
+      in: path
+      required: true
+      description: Unique tank identifier.
+      schema:
+        type: string
+        format: uuid
+    FuelingId:
+      name: fueling_id
+      in: path
+      required: true
+      description: Unique fueling identifier.
+      schema:
+        type: string
+        format: uuid
+  headers:
+    RequestId:
+      description: Correlation id for request tracing (mirrors X-Request-Id header when provided).
+      schema:
+        type: string
+  responses:
+    BadRequestError:
+      description: Invalid request parameters or payload.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            invalidQuery:
+              value:
+                type: https://car-fuel/errors/invalid_query_params
+                title: Invalid request
+                status: 400
+                code: invalid_query_params
+                detail: page must be greater than zero
+                instance: /v1/fuelings
+                requestId: cf50f72f-1c8a-4c28-acab-b8af6b5b8e9b
+                errors:
+                  page:
+                    - must_be_greater_than_zero
+            invalidPayload:
+              value:
+                type: https://car-fuel/errors/invalid_query_params
+                title: Invalid request
+                status: 400
+                code: invalid_query_params
+                detail: Request body validation failed
+                instance: /v1/vehicles
+                requestId: 9f9f2c21-e4cc-4c45-9c9a-5e4a0d3f77cd
+                errors:
+                  name:
+                    - required
+                  odometer_unit:
+                    - invalid_value
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            invalidQuery:
+              value:
+                type: https://car-fuel/errors/invalid_query_params
+                title: Invalid request
+                status: 400
+                code: invalid_query_params
+                detail: page must be greater than zero
+                instance: /v1/fuelings
+                requestId: cf50f72f-1c8a-4c28-acab-b8af6b5b8e9b
+                errors:
+                  page:
+                    - must_be_greater_than_zero
+            invalidPayload:
+              value:
+                type: https://car-fuel/errors/invalid_query_params
+                title: Invalid request
+                status: 400
+                code: invalid_query_params
+                detail: Request body validation failed
+                instance: /v1/vehicles
+                requestId: 9f9f2c21-e4cc-4c45-9c9a-5e4a0d3f77cd
+                errors:
+                  name:
+                    - required
+                  odometer_unit:
+                    - invalid_value
+    VehicleNotFoundError:
+      description: Vehicle not found.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            notFound:
+              value:
+                type: https://car-fuel/errors/vehicle_not_found
+                title: Vehicle not found
+                status: 404
+                code: vehicle_not_found
+                detail: No vehicle was found for id '6e27c7e3-9f81-4c6e-ba77-6e79b1d1a010'
+                instance: /v1/vehicles/6e27c7e3-9f81-4c6e-ba77-6e79b1d1a010
+                requestId: 7f543dc7-3d63-4d5f-8a5a-8d0ede0c8205
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            notFound:
+              value:
+                type: https://car-fuel/errors/vehicle_not_found
+                title: Vehicle not found
+                status: 404
+                code: vehicle_not_found
+                detail: No vehicle was found for id '6e27c7e3-9f81-4c6e-ba77-6e79b1d1a010'
+                instance: /v1/vehicles/6e27c7e3-9f81-4c6e-ba77-6e79b1d1a010
+                requestId: 7f543dc7-3d63-4d5f-8a5a-8d0ede0c8205
+    TankNotFoundError:
+      description: Tank not found.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            notFound:
+              value:
+                type: https://car-fuel/errors/tank_not_found
+                title: Tank not found
+                status: 404
+                code: tank_not_found
+                detail: No tank was found for id '6a3c64d4-97d9-4c52-9555-bdd083c8f34f'
+                instance: /v1/tanks/6a3c64d4-97d9-4c52-9555-bdd083c8f34f
+                requestId: 74fbf86c-3f8f-4711-9f43-8f1f2c54c5e1
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            notFound:
+              value:
+                type: https://car-fuel/errors/tank_not_found
+                title: Tank not found
+                status: 404
+                code: tank_not_found
+                detail: No tank was found for id '6a3c64d4-97d9-4c52-9555-bdd083c8f34f'
+                instance: /v1/tanks/6a3c64d4-97d9-4c52-9555-bdd083c8f34f
+                requestId: 74fbf86c-3f8f-4711-9f43-8f1f2c54c5e1
+    FuelingNotFoundError:
+      description: Fueling not found.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            notFound:
+              value:
+                type: https://car-fuel/errors/fill_not_found
+                title: Fueling not found
+                status: 404
+                code: fill_not_found
+                detail: No fueling was found for id '3dfb7c0f-d14f-4f9c-9779-27b3edc2c9b4'
+                instance: /v1/fuelings/3dfb7c0f-d14f-4f9c-9779-27b3edc2c9b4
+                requestId: a4db5ac2-8fa7-4e4d-9202-0f5b4b6b6211
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            notFound:
+              value:
+                type: https://car-fuel/errors/fill_not_found
+                title: Fueling not found
+                status: 404
+                code: fill_not_found
+                detail: No fueling was found for id '3dfb7c0f-d14f-4f9c-9779-27b3edc2c9b4'
+                instance: /v1/fuelings/3dfb7c0f-d14f-4f9c-9779-27b3edc2c9b4
+                requestId: a4db5ac2-8fa7-4e4d-9202-0f5b4b6b6211
+    InvalidFuelPayloadError:
+      description: Fueling payload failed validation.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            invalidPayload:
+              value:
+                type: https://car-fuel/errors/invalid_fill_payload
+                title: Invalid request
+                status: 422
+                code: invalid_fill_payload
+                errors:
+                  volume_liters:
+                    - must_be_positive
+                instance: /v1/fuelings
+                requestId: 9ddad315-3771-4ca9-8fd5-ddb3a223aaf0
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            invalidPayload:
+              value:
+                type: https://car-fuel/errors/invalid_fill_payload
+                title: Invalid request
+                status: 422
+                code: invalid_fill_payload
+                errors:
+                  volume_liters:
+                    - must_be_positive
+                instance: /v1/fuelings
+                requestId: 9ddad315-3771-4ca9-8fd5-ddb3a223aaf0
+    ConflictError:
+      description: Conflicting resource state (for example, duplicated plate).
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            conflict:
+              value:
+                type: https://car-fuel/errors/conflict
+                title: Conflict
+                status: 409
+                code: conflict
+                detail: Plate ABC1D23 is already registered
+                instance: /v1/vehicles
+                requestId: 0e3bbf8f-49aa-4c6a-94a7-7c82a7dc8b2a
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            conflict:
+              value:
+                type: https://car-fuel/errors/conflict
+                title: Conflict
+                status: 409
+                code: conflict
+                detail: Plate ABC1D23 is already registered
+                instance: /v1/vehicles
+                requestId: 0e3bbf8f-49aa-4c6a-94a7-7c82a7dc8b2a
+    DefaultError:
+      description: Unexpected error.
+      headers:
+        X-Request-Id:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            internal:
+              value:
+                type: https://car-fuel/errors/internal_error
+                title: Internal server error
+                status: 500
+                code: internal_error
+                detail: Unexpected error
+                requestId: 8ff4d0e3-5ab3-41c2-b9f1-1c2c3bc5c1ba
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            internal:
+              value:
+                type: https://car-fuel/errors/internal_error
+                title: Internal server error
+                status: 500
+                code: internal_error
+                detail: Unexpected error
+                requestId: 8ff4d0e3-5ab3-41c2-b9f1-1c2c3bc5c1ba
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          example: ok
+        version:
+          type: string
+          example: 1.0.0
+        timestamp:
+          type: string
+          format: date-time
+          description: Time the health response was generated.
+        environment:
+          type: string
+          example: dev
+        uptime_seconds:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Process uptime in seconds.
+    Vehicle:
+      type: object
+      required:
+        - id
+        - name
+        - odometer_unit
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Friendly name for identifying the vehicle.
+          example: Corolla 2018
+        plate:
+          type: string
+          example: ABC1D23
+        odometer_unit:
+          type: string
+          enum:
+            - KM
+            - MI
+          example: KM
+        created_at:
+          type: string
+          format: date-time
+        archived_at:
+          type: string
+          format: date-time
+          nullable: true
+    VehicleInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Corolla 2018
+        plate:
+          type: string
+          example: ABC1D23
+        odometer_unit:
+          type: string
+          enum:
+            - KM
+            - MI
+          example: KM
+    VehiclesPage:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+        meta:
+          $ref: '#/components/schemas/Pagination'
+    Tank:
+      type: object
+      required:
+        - id
+        - vehicle_id
+        - fuel_type
+        - is_primary
+      properties:
+        id:
+          type: string
+          format: uuid
+        vehicle_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Friendly name for the tank.
+          example: principal
+        fuel_type:
+          type: string
+          enum:
+            - gasoline
+            - ethanol
+            - diesel
+            - flex
+            - hybrid
+            - electric
+        capacity_liters:
+          type: number
+          format: double
+          minimum: 0
+          description: Nominal capacity in liters.
+        is_primary:
+          type: boolean
+    TankInput:
+      type: object
+      required:
+        - vehicle_id
+        - fuel_type
+      properties:
+        vehicle_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: principal
+        fuel_type:
+          type: string
+          enum:
+            - gasoline
+            - ethanol
+            - diesel
+            - flex
+            - hybrid
+            - electric
+        capacity_liters:
+          type: number
+          format: double
+          minimum: 0
+        is_primary:
+          type: boolean
+          description: Marks the primary tank for the vehicle.
+          default: false
+    TanksPage:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tank'
+        meta:
+          $ref: '#/components/schemas/Pagination'
+    Fueling:
+      type: object
+      required:
+        - id
+        - tank_id
+        - filled_at
+        - odometer
+        - volume_liters
+        - total_cost
+        - full_tank
+      properties:
+        id:
+          type: string
+          format: uuid
+        tank_id:
+          type: string
+          format: uuid
+        filled_at:
+          type: string
+          format: date-time
+        odometer:
+          type: number
+          format: double
+          minimum: 0
+        volume_liters:
+          type: number
+          format: double
+          minimum: 0
+        total_cost:
+          type: number
+          format: double
+          minimum: 0
+        full_tank:
+          type: boolean
+        note:
+          type: string
+          maxLength: 255
+    FuelingInput:
+      type: object
+      required:
+        - tank_id
+        - filled_at
+        - odometer
+        - volume_liters
+        - total_cost
+        - full_tank
+      properties:
+        tank_id:
+          type: string
+          format: uuid
+        filled_at:
+          type: string
+          format: date-time
+        odometer:
+          type: number
+          format: double
+          minimum: 0
+        volume_liters:
+          type: number
+          format: double
+          minimum: 0
+        total_cost:
+          type: number
+          format: double
+          minimum: 0
+        full_tank:
+          type: boolean
+        note:
+          type: string
+          maxLength: 255
+    FuelingsPage:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fueling'
+        meta:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      type: object
+      required:
+        - page
+        - per_page
+        - total_items
+        - total_pages
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 1
+        per_page:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+        total_items:
+          type: integer
+          format: int32
+          minimum: 0
+        total_pages:
+          type: integer
+          format: int32
+          minimum: 0
+    ProblemDetails:
+      type: object
+      required:
+        - title
+        - status
+        - code
+      properties:
+        type:
+          type: string
+          format: uri
+          description: URI or identifier of the error category.
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        instance:
+          type: string
+        code:
+          type: string
+          description: Stable internal error code.
+        requestId:
+          type: string
+          description: Correlation id from the X-Request-Id header.
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
