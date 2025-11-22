@@ -1,4 +1,4 @@
-# Guia de Estilo de API — Car Fuel
+﻿# Guia de Estilo de API — Car Fuel
 
 Este documento define convenções para APIs HTTP deste repositório, complementando `docs/DIRETRIZES.md` (Padrões de API) e orientando futuros contratos (OpenAPI, gateways, serviços).
 
@@ -53,3 +53,13 @@ Este documento define convenções para APIs HTTP deste repositório, complement
 ## Linters e validação
 - Ao introduzir OpenAPI/Swagger, usar linters (como `spectral`) no CI para validar contratos.
 - Contratos devem ser versionados junto com o código e revisados via PR.
+
+### Linter OpenAPI (Spectral)
+- Regras: arquivo `.spectral.yaml` (estende `spectral:oas`).
+- CI: workflow `.github/workflows/openapi-lint.yml` executa `spectral lint api/openapi/car-fuel-v1.yaml` em PRs e no `main`.
+- Local: `npx --yes @stoplight/spectral-cli@6 lint api/openapi/car-fuel-v1.yaml` (ou instale global com `npm i -g @stoplight/spectral-cli@6`).
+- Torne o check `openapi-lint` obrigatório na proteção da branch principal.
+
+#### Pre-commit
+- Hook definido em `.pre-commit-config.yaml` (`spectral-openapi-lint`, usa `.spectral.yaml`).
+- Instalação e uso: veja `docs/DEVELOPER_SETUP.md` (seção "OpenAPI lint e pre-commit") para comandos `uvx pre-commit install`, execução manual e escape com `SKIP=spectral-openapi-lint`.
