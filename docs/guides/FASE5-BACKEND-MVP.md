@@ -196,3 +196,9 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
 4. Atualizar este guia:
    - Adicionar links para os ADRs, arquivo OpenAPI, PRs principais e qualquer observaÃ§Ã£o de NFRs, seguranÃ§a e observabilidade aplicada.
 
+
+### Registro do passo 4 (implementado)
+- Backend inicial em **Kotlin** (JDK 17) com Spring Boot 3.2.5 e Gradle wrapper 8.7.
+- Endpoint `/v1/health` respondendo `{"status":"ok","timestamp":"<iso8601>"}`.
+- Teste de integração com MockMvc validando status 200, `status=ok` e presença de `timestamp`.
+
