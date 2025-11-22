@@ -5,6 +5,10 @@ info:
     Contract for the Car Fuel MVP covering health, vehicles, tanks, and fuelings.
     Error envelopes follow docs/API_STYLE.md and docs/ERRORS.md.
   version: 1.0.0
+  contact:
+    name: Car Fuel Team
+    url: https://car-fuel.example.com
+    email: support@car-fuel.example.com
 servers:
   - url: https://api.car-fuel.local
     description: Example base URL (HTTPS required)
@@ -25,6 +29,7 @@ paths:
       tags:
         - Health
       summary: Service health check
+      description: Returns current service health status and metadata.
       operationId: getHealth
       responses:
         '200':
@@ -51,6 +56,7 @@ paths:
       tags:
         - Vehicles
       summary: List vehicles
+      description: Returns a paginated list of vehicles.
       operationId: listVehicles
       parameters:
         - $ref: '#/components/parameters/PageParam'
@@ -79,6 +85,7 @@ paths:
       tags:
         - Vehicles
       summary: Create vehicle
+      description: Registers a new vehicle.
       operationId: createVehicle
       requestBody:
         required: true
@@ -120,6 +127,7 @@ paths:
       tags:
         - Vehicles
       summary: Get vehicle by id
+      description: Retrieves vehicle details by identifier.
       operationId: getVehicle
       responses:
         '200':
@@ -140,6 +148,7 @@ paths:
       tags:
         - Tanks
       summary: List tanks
+      description: Returns a paginated list of tanks, optionally filtered by vehicle.
       operationId: listTanks
       parameters:
         - $ref: '#/components/parameters/PageParam'
@@ -169,6 +178,7 @@ paths:
       tags:
         - Tanks
       summary: Create tank
+      description: Registers a new tank for a vehicle.
       operationId: createTank
       requestBody:
         required: true
@@ -214,6 +224,7 @@ paths:
       tags:
         - Tanks
       summary: Get tank by id
+      description: Retrieves tank details by identifier.
       operationId: getTank
       responses:
         '200':
@@ -234,6 +245,7 @@ paths:
       tags:
         - Fuelings
       summary: List fuelings
+      description: Returns a paginated list of fuelings with optional filters.
       operationId: listFuelings
       parameters:
         - $ref: '#/components/parameters/PageParam'
@@ -284,6 +296,7 @@ paths:
       tags:
         - Fuelings
       summary: Register fueling
+      description: Records a new fueling entry.
       operationId: createFueling
       requestBody:
         required: true
@@ -329,6 +342,7 @@ paths:
       tags:
         - Fuelings
       summary: Get fueling by id
+      description: Retrieves fueling details by identifier.
       operationId: getFueling
       responses:
         '200':

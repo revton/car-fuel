@@ -23,4 +23,4 @@ jobs:
       - name: Install Spectral
         run: npm install -g @stoplight/spectral-cli@6
       - name: Lint OpenAPI
-        run: spectral lint api/openapi/car-fuel-v1.yaml
+        run: spectral lint --ruleset .spectral.yaml api/openapi/car-fuel-v1.yaml
