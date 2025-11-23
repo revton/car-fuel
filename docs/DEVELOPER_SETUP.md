@@ -37,7 +37,10 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 ## OpenAPI lint e pre-commit
 - Dependências: Node 20+ com `npx`, `uvx` instalado, regras em `.spectral.yaml`.
 - Instalação do hook: `uvx pre-commit install`.
-- Execução manual: `uvx pre-commit run spectral-openapi-lint --all-files` (OpenAPI) e `uvx pre-commit run ktlint --all-files` (Kotlin).
+- Execução manual:
+  - `uvx pre-commit run spectral-openapi-lint --all-files` (OpenAPI)
+  - `uvx pre-commit run ktlint --all-files` (Kotlin)
+  - `uvx pre-commit run gradle-test --all-files` (suíte de testes com `./gradlew test`)
 - Escape quando necessário: `SKIP=spectral-openapi-lint,ktlint git commit ...`.
 - CI: workflows `.github/workflows/openapi-lint.yml` e `.github/workflows/kotlin-lint.yml` usam os mesmos comandos para manter paridade.
 - Nota: o hook `ktlint` usa `scripts/hooks/ktlint_runner.py` para chamar o wrapper correto em cada SO (`./gradlew ktlint` no Unix, `gradlew.bat ktlint` no Windows).
