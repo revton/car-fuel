@@ -1,10 +1,10 @@
-# Diretrizes de Desenvolvimento — Car Fuel
+﻿# Diretrizes de Desenvolvimento — Car Fuel
 
 Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entrega neste repositório.
 
 ## Arquitetura e Módulos
-- Separação por camadas: borda (APIs/CLI/Jobs), domínio (regras), infraestrutura (persistência/integr.)
-- APIs contract‑first quando aplicável; documentação e contratos versionados com o código.
+- Separação por camadas: borda (APIs/CLI/Jobs), domínio (regras), infraestrutura (persistência/integr.).
+- APIs contract-first quando aplicável; documentação e contratos versionados com o código.
 - Observabilidade como requisito: logs estruturados, métricas e rastreabilidade em operações críticas.
 - NFRs (performance, resiliência, escalabilidade, etc.) sumarizados em `docs/NFR.md`.
 
@@ -16,7 +16,7 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 
 ## Qualidade de Código
 - Mensagens de commit em Conventional Commits (ex.: `feat:`, `fix:`, `docs:`, `ci:`, `chore:`).
-- Revisões via PR: recomendadas. Em repositório de único mantenedor, não exigir aprovação de terceiros; usar checks obrigatórios (status checks) e checklist da PR. Com 2+ revisores, exigir ≥1 aprovação (e opcionalmente CODEOWNERS).
+- Revisões via PR: recomendadas. Em repositório de único mantenedor, não exigir aprovação de terceiros; usar checks obrigatórios (status checks) e checklist da PR. Com 2+ revisores, exigir >=1 aprovação (e opcionalmente CODEOWNERS).
 - Testes: foco em unidades críticas e integrações mínimas; automação em CI quando aplicável.
  - Detalhamento adicional em `docs/TESTING.md` (pirâmide, cobertura, ferramentas, contratos, dados de teste, flakiness e CI).
 
@@ -40,7 +40,7 @@ Este documento define diretrizes para desenvolvimento, qualidade e fluxo de entr
 ## Ferramentas e versões
 - Scripts de automação via PowerShell (`scripts/*`), com GitHub CLI (`gh`) autenticado.
 - ghstack via `uvx` (Python 3.11 recomendado) — sem necessidade de instalação global.
-- Se/Quando houver backend Java: alinhar a JDK 17 e ferramentas de build (Maven/Gradle) padronizadas.
+- Backend: Kotlin (JDK 17) com Spring Boot e Gradle wrapper padronizado.
 
 ## Segurança (visão geral)
 - Diretrizes gerais de segurança em `docs/SECURITY.md` (authN/authZ, transporte, CORS, rate limiting, segredos, supply chain, CI/CD, incidentes).
