@@ -56,4 +56,24 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 - Problemas de encoding/acentuação:
   - Certifique-se de que o arquivo está em UTF-8 e que o editor não converte automaticamente para outro encoding.
 
+## Banco de dados (PostgreSQL via Docker)
+- Subir ambiente de desenvolvimento: `docker compose --profile dev up -d db-dev` (porta 5432, DB/USER/PASS = `carfuel`).
+- As apps leem `POSTGRES_URL/USER/PASSWORD`; defaults apontam para `localhost:5432/carfuel`. Ajuste conforme necessário.
+- Testes usam Testcontainers; se Docker não estiver disponível, caem em H2 (modo PostgreSQL).
+
+## Aplicação via Docker
+- Build e subir app + db (dev): `docker compose --profile dev up --build -d app db-dev`.
+- API sobe em `http://localhost:8080` usando o banco `db-dev` (envs já configuradas no compose).
+- Health: `GET http://localhost:8080/v1/health`; contrato: `api/openapi/car-fuel-v1.yaml`.
+
+## OpenAPI (uso em dev)
+- Contrato: `api/openapi/car-fuel-v1.yaml` (OAS 3.0.3).
+- Servindo a API local (`./gradlew bootRun` ou Docker compose), use a extensão/preview da IDE ou ferramentas como Insomnia/Postman apontando para `http://localhost:8080`.
+- UIs embutidas (app precisa estar rodando):
+  - Swagger UI: `http://localhost:8080/docs` (carrega `/openapi/car-fuel-v1.yaml`).
+  - ReDoc: `http://localhost:8080/redoc.html` (bundle local em `static/vendor/redoc/redoc.standalone.js` para evitar bloqueio de CDN).
+  - Contrato bruto: `http://localhost:8080/openapi/car-fuel-v1.yaml`.
+- Lint do contrato: `npx --yes @stoplight/spectral-cli@6 lint api/openapi/car-fuel-v1.yaml` ou `uvx pre-commit run spectral-openapi-lint --all-files`.
+- Lint do contrato: `npx --yes @stoplight/spectral-cli@6 lint api/openapi/car-fuel-v1.yaml` ou `uvx pre-commit run spectral-openapi-lint --all-files`.
+
 Para mais detalhes sobre fluxo de contribuição e testes, veja `docs/CONTRIBUTING.md` e `docs/TESTING.md`.
