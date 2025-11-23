@@ -68,6 +68,7 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 - Build e subir app + db (dev): `docker compose --profile dev up --build -d app db-dev`.
 - API sobe em `http://localhost:8080` usando o banco `db-dev` (envs já configuradas no compose).
 - Health: `GET http://localhost:8080/v1/health`; contrato: `api/openapi/car-fuel-v1.yaml`.
+- Build mais estável/rápido: Dockerfile usa cache de Gradle com BuildKit (`RUN --mount=type=cache,target=/root/.gradle`). Se ocorrer timeout de download durante o build, tente novamente com rede estável; o cache persiste entre builds.
 
 ## OpenAPI (uso em dev)
 - Contrato: `api/openapi/car-fuel-v1.yaml` (OAS 3.0.3).
