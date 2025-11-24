@@ -11,3 +11,8 @@ repos:
         entry: python scripts/hooks/ktlint_runner.py
         language: python
         pass_filenames: false
+      - id: gradle-test
+        name: gradle-test
+        entry: python scripts/hooks/gradle_test_runner.py
+        language: python
+        pass_filenames: false

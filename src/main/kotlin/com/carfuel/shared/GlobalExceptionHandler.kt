@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -71,6 +72,18 @@ class GlobalExceptionHandler {
         )
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body)
     }
+
+    @ExceptionHandler(InvalidPayloadException::class)
+    fun handleInvalidPayload(ex: InvalidPayloadException): ResponseEntity<ProblemDetails> {
+        val body = ProblemDetails(
+            title = ex.title,
+            status = UNPROCESSABLE_ENTITY.value(),
+            code = ex.code,
+            detail = ex.detail,
+            errors = ex.errors
+        )
+        return ResponseEntity.status(UNPROCESSABLE_ENTITY).body(body)
+    }
 }
 
 class InvalidQueryException(message: String) : RuntimeException(message)
@@ -87,6 +100,13 @@ class ConflictException(
     val code: String,
     message: String? = null
 ) : RuntimeException(message)
+
+class InvalidPayloadException(
+    val title: String,
+    val code: String,
+    val detail: String? = null,
+    val errors: Map<String, List<String>>? = null
+) : RuntimeException(detail)
 
 private fun camelToSnake(name: String): String =
     name.replace(Regex("([a-z])([A-Z]+)"), "$1_$2").lowercase()

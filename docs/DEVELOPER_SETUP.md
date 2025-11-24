@@ -37,7 +37,10 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 ## OpenAPI lint e pre-commit
 - Dependências: Node 20+ com `npx`, `uvx` instalado, regras em `.spectral.yaml`.
 - Instalação do hook: `uvx pre-commit install`.
-- Execução manual: `uvx pre-commit run spectral-openapi-lint --all-files` (OpenAPI) e `uvx pre-commit run ktlint --all-files` (Kotlin).
+- Execução manual:
+  - `uvx pre-commit run spectral-openapi-lint --all-files` (OpenAPI)
+  - `uvx pre-commit run ktlint --all-files` (Kotlin)
+  - `uvx pre-commit run gradle-test --all-files` (suíte de testes com `./gradlew test`)
 - Escape quando necessário: `SKIP=spectral-openapi-lint,ktlint git commit ...`.
 - CI: workflows `.github/workflows/openapi-lint.yml` e `.github/workflows/kotlin-lint.yml` usam os mesmos comandos para manter paridade.
 - Nota: o hook `ktlint` usa `scripts/hooks/ktlint_runner.py` para chamar o wrapper correto em cada SO (`./gradlew ktlint` no Unix, `gradlew.bat ktlint` no Windows).
@@ -65,6 +68,7 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 - Build e subir app + db (dev): `docker compose --profile dev up --build -d app db-dev`.
 - API sobe em `http://localhost:8080` usando o banco `db-dev` (envs já configuradas no compose).
 - Health: `GET http://localhost:8080/v1/health`; contrato: `api/openapi/car-fuel-v1.yaml`.
+- Build mais estável/rápido: Dockerfile usa cache de Gradle com BuildKit (`RUN --mount=type=cache,target=/root/.gradle`). Se ocorrer timeout de download durante o build, tente novamente com rede estável; o cache persiste entre builds.
 
 ## OpenAPI (uso em dev)
 - Contrato: `api/openapi/car-fuel-v1.yaml` (OAS 3.0.3).
