@@ -27,5 +27,15 @@ services:
     ports:
       - "8080:8080"
 
+  frontend-web:
+    build:
+      context: ./frontend
+    container_name: carfuel-frontend
+    profiles: [dev]
+    depends_on:
+      - app
+    ports:
+      - "8081:80"
+
 volumes:
   db-dev-data:

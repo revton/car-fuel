@@ -1,18 +1,18 @@
-# Guia de Estudo – Fase 6 (Frontend MVP)
+# Guia de Estudo - Fase 6 (Frontend MVP)
 
 > Roteiro guiado para acompanhar passo a passo a implementação da Fase 6 (Car Fuel Web).
 
 ## Contexto
 
-- Fase: **6 – Frontend MVP da Car Fuel**.
+- Fase: **6 - Frontend MVP da Car Fuel**.
 - Backend MVP (Fase 5) concluído e exposto via `api/openapi/car-fuel-v1.yaml`.
 - Issues principais da fase (até o momento):
-  - `#156` – stack técnica frontend (ADR).
-  - `#157` – integração frontend-backend (ADR).
-  - `#158` – esqueleto do frontend.
-  - `#159` – fluxos veículos/tanques/abastecimentos.
-  - `#160` – CI (lint, test, build) frontend.
-  - `#163` – design de UX e layout do frontend.
+  - `#156` - stack técnica frontend (ADR).
+  - `#157` - integração frontend-backend (ADR).
+  - `#158` - esqueleto do frontend.
+  - `#159` - fluxos veículos/tanques/abastecimentos.
+  - `#160` - CI (lint, test, build) frontend.
+  - `#163` - design de UX e layout do frontend.
 - Base de planejamento:
   - `docs/project/PHASE_PLAN.md`
   - `docs/PROJECTS.md` (Project v2: Car Fuel)
@@ -45,7 +45,7 @@ Ao implementar a Fase 6, atualizar este arquivo com:
 
 Execute cada comando no terminal dentro do diretório do repositório (`car-fuel`), na branch `main` atualizada.
 
-### Passo 0 – Preparar ambiente frontend
+### Passo 0 - Preparar ambiente frontend
 
 1. Conferir se está em `main` e atualizado:
    - `git checkout main`
@@ -56,7 +56,7 @@ Execute cada comando no terminal dentro do diretório do repositório (`car-fuel
    - `uvx ghstack --version` (se for usar ghstack também para o frontend).
 3. Se algo falhar, revisar `docs/DEVELOPER_SETUP.md`.
 
-### Passo 1 – ADR da stack frontend (Issue #156)
+### Passo 1 - ADR da stack frontend (Issue #156)
 
 Objetivo: registrar em um ADR a stack do frontend (framework, bundler, empacotamento, estratégia de deploy) já considerando reuso em mobile.
 
@@ -76,7 +76,7 @@ Objetivo: registrar em um ADR a stack do frontend (framework, bundler, empacotam
 4. Se usar ghstack:
    - `uvx --python 3.11 ghstack submit -B main`
 
-### Passo 2 – ADR de integração frontend-backend (Issue #157)
+### Passo 2 - ADR de integração frontend-backend (Issue #157)
 
 Objetivo: definir como o frontend conversa com o backend (URLs por ambiente, CORS, autenticação futura, observabilidade), pensando em compartilhamento de cliente HTTP com o app mobile.
 
@@ -94,12 +94,12 @@ Objetivo: definir como o frontend conversa com o backend (URLs por ambiente, COR
    - `git commit -m "docs(adr): integração frontend-backend (Closes #157)"`
 4. Atualizar pilha (`uvx --python 3.11 ghstack`) se aplicável.
 
-### Passo 3 – Design de UX e layout (Issue #163)
+### Passo 3 - Design de UX e layout (Issue #163)
 
 Objetivo: mapear fluxos de usuário, desenhar layouts básicos e alinhar expectativas de UX **antes** da implementação, já pensando em mobile-first/responsivo.
 
 1. Mapear fluxos principais usando o contrato e as fases anteriores:
-   - Cadastrar veículo → cadastrar tanque → registrar abastecimento.
+   - Cadastrar veículo -> cadastrar tanque -> registrar abastecimento.
    - Consultar histórico de abastecimentos por veículo/tanque.
 2. Produzir wireframes de baixa fidelidade (ferramenta simples ou papel) para:
    - Lista/detalhe de veículos.
@@ -120,9 +120,9 @@ Objetivo: mapear fluxos de usuário, desenhar layouts básicos e alinhar expecta
      `git checkout -b docs/163-frontend-ux-layout`
    - Após atualizar `FASE6-FRONTEND-MVP.md` e `FASE6-UX-NOTES.md`:  
      `git add docs/guides/FASE6-FRONTEND-MVP.md docs/guides/FASE6-UX-NOTES.md`  
-     `git commit -m "docs(ux): Fase 6 frontend – fluxos e layout (Closes #163)"`
+     `git commit -m "docs(ux): Fase 6 frontend - fluxos e layout (Closes #163)"`
 
-### Passo 4 – Criar esqueleto do frontend (Issue #158)
+### Passo 4 - Criar esqueleto do frontend (Issue #158)
 
 Objetivo: criar estrutura do projeto frontend sob `frontend/` (ou diretório equivalente).
 
@@ -135,13 +135,16 @@ Objetivo: criar estrutura do projeto frontend sob `frontend/` (ou diretório equ
      `frontend/src/hooks`, `frontend/src/styles`, `frontend/src/shared`).
    - Scripts no `package.json` (ex.: `dev`, `build`, `test`, `lint`).
    - Em `frontend/src/shared`, concentrar modelos, validações e clientes de API em TypeScript **sem dependência de React**, para facilitar reuso em um app mobile.
-4. Opcional: página inicial `/` com uma mensagem simples usando o health da API.
-5. Adicionar testes básicos (por exemplo, um teste de componente ou de página).
+4. Implementar página inicial `/`:
+   - Componente principal em `frontend/src/pages/HomePage.tsx`.
+   - Consumindo o endpoint `/v1/health` do backend (via função auxiliar em `frontend/src/shared/api/health.ts` e configuração em `frontend/src/shared/config/`).
+5. Adicionar testes básicos (por exemplo, um teste de componente ou de página):
+   - Ex.: `frontend/src/pages/HomePage.test.tsx`, verificando que a página exibe o status retornado pela API de health (mockado em teste).
 6. Commit:
    - `git add frontend`
    - `git commit -m "feat(frontend): esqueleto Car Fuel Web (Closes #158)"`
 
-### Passo 5 – Fluxos de veículos/tanques/abastecimentos (Issue #159)
+### Passo 5 - Fluxos de veículos/tanques/abastecimentos (Issue #159)
 
 Objetivo: implementar as telas/fluxos mínimos conectados à API (Fase 5).
 
@@ -162,7 +165,7 @@ Objetivo: implementar as telas/fluxos mínimos conectados à API (Fase 5).
    - `git add frontend`
    - `git commit -m "feat(frontend): fluxos básicos veículos/tanques/abastecimentos (Closes #159)"`
 
-### Passo 6 – Lint, testes e CI do frontend (Issue #160)
+### Passo 6 - Lint, testes e CI do frontend (Issue #160)
 
 Objetivo: garantir qualidade mínima e checks em PRs.
 
@@ -177,7 +180,7 @@ Objetivo: garantir qualidade mínima e checks em PRs.
    - `git add .github/workflows/*.yml package.json frontend`
    - `git commit -m "ci(frontend): lint, test e build (Closes #160)"`
 
-### Passo 7 – Review, land e guia de estudo
+### Passo 7 - Review, land e guia de estudo
 
 1. Para cada PR da pilha frontend:
    - Revisar diffs, garantir que os checks (`frontend-lint`, `frontend-test`, `frontend-build`) estejam verdes.

@@ -1,5 +1,8 @@
 # Codex Cloud — Contexto Operacional
 
+- Todo arquivo texto deve permanecer UTF-8 e LF.
+- Nunca duplicar blocos: ao refatorar, substituir no lugar.
+
 Este repositório usa ghstack como fluxo padrão para PRs empilhadas. Quando estiver atuando pelo Codex no Cloud, siga estas referências e práticas:
 
 ## Documentação essencial
