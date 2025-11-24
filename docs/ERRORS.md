@@ -2,16 +2,16 @@
 
 Este documento define o formato padrão de erros para APIs HTTP do projeto, alinhado ao estilo descrito em `docs/API_STYLE.md`.
 
-## Envelope de erro (inspirado na RFC 7807)
+## Envelope de erro (baseado na RFC 7807)
 
-Erro de API deve ser retornado em JSON com os campos abaixo (compatível com `application/problem+json`):
+Erro de API deve ser retornado em JSON (`application/problem+json`) com os campos abaixo:
 
-- `type` (string, opcional): URI ou identificador da categoria de erro (ex.: `"https://car-fuel/errors/vehicle_not_found"`).
-- `title` (string, obrigatório): resumo curto, estável e legível (ex.: `"Vehicle not found"`).
+- `type` (string, opcional): URI ou identificador da categoria de erro (ex.: `https://car-fuel/errors/vehicle_not_found`).
+- `title` (string, obrigatório): resumo curto, estável e legível (ex.: `Vehicle not found`).
 - `status` (number, obrigatório): código HTTP correspondente (ex.: `404`).
 - `detail` (string, opcional): mensagem detalhada, específica da ocorrência.
 - `instance` (string, opcional): URI ou identificador da ocorrência (ex.: caminho da rota).
-- `code` (string, obrigatório): código interno estável (ex.: `"vehicle_not_found"`).
+- `code` (string, obrigatório): código interno estável (ex.: `vehicle_not_found`).
 - `requestId` (string, opcional): id de correlação da requisição (mesmo valor de `X-Request-Id`).
 - `errors` (object, opcional): mapa de erros de validação por campo (ex.: `{ "plate": ["invalid_format"] }`).
 
@@ -33,32 +33,33 @@ Erro de API deve ser retornado em JSON com os campos abaixo (compatível com `ap
 
 Sugestão de códigos internos (campo `code`) e mapeamento para HTTP:
 
-| code                       | HTTP status | Descrição                                   |
-|----------------------------|------------|---------------------------------------------|
-| `vehicle_not_found`        | 404        | Veículo não encontrado                      |
-| `fill_not_found`           | 404        | Abastecimento não encontrado                |
-| `invalid_fill_payload`     | 400        | Dados de abastecimento inválidos            |
-| `invalid_query_params`     | 400        | Parâmetros de consulta inválidos            |
-| `unauthorized`             | 401        | Não autenticado                             |
-| `forbidden`                | 403        | Sem permissão para acessar o recurso        |
-| `conflict`                 | 409        | Conflito de estado (ex.: recurso duplicado) |
-| `rate_limited`             | 429        | Limite de requisições excedido              |
-| `internal_error`           | 500        | Erro interno inesperado                     |
+| code                   | HTTP status | Descrição                                   |
+|------------------------|-------------|---------------------------------------------|
+| `vehicle_not_found`    | 404         | Veículo não encontrado                      |
+| `tank_not_found`       | 404         | Tanque não encontrado                       |
+| `fill_not_found`       | 404         | Abastecimento não encontrado                |
+| `invalid_fill_payload` | 422         | Dados de abastecimento inválidos            |
+| `invalid_query_params` | 400         | Parâmetros de consulta inválidos            |
+| `unauthorized`         | 401         | Não autenticado                             |
+| `forbidden`            | 403         | Sem permissão para acessar o recurso        |
+| `conflict`             | 409         | Conflito de estado (ex.: recurso duplicado) |
+| `rate_limited`         | 429         | Limite de requisições excedido              |
+| `internal_error`       | 500         | Erro interno inesperado                     |
 
-Ao adicionar novos erros de domínio, crie códigos internos consistentes (snake_case) e documente-os neste catálogo.
+Ao adicionar novos erros de domínio, use códigos internos consistentes (snake_case) e documente-os neste catálogo.
 
 ## Erros de validação
 
-Para erros de validação de payload ou query string, use `status = 400` ou `422` e preencha o campo `errors`:
+Para erros de validação de payload, preferir `status = 422` (ex.: `invalid_fill_payload`); para query string usar `400` (ex.: `invalid_query_params`). Sempre preencher o campo `errors`:
 
 ```json
 {
   "title": "Invalid request",
-  "status": 400,
+  "status": 422,
   "code": "invalid_fill_payload",
   "errors": {
     "odometer": ["must_be_positive"],
-    "liters": ["must_be_greater_than_zero"]
+    "volume_liters": ["must_be_greater_than_zero"]
   }
 }
 ```
@@ -71,5 +72,4 @@ Ao modelar erros em OpenAPI/Swagger:
 - Reutilizar esse schema em respostas padrão (ex.: `400Error`, `404Error`, `DefaultError`).
 - Quando possível, referenciar `code` e `type` com enum ou documentação textual.
 
-O objetivo é manter erros previsíveis para clientes (tanto humanos quanto automações) e garantir que qualquer mudança de formato seja centralmente controlada por este catálogo.
-
+O objetivo é manter erros previsíveis para clientes (humanos e automações) e garantir que qualquer mudança de formato seja centralmente controlada por este catálogo.

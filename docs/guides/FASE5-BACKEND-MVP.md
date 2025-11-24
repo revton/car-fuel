@@ -1,4 +1,4 @@
-# Guia de Estudo — Fase 5 (Backend MVP)
+﻿# Guia de Estudo — Fase 5 (Backend MVP)
 
 > Rascunho guiado para acompanhar passo a passo a implementação da Fase 5.
 
@@ -196,3 +196,28 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
 4. Atualizar este guia:
    - Adicionar links para os ADRs, arquivo OpenAPI, PRs principais e qualquer observação de NFRs, segurança e observabilidade aplicada.
 
+
+### Registro do passo 4 (implementado)
+- Backend inicial em **Kotlin** (JDK 17) com Spring Boot 3.2.5 e Gradle wrapper 8.7.
+- Endpoint `/v1/health` respondendo `{"status":"ok","timestamp":"<iso8601>"}`.
+- Teste de integração com MockMvc validando status 200, `status=ok` e presença de `timestamp`.
+
+### Registro do passo 5 (implementado)
+- Consulte `docs/guides/FASE5-PASSO5-VEHICLES.md` para detalhes dos endpoints de veículos, validações/erros e testes.
+- UIs de documentação expostas pela app: Swagger UI em `/docs`, ReDoc em `/redoc.html` e contrato bruto em `/openapi/car-fuel-v1.yaml` (bundle local, sem CDN).
+- Organização por camadas: controllers/ services/ repositories/ entities/ dtos/ mappers (layer-first). Foram adicionados testes unitários por camada (DTO, mapper, service com Mockito, repository @DataJpaTest) além das integrações de controller.
+
+### Registro do passo 6 (fuelings)
+- Implementados endpoints conforme OpenAPI:
+  - `POST /v1/fuelings` com validações de payload (422 `invalid_fill_payload`) e 404 `tank_not_found`.
+  - `GET /v1/fuelings` com filtros `tank_id`, `vehicle_id`, `from`, `to` e paginação.
+  - `GET /v1/fuelings/{fueling_id}` com 404 `fill_not_found`.
+- Camadas:
+  - Entities: `TankEntity`, `FuelingEntity`; Repositories: `TankRepository`, `FuelingRepository` (filtros).
+  - Service: `FuelingService` (validação de payload, parsing de UUID, regras de filtro).
+  - Controller: `FuelingController`.
+  - DTO/Mapper: `FuelingRequest/Response/FuelingsPage`, `toResponse`.
+- Testes:
+  - Integração (`FuelingControllerTest`): cria fueling, 404 tank, 422 payload, filtro por tank, get por id/404.
+  - Unitários complementares permanecem para outras camadas; cobertura do fluxo principal garantida via integração.
+- Guia detalhado: `docs/guides/FASE5-PASSO6-FUELINGS.md`.

@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: spectral-openapi-lint
+        name: spectral-openapi-lint
+        entry: npx --yes @stoplight/spectral-cli@6 lint api/openapi/car-fuel-v1.yaml
+        language: system
+        pass_filenames: false
+      - id: ktlint
+        name: ktlint
+        entry: python scripts/hooks/ktlint_runner.py
+        language: python
+        pass_filenames: false
+      - id: gradle-test
+        name: gradle-test
+        entry: python scripts/hooks/gradle_test_runner.py
+        language: python
+        pass_filenames: false
