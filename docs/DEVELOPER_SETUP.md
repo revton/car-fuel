@@ -42,7 +42,7 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
   - `uvx pre-commit run ktlint --all-files` (Kotlin)
   - `uvx pre-commit run gradle-test --all-files` (suíte de testes com `./gradlew test`)
 - Escape quando necessário: `SKIP=spectral-openapi-lint,ktlint git commit ...`.
-- CI: workflows `.github/workflows/openapi-lint.yml` e `.github/workflows/kotlin-lint.yml` usam os mesmos comandos para manter paridade.
+- CI: workflows `.github/workflows/openapi-lint.yml`, `.github/workflows/kotlin-lint.yml`, `.github/workflows/backend-test.yml` e `.github/workflows/backend-build.yml` mantêm paridade com os comandos locais.
 - Nota: o hook `ktlint` usa `scripts/hooks/ktlint_runner.py` para chamar o wrapper correto em cada SO (`./gradlew ktlint` no Unix, `gradlew.bat ktlint` no Windows).
 
 ## Backend Kotlin (build/test/lint)

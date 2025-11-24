@@ -1,4 +1,4 @@
-name: backend-test
+name: backend-build
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
       - main
 
 jobs:
-  backend-test:
-    name: backend-test
+  backend-build:
+    name: backend-build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,5 +23,5 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Run tests
-        run: ./gradlew test
+      - name: Build jar
+        run: ./gradlew clean bootJar
