@@ -1,4 +1,4 @@
-package com.carfuel.health
+package com.carfuel.controller
 
 import org.springframework.core.env.Environment
 import org.springframework.http.ResponseEntity

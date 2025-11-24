@@ -1,4 +1,4 @@
-# Guia de Estudo — Fase 5 (Backend MVP)
+﻿# Guia de Estudo — Fase 5 (Backend MVP)
 
 > Rascunho guiado para acompanhar passo a passo a implementação da Fase 5.
 
@@ -200,5 +200,9 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
 ### Registro do passo 4 (implementado)
 - Backend inicial em **Kotlin** (JDK 17) com Spring Boot 3.2.5 e Gradle wrapper 8.7.
 - Endpoint `/v1/health` respondendo `{"status":"ok","timestamp":"<iso8601>"}`.
-- Teste de integra��o com MockMvc validando status 200, `status=ok` e presen�a de `timestamp`.
+- Teste de integração com MockMvc validando status 200, `status=ok` e presença de `timestamp`.
 
+### Registro do passo 5 (implementado)
+- Consulte `docs/guides/FASE5-PASSO5-VEHICLES.md` para detalhes dos endpoints de veículos, validações/erros e testes.
+- UIs de documentação expostas pela app: Swagger UI em `/docs`, ReDoc em `/redoc.html` e contrato bruto em `/openapi/car-fuel-v1.yaml` (bundle local, sem CDN).
+- Organização por camadas: controllers/ services/ repositories/ entities/ dtos/ mappers (layer-first). Foram adicionados testes unitários por camada (DTO, mapper, service com Mockito, repository @DataJpaTest) além das integrações de controller.

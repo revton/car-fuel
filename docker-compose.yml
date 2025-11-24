@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db-dev:
+    image: postgres:16-alpine
+    container_name: carfuel-postgres-dev
+    profiles: [dev]
+    environment:
+      POSTGRES_DB: carfuel
+      POSTGRES_USER: carfuel
+      POSTGRES_PASSWORD: carfuel
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-dev-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: carfuel-api
+    profiles: [dev]
+    depends_on:
+      - db-dev
+    environment:
+      POSTGRES_URL: jdbc:postgresql://db-dev:5432/carfuel
+      POSTGRES_USER: carfuel
+      POSTGRES_PASSWORD: carfuel
+    ports:
+      - "8080:8080"
+
+volumes:
+  db-dev-data:
