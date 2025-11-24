@@ -174,6 +174,7 @@ Objetivo: garantir que o backend seja compilado/testado em CI e expor esses jobs
 2. Adicionar/atualizar workflow(s) em `.github/workflows/`:
    - Build do backend.
    - Execução de testes.
+   - Nomes de jobs/checks: `backend-build` e `backend-test` (visíveis em Branch protection).
 3. Conferir que os nomes dos jobs/checks ficam claros para uso em Branch protection.
 4. Commit:
    - `git add .github/workflows/*.yml`
