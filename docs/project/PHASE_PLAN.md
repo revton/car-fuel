@@ -100,19 +100,18 @@ Checklist (concluído)
   - Objetivo macro:
     - Entregar uma interface web mínima para consumir a Car Fuel API (Fase 5), com foco em cadastro de veículos, tanques e registro de abastecimentos.
   - Planejamento / Design:
-    - ADR da stack frontend (framework JS/TS, bundler, deploy estático).
-    - ADR de integração frontend–backend (CORS, ambientes, autenticação futura).
+    - #156 ADR da stack frontend (framework JS/TS, bundler, deploy estático).
+    - #157 ADR de integração frontend–backend (CORS, ambientes, autenticação futura).
     - Revisar impactos em `docs/NFR.md`, `docs/SECURITY.md` e `docs/PRIVACY.md` para o frontend.
   - Implementação inicial (exemplos):
     - Página inicial com resumo de health/status da API.
     - Fluxos:
-      - Listar/criar veículos.
-      - Listar/criar tanques por veículo.
-      - Registrar/listar abastecimentos.
+      - #158 Listar/criar veículos (esqueleto + telas iniciais).
+      - #159 Listar/criar tanques por veículo e registrar/listar abastecimentos.
   - Testes e CI:
     - Testes de unidade/componentes conforme stack escolhida.
-    - Workflows de build/test frontend em `.github/workflows/`, alinhados a `docs/TESTING.md`.
+    - #160 Workflows de build/test frontend em `.github/workflows/`, alinhados a `docs/TESTING.md`.
   - Organização e documentação:
     - Backlog da Fase 6 rastreado no Project v2 **Car Fuel** (coluna Backlog → In Progress → Review → Done).
-    - Guia de estudo dedicado: `docs/guides/FASE6-FRONTEND-MVP.md` (a ser criado, seguindo o padrão dos guias da Fase 5).
+    - Guia de estudo dedicado: `docs/guides/FASE6-FRONTEND-MVP.md`.
 

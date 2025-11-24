@@ -53,7 +53,7 @@ Use estes passos como checklist. Execute cada comando no terminal dentro do dire
 Objetivo: registrar em um ADR a stack do frontend (framework, bundler, empacotamento, estratégia de deploy).
 
 1. Criar branch:
-   - `git checkout -b adr/20x-frontend-stack`
+   - `git checkout -b adr/156-frontend-stack`
 2. Criar ADR a partir do template:
    - Copiar `docs/adr/0000-template.md` para algo como  
      `docs/adr/0008-frontend-stack.md`.
@@ -64,7 +64,7 @@ Objetivo: registrar em um ADR a stack do frontend (framework, bundler, empacotam
      - Consequências (build, deploy, testes).
 3. Commit:
    - `git add docs/adr/0008-frontend-stack.md`
-   - `git commit -m "docs(adr): stack técnica frontend (Closes #20x)"`
+   - `git commit -m "docs(adr): stack técnica frontend (Closes #156)"`
 4. Se usar ghstack:
    - `uvx --python 3.11 ghstack submit -B main`
 
@@ -73,7 +73,7 @@ Objetivo: registrar em um ADR a stack do frontend (framework, bundler, empacotam
 Objetivo: definir como o frontend conversa com o backend (URLs por ambiente, CORS, autenticação futura, observabilidade).
 
 1. Criar branch sobre a ponta da pilha:
-   - `git checkout -b adr/20y-frontend-backend-integration`
+   - `git checkout -b adr/157-frontend-backend-integration`
 2. Criar ADR, por exemplo:
    - `docs/adr/0009-frontend-backend-integration.md`
    - Descrever:
@@ -82,7 +82,7 @@ Objetivo: definir como o frontend conversa com o backend (URLs por ambiente, COR
      - Uso do contrato OpenAPI (geração de cliente opcional, validação).
 3. Commit:
    - `git add docs/adr/0009-frontend-backend-integration.md`
-   - `git commit -m "docs(adr): integração frontend-backend (Closes #20y)"`
+   - `git commit -m "docs(adr): integração frontend-backend (Closes #157)"`
 4. Atualizar pilha (`uvx --python 3.11 ghstack`) se aplicável.
 
 ### Passo 3 – Design de UX e layout
@@ -109,7 +109,7 @@ Objetivo: mapear fluxos de usuário, desenhar layouts básicos e alinhar expecta
 Objetivo: criar estrutura do projeto frontend sob `frontend/` (ou diretório equivalente).
 
 1. Criar branch:
-   - `git checkout -b feat/20z-frontend-skeleton`
+   - `git checkout -b feat/158-frontend-skeleton`
 2. Gerar projeto conforme stack definida (ex.: React + Vite, Next.js, etc.).
 3. Padronizar:
    - Pastas (`frontend/src/pages`, `frontend/src/components`, `frontend/src/api`, ...).
@@ -118,14 +118,14 @@ Objetivo: criar estrutura do projeto frontend sob `frontend/` (ou diretório equ
 5. Adicionar testes básicos (ex.: um teste de componente).
 6. Commit:
    - `git add frontend`
-   - `git commit -m "feat(frontend): esqueleto Car Fuel Web (Closes #20z)"`
+   - `git commit -m "feat(frontend): esqueleto Car Fuel Web (Closes #158)"`
 
 ### Passo 5 – Fluxos de veículos/tanques/abastecimentos
 
 Objetivo: implementar as telas/fluxos mínimos conectados à API (Fase 5).
 
 1. Criar branch:
-   - `git checkout -b feat/21x-frontend-vehicles-tanks-fuelings`
+   - `git checkout -b feat/159-frontend-vehicles-tanks-fuelings`
 2. Implementar telas:
    - Listar e criar veículos.
    - Listar e criar tanques por veículo.
@@ -137,7 +137,7 @@ Objetivo: implementar as telas/fluxos mínimos conectados à API (Fase 5).
    - Testes de integração de páginas/fluxos (quando fizer sentido).
 5. Commit:
    - `git add frontend`
-   - `git commit -m "feat(frontend): fluxos básicos veículos/tanques/abastecimentos (Closes #21x)"`
+   - `git commit -m "feat(frontend): fluxos básicos veículos/tanques/abastecimentos (Closes #159)"`
 
 ### Passo 6 – Lint, testes e CI do frontend
 
@@ -152,7 +152,7 @@ Objetivo: garantir qualidade mínima e checks em PRs.
 3. Opcional: integrar com pre-commit (hooks para lint/test rápidos).
 4. Commit:
    - `git add .github/workflows/*.yml package.json frontend`
-   - `git commit -m "ci(frontend): lint, test e build (Closes #21y)"`
+   - `git commit -m "ci(frontend): lint, test e build (Closes #160)"`
 
 ### Passo 7 – Review, land e guia de estudo
 
@@ -165,4 +165,3 @@ Objetivo: garantir qualidade mínima e checks em PRs.
 4. Atualizar este guia:
    - Linkar ADRs, PRs, scripts e workflows utilizados.
    - Registrar decisões importantes de UX/NFRs e pontos de atenção para fases futuras (auth, caching, etc.).
-
