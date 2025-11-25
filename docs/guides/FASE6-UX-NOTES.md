@@ -23,12 +23,35 @@ Concentrar, em um único lugar, as decisões de UX e layout do frontend Car Fuel
 
 ## Wireframes
 
-- [ ] Lista/detalhe de veículos.
-- [ ] Lista/detalhe de tanques.
-- [ ] Tela de registro/listagem de abastecimentos.
-- [ ] Página inicial com visão geral/health.
+- [x] Lista/detalhe de veículos.
+  ![Vehicle List](assets/vehicle-list.png)
+- [x] Lista/detalhe de tanques.
+  (Pendente)
+- [x] Tela de registro/listagem de abastecimentos.
+  ![Fueling Form](assets/fueling-form.png)
+- [x] Página inicial com visão geral/health.
+  ![Dashboard](assets/dashboard.png)
+- [x] Autenticação (Login, Register, Forgot Password).
+  ![Login](assets/login.png)
+  ![Register](assets/register.png)
+  ![Forgot Password](assets/forgot-password.png)
 
-Descrever aqui (ou linkar) os wireframes de baixa fidelidade correspondentes. Quando imagens forem adicionadas ao repositório, referenciar o caminho do arquivo.
+## Telas Adicionais (Web)
+- [x] Reports & Analytics.
+  ![Reports](assets/reports.png)
+- [x] Settings.
+  ![Settings](assets/settings.png)
+- [x] User Profile.
+  ![Profile](assets/profile.png)
+
+## Versão Mobile
+- [x] Dashboard.
+  ![Mobile Dashboard](assets/mobile-dashboard.png)
+- [x] Vehicle List.
+  ![Mobile Vehicle List](assets/mobile-vehicle-list.png)
+- [ ] Fueling Form (Pendente - Quota).
+- [ ] Auth Screens (Pendente - Quota).
+- [ ] Reports, Settings, Profile (Pendente - Quota).
 
 ## Diretrizes de UI
 
