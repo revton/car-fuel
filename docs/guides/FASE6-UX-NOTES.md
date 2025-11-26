@@ -1,0 +1,79 @@
+# Notas de UX – Fase 6 (Frontend Car Fuel)
+
+> Documento de apoio ao **Passo 3 – Design de UX e layout (Issue #163)** descrito em `docs/guides/FASE6-FRONTEND-MVP.md`.
+
+## Objetivo
+
+Concentrar, em um único lugar, as decisões de UX e layout do frontend Car Fuel, para que:
+
+- os fluxos principais de usuário fiquem claros;
+- os layouts/wireframes possam ser versionados e evoluídos;
+- futuras implementações (web e mobile) reutilizem os mesmos conceitos de navegação, feedback e visual.
+
+## Fluxos principais
+
+- **Cadastro e uso de veículo e tanque**
+  - [ ] Fluxo: cadastrar veículo → cadastrar tanque → registrar abastecimento.
+  - [ ] Estados de erro e sucesso para cada etapa.
+- **Consulta de histórico**
+  - [ ] Fluxo: selecionar veículo/tanque → listar abastecimentos.
+  - [ ] Filtros (datas, veículo, tanque) e comportamento quando não há dados.
+
+> Preencher esta seção com descrições textuais, diagramas simples ou links para ferramentas externas (figma, etc.), sempre que possível incluindo imagens exportadas na pasta `docs/guides/assets/` ou similar.
+
+## Wireframes
+
+- [x] Lista/detalhe de veículos.
+  ![Vehicle List](assets/vehicle-list.png)
+- [x] Lista/detalhe de tanques.
+  (Pendente)
+- [x] Tela de registro/listagem de abastecimentos.
+  ![Fueling Form](assets/fueling-form.png)
+- [x] Página inicial com visão geral/health.
+  ![Dashboard](assets/dashboard.png)
+- [x] Autenticação (Login, Register, Forgot Password).
+  ![Login](assets/login.png)
+  ![Register](assets/register.png)
+  ![Forgot Password](assets/forgot-password.png)
+
+## Telas Adicionais (Web)
+- [x] Reports & Analytics.
+  ![Reports](assets/reports.png)
+- [x] Settings.
+  ![Settings](assets/settings.png)
+- [x] User Profile.
+  ![Profile](assets/profile.png)
+
+## Versão Mobile
+- [x] Dashboard.
+  ![Mobile Dashboard](assets/mobile-dashboard.png)
+- [x] Vehicle List.
+  ![Mobile Vehicle List](assets/mobile-vehicle-list.png)
+- [ ] Fueling Form (Pendente - Quota).
+- [ ] Auth Screens (Pendente - Quota).
+- [ ] Reports, Settings, Profile (Pendente - Quota).
+
+## Diretrizes de UI
+
+- **Tipografia**
+  - [ ] Fonte padrão, tamanhos e pesos para títulos, subtítulos e corpo.
+- **Cores**
+  - [ ] Paleta principal (primária/secundária/neutra) e uso previsto.
+- **Espaçamentos e grid**
+  - [ ] Margens e espaçamentos recorrentes; alinhamento de formulários e listas.
+- **Feedbacks**
+  - [ ] Padrões para mensagens de sucesso/erro/alerta.
+  - [ ] Tratamento visual para erros de validação de formulários.
+
+## Considerações de mobile e reuso futuro
+
+- [ ] Decisões de layout que facilitam portar as telas para um app mobile (por exemplo, React Native/Expo).
+- [ ] Padrões de navegação que podem ser compartilhados entre Web e mobile (lista/detalhe, tabs, etc.).
+
+## Referências
+
+- `docs/guides/FASE6-FRONTEND-MVP.md` (Passo 3 – Design de UX e layout).
+- `docs/API_STYLE.md`, `docs/ERRORS.md`.
+- `docs/NFR.md`, `docs/PRIVACY.md`.
+- OpenAPI: `api/openapi/car-fuel-v1.yaml`.
+
