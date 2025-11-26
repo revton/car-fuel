@@ -5,4 +5,12 @@ import react from '@vitejs/plugin-react'
 // A configuração de testes (Vitest) fica em `vitest.config.ts`.
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/v1': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      }
+    }
+  }
 })

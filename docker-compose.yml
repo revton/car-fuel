@@ -4,7 +4,7 @@ services:
   db-dev:
     image: postgres:16-alpine
     container_name: carfuel-postgres-dev
-    profiles: [dev]
+    profiles: [ dev ]
     environment:
       POSTGRES_DB: carfuel
       POSTGRES_USER: carfuel
@@ -17,7 +17,7 @@ services:
   app:
     build: .
     container_name: carfuel-api
-    profiles: [dev]
+    profiles: [ dev ]
     depends_on:
       - db-dev
     environment:
@@ -30,12 +30,14 @@ services:
   frontend-web:
     build:
       context: ./frontend
+      args:
+        - VITE_API_BASE_URL=
     container_name: carfuel-frontend
-    profiles: [dev]
+    profiles: [ dev ]
     depends_on:
       - app
     ports:
-      - "8081:80"
+      - "3000:80"
 
 volumes:
   db-dev-data:

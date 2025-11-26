@@ -1,58 +1,61 @@
-import { useEffect, useState } from 'react'
-import { fetchHealth, type HealthResponse } from '../shared/api/health'
+import { useHealth } from '../shared/context/HealthContext';
+import { Card } from '../components/UI/Card';
+import { Link } from 'react-router-dom';
 
-type HealthState =
-  | { type: 'idle' }
-  | { type: 'loading' }
-  | { type: 'success'; data: HealthResponse }
-  | { type: 'error'; error: string }
-
-export function HomePage() {
-  const [health, setHealth] = useState<HealthState>({ type: 'idle' })
-
-  useEffect(() => {
-    let active = true
-    setHealth({ type: 'loading' })
-
-    fetchHealth()
-      .then((data) => {
-        if (!active) return
-        setHealth({ type: 'success', data })
-      })
-      .catch((error: unknown) => {
-        if (!active) return
-        const message =
-          error instanceof Error ? error.message : 'Erro ao consultar health'
-        setHealth({ type: 'error', error: message })
-      })
-
-    return () => {
-      active = false
-    }
-  }, [])
+export const HomePage = () => {
+  const { health, error, loading, isOnline } = useHealth();
 
   return (
-    <main>
-      <h1>Car Fuel Web</h1>
-      <p>Página inicial do Frontend MVP.</p>
+    <div className="page-container">
+      <h2 style={{ marginBottom: '20px' }}>Dashboard</h2>
 
-      {health.type === 'loading' && <p>Verificando status da API...</p>}
+      <div style={{ display: 'grid', gap: '20px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+        <Card title="System Status">
+          {loading && <div>Checking system health...</div>}
 
-      {health.type === 'error' && (
-        <p role="alert">Falha ao consultar health: {health.error}</p>
-      )}
-
-      {health.type === 'success' && (
-        <section aria-label="Status da API">
-          <p>API status: {health.data.status}</p>
-          {health.data.timestamp && (
-            <p>Atualizado em: {health.data.timestamp}</p>
+          {error && (
+            <div style={{ color: 'var(--color-error)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '24px' }}>🔴</span>
+              <div>
+                <strong>Offline</strong>
+                <div>{error}</div>
+              </div>
+            </div>
           )}
-        </section>
-      )}
-    </main>
-  )
-}
 
-export default HomePage
+          {health && (
+            <div style={{ color: 'var(--color-success)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '24px' }}>🟢</span>
+              <div>
+                <strong>Online</strong>
+                <div>Version: {health.version}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                  Env: {health.environment} • Uptime: {Math.floor(health.uptime_seconds / 60)}m
+                </div>
+              </div>
+            </div>
+          )}
+        </Card>
 
+        <Card title="Quick Actions">
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {isOnline ? (
+              <>
+                <Link to="/vehicles/new" className="btn-primary" style={{ textDecoration: 'none', fontSize: '0.9rem' }}>
+                  Add Vehicle
+                </Link>
+                <Link to="/fuelings/new" className="btn-primary" style={{ textDecoration: 'none', fontSize: '0.9rem' }}>
+                  Register Fueling
+                </Link>
+              </>
+            ) : (
+              <div style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
+                Actions unavailable while offline.
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+};
