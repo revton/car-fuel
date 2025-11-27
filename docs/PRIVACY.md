@@ -40,6 +40,11 @@ Em geral, dados de usuário e placa podem ser considerados dados pessoais/identi
 - Evitar incluir dados pessoais em eventos de telemetria; quando inevitável, considerar anonimização ou pseudonimização.
 - Qualquer integração com ferramentas de analytics deve ser revisada à luz deste documento e de `docs/SECURITY.md`.
 
+## Mobile e Permissões
+- O aplicativo móvel deve solicitar permissões apenas quando necessário (ex.: câmera para escanear QR Code, localização para mapa de postos).
+- Explicar ao usuário o motivo da solicitação antes de pedir a permissão.
+- Dados sensíveis armazenados no dispositivo (tokens) devem usar armazenamento seguro (`SecureStore`).
+
 ## Incidentes de privacidade
 - Em caso de incidente envolvendo dados pessoais (ex.: exposição indevida de logs), deve-se:
   - Identificar rapidamente a extensão (quais dados, por quanto tempo).
