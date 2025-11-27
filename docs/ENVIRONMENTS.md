@@ -12,6 +12,9 @@ Este documento descreve os ambientes previstos para o Car Fuel e como pensar var
 - Em pipelines/Actions, usar GitHub Secrets para tokens/chaves sensíveis.
 - Nunca commitar chaves, tokens ou credenciais (API keys, senhas, connection strings) no repositório.
 - Parametrizar URLs de backend, chaves de API e credenciais via env vars específicas por ambiente.
+- **Mobile**:
+  - `EXPO_PUBLIC_API_URL`: URL da API backend.
+  - `EXPO_PUBLIC_ENV`: Ambiente atual (`development`, `staging`, `production`).
 
 ## CORS
 - Local/dev: permitir origens de desenvolvimento conhecidas (ex.: `http://localhost:*`).
