@@ -6,9 +6,15 @@ Este guia descreve como criar e manter PRs empilhadas usando a ferramenta `ghsta
 - opção de landing automatizado via workflow `ghstack-land`.
 
 ## Cheat Sheet (rápido)
-- Publicar a pilha (base `main`): `uvx --python 3.11 ghstack submit -B main`
-- Atualizar após rebase/amend: `uvx --python 3.11 ghstack`
-- Ajuda/versão: `uvx ghstack --help` • `uvx ghstack --version`
+- Publicar a pilha (base `main`):
+  - `uvx --python 3.11 ghstack submit -B main` **ou**
+  - `python scripts/ghstack/run_ghstack.py submit -B main` (usa o pacote vendorizado em `vendor/python`)
+- Atualizar ap?s rebase/amend:
+  - `uvx --python 3.11 ghstack`
+  - ou `python scripts/ghstack/run_ghstack.py`
+- Ajuda/vers?o:
+  - `uvx ghstack --help` ? `uvx ghstack --version`
+  - ou `python scripts/ghstack/run_ghstack.py --help`
 
 Criar pilha 1 → 2 → 3 (base main):
 ```bash
@@ -51,6 +57,14 @@ uvx --python 3.11 ghstack                  # PR3 base PR2
 ### Alternativas
 - `pipx install ghstack` ou `pip install --user ghstack`
 - Verifique: `ghstack --version`
+
+### Execu��ǜo com pacote vendorizado (offline/local)
+- O reposit��rio inclui `ghstack==0.12.0` e dependências em `vendor/python`.
+- Scripts auxiliares executam o CLI sem depender de downloads:
+  - Windows: `.\scripts\ghstack\run-ghstack.ps1 submit -B main`
+  - Linux/macOS: `./scripts/ghstack/run-ghstack.sh submit -B main`
+  - Cross-plataforma: `python scripts/ghstack/run_ghstack.py submit -B main`
+- Os scripts ajustam `PYTHONPATH` automaticamente; basta garantir que `python` (3.11+) esteja disponível.
 
 ## Autenticação
 - Na primeira execução, o `ghstack` solicitará um token do GitHub com permissão de escrita (scope `repo`).

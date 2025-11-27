@@ -33,6 +33,11 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 - Verificar:
   - `uvx --python 3.11 ghstack --version`
 - Configurar `~/.ghstackrc` com token de repositório (PAT `repo`) conforme `docs/STACK-PR-GHSTACK.md`.
+- Sem acesso à internet (ou quando `uvx` não consegue baixar pacotes), use o `ghstack` vendorizado:
+  - Windows: `.\scripts\ghstack\run-ghstack.ps1 ...`
+  - Linux/macOS: `./scripts/ghstack/run-ghstack.sh ...`
+  - Qualquer SO: `python scripts/ghstack/run_ghstack.py ...`
+  - Os scripts carregam automaticamente `vendor/python`, que inclui `ghstack==0.12.0` e dependências.
 
 ## OpenAPI lint e pre-commit
 - Dependências: Node 20+ com `npx`, `uvx` instalado, regras em `.spectral.yaml`.
