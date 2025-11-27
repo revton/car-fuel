@@ -22,7 +22,11 @@ Objetivo: priorizar feedback rápido em unidade/integrado e evitar uma suíte e2
   - Mocks: Mockito ou MockK (se Kotlin for usado).
   - Integrações reais com banco/filas: Testcontainers.
 - Frontend (JS/TS):
-  - Testes de unidade e componentes: Vitest (e Testing Library, se houver UI).
+  - **Testes de Unidade**: Vitest + Testing Library.
+    - Arquivos `*.test.tsx` colocados junto aos componentes.
+  - **Testes de Integração**: Vitest + Testing Library (com Router mockado).
+    - Arquivos `*.integration.test.tsx` em `src/tests/integration/`.
+  - Ver **ADR 0011** para detalhes da estratégia.
 
 ## Testes de contratos
 - Para APIs HTTP, preferir contratos explícitos (OpenAPI) e:

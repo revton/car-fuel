@@ -35,10 +35,14 @@ set JAVA_EXE=%JAVA_HOME%\bin\java.exe
 set APP_ARGS=%*
 
 %JAVA_EXE% %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %APP_ARGS%
+if "%ERRORLEVEL%"=="0" goto end
+
+:fail
+exit /b 1
 
 :end
 @endlocal
-exit /b
+exit /b 0
 
 :fail
 echo.
