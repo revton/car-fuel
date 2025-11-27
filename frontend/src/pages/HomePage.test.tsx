@@ -1,32 +1,79 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import { vi } from 'vitest'
-import { HomePage } from './HomePage'
-import * as healthApi from '../shared/api/health'
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { HomePage } from './HomePage';
+import { MemoryRouter } from 'react-router-dom';
+import * as HealthContextModule from '../shared/context/HealthContext';
 
-vi.mock('../shared/api/health')
-
-const mockedFetchHealth = healthApi as {
-  fetchHealth: ReturnType<typeof vi.fn>
-}
+// Mock useHealth hook
+vi.mock('../shared/context/HealthContext', async () => {
+  const actual = await vi.importActual('../shared/context/HealthContext');
+  return {
+    ...actual,
+    useHealth: vi.fn(),
+  };
+});
 
 describe('HomePage', () => {
   beforeEach(() => {
-    mockedFetchHealth.fetchHealth = vi.fn()
-  })
+    vi.clearAllMocks();
+  });
 
-  it('deve exibir o status retornado pelo endpoint /v1/health', async () => {
-    mockedFetchHealth.fetchHealth.mockResolvedValue({
-      status: 'ok',
-      timestamp: '2025-11-24T12:00:00Z',
-    })
+  it('renders online status when health check succeeds', () => {
+    (HealthContextModule.useHealth as any).mockReturnValue({
+      health: {
+        status: 'ok',
+        version: '1.0.0',
+        environment: 'test',
+        uptime_seconds: 100
+      },
+      error: null,
+      loading: false,
+      isOnline: true,
+    });
 
-    render(<HomePage />)
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    );
 
-    expect(screen.getByText(/Verificando status da API/i)).toBeInTheDocument()
+    screen.debug();
 
-    await waitFor(() => {
-      expect(screen.getByText(/API status: ok/i)).toBeInTheDocument()
-    })
-  })
-})
+    expect(screen.getByText(/Online/i)).toBeInTheDocument();
+    expect(screen.getByText(/1.0.0/)).toBeInTheDocument();
+  });
 
+  it('renders offline status when health check fails', () => {
+    (HealthContextModule.useHealth as any).mockReturnValue({
+      health: null,
+      error: 'Backend is unreachable',
+      loading: false,
+      isOnline: false,
+    });
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Offline')).toBeInTheDocument();
+  });
+
+  it('renders loading state', () => {
+    (HealthContextModule.useHealth as any).mockReturnValue({
+      health: null,
+      error: null,
+      loading: true,
+      isOnline: false,
+    });
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Checking system health...')).toBeInTheDocument();
+  });
+});

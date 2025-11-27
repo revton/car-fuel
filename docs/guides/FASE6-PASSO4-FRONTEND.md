@@ -70,14 +70,14 @@ Data: 2025-11-24
   - Stage final em Nginx servindo `dist/` em `/usr/share/nginx/html` (porta 80 no container).
 - O `docker-compose.yml` passou a incluir o serviço `frontend-web` no profile `dev`:
   - Conectado ao mesmo profile `dev` usado por `app` (backend) e `db-dev` (Postgres).
-  - Mapeado para `http://localhost:8081` no host (`ports: "8081:80"`).
+  - Mapeado para `http://localhost:3000` no host (`ports: "3000:80"`).
 - Fluxo com Docker em desenvolvimento:
   - Subir tudo (db + API + frontend):
     - `docker compose --profile dev up --build -d`
   - Resultado esperado:
     - Banco: `db-dev` (Postgres 16).
     - API backend: `http://localhost:8080` (health em `/v1/health`).
-    - Frontend: `http://localhost:8081` exibindo status da API.
+    - Frontend: `http://localhost:3000` exibindo status da API.
   - Para detalhes adicionais, `docs/DEVELOPER_SETUP.md` descreve esse fluxo na seção “Frontend via Docker (dev)”. 
 
 ## Arquivos tocados e por que

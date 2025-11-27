@@ -66,7 +66,8 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
   - Acesse `http://localhost:5173` no navegador (aponta por padrão para `http://localhost:8080` via `VITE_API_BASE_URL`).
 - Testes do frontend:
   - `cd frontend`
-  - `npm test` (Vitest + Testing Library).
+  - `npm test` (Roda unitários e integração).
+  - Testes de integração estão em `frontend/src/tests/integration`.
 - Estrutura inicial relevante:
   - Página inicial em `frontend/src/pages/HomePage.tsx`, consumindo o endpoint `/v1/health` da API.
   - Configuração compartilhada da API em `frontend/src/shared/config/apiConfig.ts` (usa `VITE_API_BASE_URL` ou `http://localhost:8080`).
@@ -79,7 +80,7 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
   - Ou apenas frontend (assumindo `db-dev` e `app` já em execução):  
     - `docker compose --profile dev up --build -d frontend-web`
 - Com `frontend-web` rodando:
-  - Frontend em `http://localhost:8081`.
+  - Frontend em `http://localhost:3000`.
   - O build do Vite usa `VITE_API_BASE_URL=http://app:8080`, apontando para o serviço `app` dentro da rede Docker.
 - Use esta opção quando quiser validar o frontend integrado ao backend via navegador, sem subir o dev server local.
 
@@ -117,4 +118,3 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
   - ou `uvx pre-commit run spectral-openapi-lint --all-files`.
 
 Para mais detalhes sobre fluxo de contribuição e testes, veja `docs/CONTRIBUTING.md` e `docs/TESTING.md`.
-
