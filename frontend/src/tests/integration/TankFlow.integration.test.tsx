@@ -24,13 +24,13 @@ describe('Tank Flow Integration', () => {
 
     it('navigates from Vehicle List to Tank List and adds a new tank', async () => {
         // 1. Setup Data
-        const mockVehicles = [{ id: 'v1', name: 'Car 1', plate: 'ABC-1234', odometerUnit: 'km' }];
-        const mockTanks = [{ id: 't1', name: 'Main Tank', fuelType: 'gasoline', capacity: 50, isPrimary: true }];
+        const mockVehicles = [{ id: 'v1', name: 'Car 1', plate: 'ABC-1234', odometerUnit: 'KM' as const, createdAt: '2023-01-01' }];
+        const mockTanks = [{ id: 't1', vehicleId: 'v1', name: 'Main Tank', fuelType: 'gasoline' as const, capacity: 50, isPrimary: true }];
 
-        vi.mocked(apiClient.getVehicles).mockResolvedValue(mockVehicles as any);
-        vi.mocked(apiClient.getVehicle).mockResolvedValue(mockVehicles[0] as any);
-        vi.mocked(apiClient.getTanks).mockResolvedValue(mockTanks as any);
-        vi.mocked(apiClient.createTank).mockResolvedValue({ id: 't2', ...mockTanks[0], name: 'Reserve Tank' } as any);
+        vi.mocked(apiClient.getVehicles).mockResolvedValue(mockVehicles);
+        vi.mocked(apiClient.getVehicle).mockResolvedValue(mockVehicles[0]);
+        vi.mocked(apiClient.getTanks).mockResolvedValue(mockTanks);
+        vi.mocked(apiClient.createTank).mockResolvedValue({ id: 't2', ...mockTanks[0], name: 'Reserve Tank' });
 
         // 2. Render App with Routes
         render(

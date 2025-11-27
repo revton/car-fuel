@@ -1,6 +1,6 @@
 import { ApiError, type ProblemDetails } from './apiErrors';
 import type { Vehicle } from '../domain/vehicle';
-import type { Tank } from '../domain/tank';
+import type { Tank, FuelType } from '../domain/tank';
 import type { Fueling } from '../domain/fueling';
 
 export interface HealthResponse {
@@ -9,6 +9,27 @@ export interface HealthResponse {
     timestamp: string;
     environment: string;
     uptime_seconds: number;
+}
+
+// DTOs
+interface TankDto {
+    id: string;
+    vehicle_id: string;
+    name: string;
+    capacity_liters: number;
+    fuel_type: string;
+    is_primary: boolean;
+}
+
+interface FuelingDto {
+    id: string;
+    tank_id: string;
+    filled_at: string;
+    odometer: number;
+    volume_liters: number;
+    total_cost: number;
+    full_tank: boolean;
+    note: string | null;
 }
 
 const API_HOST = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080';
@@ -31,7 +52,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
     let problem: ProblemDetails;
     try {
         problem = await response.json();
-    } catch (e) {
+    } catch {
         // Fallback if response is not JSON
         problem = {
             title: response.statusText,
@@ -102,13 +123,13 @@ export const apiClient = {
     // Tanks
     getTanks: async (vehicleId: string): Promise<Tank[]> => {
         const response = await fetchWithTimeout(`${BASE_URL}/tanks?vehicle_id=${vehicleId}`);
-        const page = await handleResponse<{ data: any[] }>(response);
-        return page.data.map((t: any) => ({
+        const page = await handleResponse<{ data: TankDto[] }>(response);
+        return page.data.map((t) => ({
             id: t.id,
             vehicleId: t.vehicle_id,
             name: t.name,
             capacity: t.capacity_liters,
-            fuelType: t.fuel_type,
+            fuelType: t.fuel_type as FuelType,
             isPrimary: t.is_primary
         }));
     },
@@ -135,7 +156,7 @@ export const apiClient = {
             url += `?vehicle_id=${vehicleId}`;
         }
         const response = await fetchWithTimeout(url);
-        const page = await handleResponse<{ data: any[] }>(response);
+        const page = await handleResponse<{ data: FuelingDto[] }>(response);
 
         // Map backend response to domain model
         return page.data.map(f => ({
@@ -146,7 +167,7 @@ export const apiClient = {
             volumeLiters: f.volume_liters,
             totalCost: f.total_cost,
             fullTank: f.full_tank,
-            note: f.note
+            note: f.note ?? undefined
         }));
     },
 
@@ -164,7 +185,7 @@ export const apiClient = {
                 note: fueling.note
             })
         });
-        const f = await handleResponse<any>(response);
+        const f = await handleResponse<FuelingDto>(response);
         return {
             id: f.id,
             tankId: f.tank_id,
@@ -173,7 +194,7 @@ export const apiClient = {
             volumeLiters: f.volume_liters,
             totalCost: f.total_cost,
             fullTank: f.full_tank,
-            note: f.note
+            note: f.note ?? undefined
         };
     }
 };

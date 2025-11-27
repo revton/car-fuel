@@ -16,3 +16,13 @@ repos:
         entry: python scripts/hooks/gradle_test_runner.py
         language: python
         pass_filenames: false
+      - id: frontend-lint
+        name: frontend-lint
+        entry: npm run lint --prefix frontend
+        language: system
+        pass_filenames: false
+      - id: frontend-test
+        name: frontend-test
+        entry: npm test --prefix frontend -- --run
+        language: system
+        pass_filenames: false

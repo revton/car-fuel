@@ -14,31 +14,31 @@ export const TankList = () => {
     const [vehicleName, setVehicleName] = useState<string>('');
 
     useEffect(() => {
+        const loadData = async () => {
+            setLoading(true);
+            try {
+                // Load tanks
+                const tanksData = await apiClient.getTanks(vehicleId!);
+                setTanks(tanksData);
+
+                // Load vehicle details for the header (optional but good UX)
+                try {
+                    const vehicle = await apiClient.getVehicle(vehicleId!);
+                    setVehicleName(vehicle.name);
+                } catch (e) {
+                    console.error('Failed to load vehicle details', e);
+                }
+            } catch (error) {
+                console.error('Failed to load tanks', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         if (vehicleId) {
             loadData();
         }
     }, [vehicleId]);
-
-    const loadData = async () => {
-        setLoading(true);
-        try {
-            // Load tanks
-            const tanksData = await apiClient.getTanks(vehicleId!);
-            setTanks(tanksData);
-
-            // Load vehicle details for the header (optional but good UX)
-            try {
-                const vehicle = await apiClient.getVehicle(vehicleId!);
-                setVehicleName(vehicle.name);
-            } catch (e) {
-                console.error('Failed to load vehicle details', e);
-            }
-        } catch (error) {
-            console.error('Failed to load tanks', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     if (loading) return <div>Loading...</div>;
 

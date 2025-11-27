@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { HomePage } from '../../pages/HomePage';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -21,7 +21,7 @@ describe('HomePage Integration', () => {
 
     it('navigates to vehicle form when Add Vehicle is clicked', async () => {
         const user = userEvent.setup();
-        (HealthContextModule.useHealth as any).mockReturnValue({
+        (HealthContextModule.useHealth as Mock).mockReturnValue({
             health: { status: 'ok' },
             error: null,
             loading: false,

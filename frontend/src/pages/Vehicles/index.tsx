@@ -1,2 +1,2 @@
-export * from './VehicleList';
-export * from './VehicleForm';
+export { VehicleList } from './VehicleList';
+export { VehicleForm } from './VehicleForm';

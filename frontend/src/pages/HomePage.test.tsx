@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { HomePage } from './HomePage';
 import { MemoryRouter } from 'react-router-dom';
 import * as HealthContextModule from '../shared/context/HealthContext';
@@ -19,7 +19,7 @@ describe('HomePage', () => {
   });
 
   it('renders online status when health check succeeds', () => {
-    (HealthContextModule.useHealth as any).mockReturnValue({
+    (HealthContextModule.useHealth as Mock).mockReturnValue({
       health: {
         status: 'ok',
         version: '1.0.0',
@@ -44,7 +44,7 @@ describe('HomePage', () => {
   });
 
   it('renders offline status when health check fails', () => {
-    (HealthContextModule.useHealth as any).mockReturnValue({
+    (HealthContextModule.useHealth as Mock).mockReturnValue({
       health: null,
       error: 'Backend is unreachable',
       loading: false,
@@ -61,7 +61,7 @@ describe('HomePage', () => {
   });
 
   it('renders loading state', () => {
-    (HealthContextModule.useHealth as any).mockReturnValue({
+    (HealthContextModule.useHealth as Mock).mockReturnValue({
       health: null,
       error: null,
       loading: true,

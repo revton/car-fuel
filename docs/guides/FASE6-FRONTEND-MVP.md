@@ -169,14 +169,16 @@ Objetivo: implementar as telas/fluxos mínimos conectados à API (Fase 5).
 
 Objetivo: garantir qualidade mínima e checks em PRs.
 
-1. Criar/ajustar scripts no `package.json`:
+1. Criar branch:
+   - `git checkout -b ci/160-frontend-lint-test-build`
+2. Criar/ajustar scripts no `package.json`:
    - `lint`, `test`, `build`.
-2. Adicionar workflows em `.github/workflows/`:
+3. Adicionar workflows em `.github/workflows/`:
    - `frontend-lint` (ex.: `pnpm lint` ou `npm run lint`).
    - `frontend-test` (ex.: `pnpm test` ou `npm test -- --watch=false`).
    - `frontend-build` (ex.: `pnpm build` ou `npm run build`).
-3. Opcional: integrar com pre-commit (hooks para lint/test rápidos).
-4. Commit:
+4. Opcional: integrar com pre-commit (hooks para lint/test rápidos).
+5. Commit:
    - `git add .github/workflows/*.yml package.json frontend`
    - `git commit -m "ci(frontend): lint, test e build (Closes #160)"`
 
