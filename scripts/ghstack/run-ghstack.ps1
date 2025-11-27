@@ -1,7 +1,7 @@
 param(
     [Parameter(ValueFromRemainingArguments = $true)]
-    [string[]]$Args
+    [string[]]$Arguments
 )
 $ErrorActionPreference = "Stop"
 $script = Join-Path $PSScriptRoot "run_ghstack.py"
-python $script @Args
+& uv run --python 3.11 $script @Arguments

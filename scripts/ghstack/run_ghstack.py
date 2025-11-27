@@ -6,7 +6,7 @@ import runpy
 import sys
 from pathlib import Path
 
-VENDOR_PATH = Path(__file__).resolve().parents[1] / "vendor" / "python"
+VENDOR_PATH = Path(__file__).resolve().parents[2] / "vendor" / "python"
 
 
 def main() -> None:
