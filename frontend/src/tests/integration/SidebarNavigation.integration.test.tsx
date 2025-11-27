@@ -1,14 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { MainLayout } from '../../components/Layout/MainLayout';
 import { HomePage } from '../../pages/HomePage';
 import { HealthProvider } from '../../shared/context/HealthContext';
 
 // Mock Health Context to avoid API calls
+// Mock Health Context to avoid API calls
 vi.mock('../../shared/context/HealthContext', () => ({
-    HealthProvider: ({ children }: any) => <div>{children}</div>,
+    HealthProvider: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
     useHealth: () => ({
         health: { version: '1.0.0', environment: 'test', uptime_seconds: 100 },
         error: null,

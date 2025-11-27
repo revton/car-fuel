@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { VehicleForm } from '../../pages/Vehicles/VehicleForm';
 import { apiClient } from '../../shared/api/apiClient';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
@@ -40,8 +40,8 @@ describe('VehicleForm', () => {
     });
 
     it('submits form with valid data', async () => {
-        (apiClient.createVehicle as any).mockResolvedValue({ id: 'v1' });
-        (apiClient.createTank as any).mockResolvedValue({});
+        (apiClient.createVehicle as Mock).mockResolvedValue({ id: 'v1' });
+        (apiClient.createTank as Mock).mockResolvedValue({});
 
         render(
             <MemoryRouter>
@@ -77,7 +77,7 @@ describe('VehicleForm', () => {
 
     it('loads existing vehicle for editing (read-only)', async () => {
         const mockVehicle = { id: '1', name: 'Existing Car', plate: 'XYZ-9876', odometerUnit: 'mi' };
-        (apiClient.getVehicle as any).mockResolvedValue(mockVehicle);
+        (apiClient.getVehicle as Mock).mockResolvedValue(mockVehicle);
 
         render(
             <MemoryRouter initialEntries={['/vehicles/1']}>

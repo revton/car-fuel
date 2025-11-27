@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { FuelingList } from '../../pages/Fuelings/FuelingList';
 import { apiClient } from '../../shared/api/apiClient';
 import { MemoryRouter } from 'react-router-dom';
@@ -16,12 +16,12 @@ describe('FuelingList', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         // Default mock implementations to avoid crashes
-        (apiClient.getVehicles as any).mockResolvedValue([]);
-        (apiClient.getTanks as any).mockResolvedValue([]);
+        (apiClient.getVehicles as Mock).mockResolvedValue([]);
+        (apiClient.getTanks as Mock).mockResolvedValue([]);
     });
 
     it('renders empty state when no fuelings', async () => {
-        (apiClient.getFuelings as any).mockResolvedValue([]);
+        (apiClient.getFuelings as Mock).mockResolvedValue([]);
         render(
             <MemoryRouter>
                 <FuelingList />
@@ -52,9 +52,9 @@ describe('FuelingList', () => {
             { id: 'tank1', name: 'Main Tank', vehicleId: 'v1' }
         ];
 
-        (apiClient.getFuelings as any).mockResolvedValue(mockFuelings);
-        (apiClient.getVehicles as any).mockResolvedValue(mockVehicles);
-        (apiClient.getTanks as any).mockResolvedValue(mockTanks);
+        (apiClient.getFuelings as Mock).mockResolvedValue(mockFuelings);
+        (apiClient.getVehicles as Mock).mockResolvedValue(mockVehicles);
+        (apiClient.getTanks as Mock).mockResolvedValue(mockTanks);
 
         render(
             <MemoryRouter>

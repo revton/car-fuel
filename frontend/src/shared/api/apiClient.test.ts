@@ -1,11 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { apiClient } from './apiClient';
 import { ApiError } from './apiErrors';
+import type { Fueling } from '../domain/fueling';
 
 global.fetch = vi.fn();
 
-function mockFetchResponse(status: number, body: any) {
-    (global.fetch as any).mockResolvedValue({
+function mockFetchResponse(status: number, body: unknown) {
+    (global.fetch as Mock).mockResolvedValue({
         ok: status >= 200 && status < 300,
         status,
         statusText: status === 200 ? 'OK' : 'Error',
@@ -47,11 +48,12 @@ describe('apiClient', () => {
 
         try {
             await apiClient.getVehicles();
-        } catch (e: any) {
-            expect(e).toBeInstanceOf(ApiError);
-            expect(e.status).toBe(400);
-            expect(e.code).toBe('invalid_query_params');
-            expect(e.details).toBe('page must be greater than zero');
+        } catch (e) {
+            const apiError = e as ApiError;
+            expect(apiError).toBeInstanceOf(ApiError);
+            expect(apiError.status).toBe(400);
+            expect(apiError.code).toBe('invalid_query_params');
+            expect(apiError.details).toBe('page must be greater than zero');
         }
     });
 
@@ -89,10 +91,11 @@ describe('apiClient', () => {
         mockFetchResponse(422, errorBody);
 
         try {
-            await apiClient.createFueling({} as any);
-        } catch (e: any) {
-            expect(e.status).toBe(422);
-            expect(e.errors).toEqual({ volume_liters: ['must_be_positive'] });
+            await apiClient.createFueling({} as Fueling);
+        } catch (e) {
+            const apiError = e as ApiError;
+            expect(apiError.status).toBe(422);
+            expect(apiError.errors).toEqual({ volume_liters: ['must_be_positive'] });
         }
     });
 

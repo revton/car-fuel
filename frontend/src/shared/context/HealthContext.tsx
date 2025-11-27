@@ -49,6 +49,7 @@ export const HealthProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useHealth = () => {
     const context = useContext(HealthContext);
     if (context === undefined) {

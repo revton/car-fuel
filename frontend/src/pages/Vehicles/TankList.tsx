@@ -12,19 +12,19 @@ export const TankList = ({ vehicleId }: TankListProps) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const loadTanks = async () => {
+            try {
+                const data = await mockApi.getTanks(vehicleId);
+                setTanks(data);
+            } catch (error) {
+                console.error('Failed to load tanks', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         loadTanks();
     }, [vehicleId]);
-
-    const loadTanks = async () => {
-        try {
-            const data = await mockApi.getTanks(vehicleId);
-            setTanks(data);
-        } catch (error) {
-            console.error('Failed to load tanks', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     if (loading) return <div>Loading tanks...</div>;
 

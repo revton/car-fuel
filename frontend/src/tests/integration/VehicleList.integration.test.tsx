@@ -1,5 +1,5 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { VehicleList } from '../../pages/Vehicles/VehicleList';
 import { apiClient } from '../../shared/api/apiClient';
 import { MemoryRouter } from 'react-router-dom';
@@ -26,7 +26,7 @@ describe('VehicleList', () => {
     });
 
     it('renders loading state initially', () => {
-        (apiClient.getVehicles as any).mockReturnValue(new Promise(() => { })); // Never resolves
+        (apiClient.getVehicles as Mock).mockReturnValue(new Promise(() => { })); // Never resolves
         render(
             <MemoryRouter>
                 <VehicleList />
@@ -36,7 +36,7 @@ describe('VehicleList', () => {
     });
 
     it('renders empty state when no vehicles', async () => {
-        (apiClient.getVehicles as any).mockResolvedValue([]);
+        (apiClient.getVehicles as Mock).mockResolvedValue([]);
         render(
             <MemoryRouter>
                 <VehicleList />
@@ -53,7 +53,7 @@ describe('VehicleList', () => {
             { id: '1', name: 'Car 1', plate: 'ABC-1234', odometerUnit: 'km' },
             { id: '2', name: 'Car 2', plate: 'XYZ-9876', odometerUnit: 'mi' },
         ];
-        (apiClient.getVehicles as any).mockResolvedValue(mockVehicles);
+        (apiClient.getVehicles as Mock).mockResolvedValue(mockVehicles);
 
         render(
             <MemoryRouter>
@@ -68,7 +68,7 @@ describe('VehicleList', () => {
     });
 
     it('navigates to new vehicle page on button click', async () => {
-        (apiClient.getVehicles as any).mockResolvedValue([]);
+        (apiClient.getVehicles as Mock).mockResolvedValue([]);
         render(
             <MemoryRouter>
                 <VehicleList />

@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { FuelingForm } from '../../pages/Fuelings/FuelingForm';
 import { apiClient } from '../../shared/api/apiClient';
 import { MemoryRouter } from 'react-router-dom';
@@ -31,8 +31,8 @@ describe('FuelingForm', () => {
         const mockVehicles = [{ id: 'v1', name: 'Car 1' }];
         const mockTanks = [{ id: 't1', name: 'Tank 1' }];
 
-        (apiClient.getVehicles as any).mockResolvedValue(mockVehicles);
-        (apiClient.getTanks as any).mockResolvedValue(mockTanks);
+        (apiClient.getVehicles as Mock).mockResolvedValue(mockVehicles);
+        (apiClient.getTanks as Mock).mockResolvedValue(mockTanks);
 
         render(
             <MemoryRouter>
@@ -53,8 +53,8 @@ describe('FuelingForm', () => {
             { id: 't2', name: 'Primary Tank', isPrimary: true, fuelType: 'ethanol' }
         ];
 
-        (apiClient.getVehicles as any).mockResolvedValue(mockVehicles);
-        (apiClient.getTanks as any).mockResolvedValue(mockTanks);
+        (apiClient.getVehicles as Mock).mockResolvedValue(mockVehicles);
+        (apiClient.getTanks as Mock).mockResolvedValue(mockTanks);
 
         render(
             <MemoryRouter>
@@ -71,8 +71,8 @@ describe('FuelingForm', () => {
 
     it('calculates total cost', async () => {
         const user = userEvent.setup();
-        (apiClient.getVehicles as any).mockResolvedValue([]);
-        (apiClient.getTanks as any).mockResolvedValue([]);
+        (apiClient.getVehicles as Mock).mockResolvedValue([]);
+        (apiClient.getTanks as Mock).mockResolvedValue([]);
 
         render(
             <MemoryRouter>
@@ -99,9 +99,9 @@ describe('FuelingForm', () => {
         const mockVehicles = [{ id: 'v1', name: 'Car 1' }];
         const mockTanks = [{ id: 't1', name: 'Tank 1', isPrimary: true, fuelType: 'gasoline' }];
 
-        (apiClient.getVehicles as any).mockResolvedValue(mockVehicles);
-        (apiClient.getTanks as any).mockResolvedValue(mockTanks);
-        (apiClient.createFueling as any).mockResolvedValue({});
+        (apiClient.getVehicles as Mock).mockResolvedValue(mockVehicles);
+        (apiClient.getTanks as Mock).mockResolvedValue(mockTanks);
+        (apiClient.createFueling as Mock).mockResolvedValue({});
 
         render(
             <MemoryRouter>
