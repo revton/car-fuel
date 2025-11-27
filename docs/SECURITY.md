@@ -30,6 +30,11 @@ Este documento estabelece diretrizes gerais de segurança para o projeto Car Fue
 - Em dev/local, usar `.env` ignorado no git; em CI/CD, GitHub Secrets.
 - Senhas/hashs (se existirem) devem usar algoritmos adequados (ex.: bcrypt, argon2) com salt.
 
+## Mobile Security
+- **Armazenamento Seguro**: Tokens de autenticação e dados sensíveis devem ser armazenados usando `expo-secure-store` (iOS Keychain / Android Keystore). Nunca usar `AsyncStorage` para dados sensíveis.
+- **Deep Linking**: Validar parâmetros de entrada em deep links para evitar ataques de injeção ou redirecionamento malicioso.
+- **SSL Pinning**: Considerar implementação futura para mitigar ataques Man-in-the-Middle (MitM).
+
 ## Supply Chain (Dependências)
 - Usar versões pinadas ou faixas de versão controladas para dependências críticas.
 - Evitar dependências sem manutenção ou de origem duvidosa.
