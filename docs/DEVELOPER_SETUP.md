@@ -6,10 +6,20 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 - Git instalado e configurado.
 - Ferramentas de linha de comando:
   - `gh` (GitHub CLI) autenticado (`gh auth status`).
-  - `uv` + `uvx` para rodar ferramentas Python (ghstack, pre-commit).
+  - `uvx` + `uvx` para rodar ferramentas Python (ghstack, pre-commit).
   - Node.js 20+ (para `npx` usado no lint OpenAPI, hooks e frontend).
   - PowerShell (Windows) para scripts em `scripts/*.ps1`.
+    - `scripts/dev/start-dev.ps1`: Sobe o ambiente completo (app + db).
+    - `scripts/dev/stop-dev.ps1`: Para o ambiente.
 - IDE/editor com suporte a UTF-8 (VS Code, IntelliJ, etc.).
+
+## Devcontainer (Recomendado)
+- O projeto suporta **Devcontainers** (VS Code Remote - Containers) para um ambiente de desenvolvimento padronizado e isolado.
+- Requisitos: Docker Desktop e VS Code com extensão "Dev Containers".
+- Ao abrir o projeto no VS Code, aceite a sugestão para "Reopen in Container".
+- O ambiente inclui automaticamente: JDK, Node.js, ferramentas de CLI e configurações de rede.
+- Veja `docs/adr/0012-devcontainer.md` para detalhes da decisão arquitetural.
+
 
 ## Encoding e fim de linha
 - Usar **UTF-8** como encoding padrão.
