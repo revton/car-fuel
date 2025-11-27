@@ -16,6 +16,7 @@ class CarFuelApplication {
     @Bean
     fun corsConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurer {
+            @Suppress("SpreadOperator")
             override fun addCorsMappings(registry: CorsRegistry) {
                 val origins = allowedOrigins.split(",").map { it.trim() }.toTypedArray()
                 registry.addMapping("/**")
