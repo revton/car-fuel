@@ -6,12 +6,13 @@
 
 - Fase: **6 – Frontend MVP da Car Fuel**.
 - Backend MVP (Fase 5) concluído e exposto via `api/openapi/car-fuel-v1.yaml`.
-- Issues principais da fase (exemplos atuais):
+- Issues principais da fase (até o momento):
   - `#156` – stack técnica frontend (ADR).
   - `#157` – integração frontend-backend (ADR).
   - `#158` – esqueleto do frontend.
   - `#159` – fluxos veículos/tanques/abastecimentos.
   - `#160` – CI (lint, test, build) frontend.
+  - `#163` – design de UX e layout do frontend.
 - Base de planejamento:
   - `docs/project/PHASE_PLAN.md`
   - `docs/PROJECTS.md` (Project v2: Car Fuel)
@@ -93,7 +94,7 @@ Objetivo: definir como o frontend conversa com o backend (URLs por ambiente, COR
    - `git commit -m "docs(adr): integração frontend-backend (Closes #157)"`
 4. Atualizar pilha (`uvx --python 3.11 ghstack`) se aplicável.
 
-### Passo 3 – Design de UX e layout
+### Passo 3 – Design de UX e layout (Issue #163)
 
 Objetivo: mapear fluxos de usuário, desenhar layouts básicos e alinhar expectativas de UX **antes** da implementação, já pensando em mobile-first/responsivo.
 
@@ -111,9 +112,15 @@ Objetivo: mapear fluxos de usuário, desenhar layouts básicos e alinhar expecta
 4. Pensar o layout de forma **responsiva** e previsível:
    - Evitar dependência forte de interações só de desktop.
    - Usar componentes e padrões de navegação que possam inspirar uma futura versão mobile (React Native/Expo ou similar).
-5. Registrar as decisões em um doc curto:
-   - Ex.: seção neste guia ou arquivo `docs/guides/FASE6-UX-NOTES.md`.
-   - Linkar esse doc nas issues de implementação de telas.
+5. Registrar as decisões em um documento dedicado:
+   - Arquivo: `docs/guides/FASE6-UX-NOTES.md` (ver seção abaixo).
+   - Linkar esse arquivo na Issue `#163` e nas issues de implementação de telas.
+6. Exemplo de branch e commit para este passo:
+   - Criar branch na ponta da pilha do ghstack:  
+     `git checkout -b docs/163-frontend-ux-layout`
+   - Após atualizar `FASE6-FRONTEND-MVP.md` e `FASE6-UX-NOTES.md`:  
+     `git add docs/guides/FASE6-FRONTEND-MVP.md docs/guides/FASE6-UX-NOTES.md`  
+     `git commit -m "docs(ux): Fase 6 frontend – fluxos e layout (Closes #163)"`
 
 ### Passo 4 – Criar esqueleto do frontend (Issue #158)
 
