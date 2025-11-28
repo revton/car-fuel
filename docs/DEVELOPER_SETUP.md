@@ -6,7 +6,7 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
 - Git instalado e configurado.
 - Ferramentas de linha de comando:
   - `gh` (GitHub CLI) autenticado (`gh auth status`).
-  - `uvx` + `uvx` para rodar ferramentas Python (ghstack, pre-commit).
+  - `uv` + `uvx` para rodar ferramentas Python (ghstack, pre-commit).
   - Node.js 20+ (para `npx` usado no lint OpenAPI, hooks e frontend).
   - PowerShell (Windows) para scripts em `scripts/*.ps1`.
     - `scripts/dev/start-dev.ps1`: Sobe o ambiente completo (app + db).
