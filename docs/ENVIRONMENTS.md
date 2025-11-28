@@ -3,7 +3,8 @@
 Este documento descreve os ambientes previstos para o Car Fuel e como pensar variáveis/segredos, CORS, flags, observabilidade, limites, dados e promoção entre eles.
 
 ## Ambientes previstos
-- **Local**: desenvolvimento na máquina do dev (ex.: API em localhost, banco local/contêiner). Maior liberdade de logs e dados de teste.
+- **Local**: desenvolvimento na máquina do dev (ex.: API em localhost, banco local/contêiner).
+  - **Devcontainer**: ambiente padronizado via Docker, garantindo paridade de ferramentas e versões entre desenvolvedores. É a referência oficial para execução local.
 - **Dev / Preview** (futuro): ambiente compartilhado para validação rápida de features; pode usar dados sintéticos.
 - **Prod** (futuro): ambiente real de uso, com dados de usuários; políticas de segurança, observabilidade e limites mais rígidas.
 
