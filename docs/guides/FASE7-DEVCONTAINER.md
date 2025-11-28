@@ -75,6 +75,7 @@ Cada passo gera uma branch baseada na anterior para manter a cadeia na mesma fas
 - **Branch**: `feat/phase7-172-devcontainer-workflow`
 - **Base**: `feat/phase7-171-hot-deploy-scripts`
 - **Escopo**: adicionar wrappers PowerShell `scripts/dev/*.ps1`, documentação de attach/detach, sincronização de volumes e exemplos para múltiplos agentes.
+- **Status**: Implementado.
 - **Commit**: `chore(devcontainer): scripts auxiliares e docs (Closes #172)`
 - **Comandos**
   ```powershell
