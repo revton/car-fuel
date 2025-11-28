@@ -11,6 +11,14 @@ Este guia ajuda a preparar o ambiente de desenvolvimento para o Car Fuel.
   - PowerShell (Windows) para scripts em `scripts/*.ps1`.
 - IDE/editor com suporte a UTF-8 (VS Code, IntelliJ, etc.).
 
+## Devcontainer (Recomendado)
+- O projeto suporta **Devcontainers** (VS Code Remote - Containers) para um ambiente de desenvolvimento padronizado e isolado.
+- Requisitos: Docker Desktop e VS Code com extensão "Dev Containers".
+- Ao abrir o projeto no VS Code, aceite a sugestão para "Reopen in Container".
+- O ambiente inclui automaticamente: JDK, Node.js, ferramentas de CLI e configurações de rede.
+- Veja `docs/adr/0012-devcontainer.md` para detalhes da decisão arquitetural.
+
+
 ## Encoding e fim de linha
 - Usar **UTF-8** como encoding padrão.
 - Em Windows, manter CRLF apenas onde o repositório já estiver configurado; evitar mudar fim de linha desnecessariamente.
