@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+      - .:/workspace:cached
+    # Overrides the default command to keep the container running
+    command: sleep infinity
+    # Connect to the same network as other services if needed, but usually compose handles this.
+    # We want to be able to access db-dev.
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://db-dev:5432/carfuel
+      - POSTGRES_USER=carfuel
+      - POSTGRES_PASSWORD=carfuel

@@ -1,0 +1,25 @@
+name: Devcontainer Validation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.devcontainer/**'
+      - 'docker/dev/**'
+      - 'compose.devcontainer.yml'
+  pull_request:
+    paths:
+      - '.devcontainer/**'
+      - 'docker/dev/**'
+      - 'compose.devcontainer.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Validate Devcontainer Config
+        run: |
+          npm install -g @devcontainers/cli
+          devcontainer validate .devcontainer/devcontainer.json
